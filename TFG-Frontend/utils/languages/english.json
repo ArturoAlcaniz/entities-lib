@@ -1,0 +1,23 @@
+{
+    "titles" : {
+        "iniciar_sesion" : "Log in",
+        "inicio" : "Home"
+    },
+    "labels" : {
+        "correo" : "Email",
+        "pass" : "Password"
+    },
+    "explanations" : {
+        "email" : "We'll never share your email with anyone else."
+    },
+    "buttons" : {
+        "iniciar_sesion" : "Log in",
+        "registro" : "Register"
+    },
+    "requestErrors" : {
+        "invalid_credentials" : "Invalid Credentials",
+        "invalid_email": "The email is not valid",
+        "email_empty": "The email cannot be empty",
+        "pass_empty": "The password cannot be empty"
+    }
+}

@@ -1,0 +1,30 @@
+@charset "utf-8";
+
+// Update some of Bulma's component variables
+$body-background-color: #3498dbd1;
+$body-overflow-x: hidden;
+$body-overflow-y: hidden;
+
+body{
+    overflow: hidden;
+}
+
+.pageCentered{
+    position: absolute;
+    top: 40%;
+    left: 40%;
+    overflow: hidden;
+}
+
+.loginForm{
+    width: 400px;
+}
+
+.languageSelect {
+    max-width: fit-content;
+    position: absolute;
+    top: 5%;
+    left: 90%;
+}
+
+@import "../node_modules/bulma/bulma.sass";
