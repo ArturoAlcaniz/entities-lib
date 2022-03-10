@@ -22,7 +22,7 @@ class LoginPage extends AppPage{
         console.log(page.password);
         axios({
             method: 'post',
-            url: '/api/login',
+            url: '/api/users/login',
             data: {
                 email: page.email,
                 pass: page.password

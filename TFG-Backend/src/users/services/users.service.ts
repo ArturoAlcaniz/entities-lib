@@ -8,6 +8,8 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class UsersService extends BaseService<User> {
 
+    usersLoggedIn: Map<string, string> =  new Map<string, string>();
+
     constructor(private hashService: CustomHashing, @InjectRepository(User) private userRepository : Repository<User>){
         super();
     }
