@@ -15,9 +15,13 @@
         "registro" : "Register"
     },
     "requestErrors" : {
-        "invalid_credentials" : "Invalid Credentials",
+        "invalid_credentials": "Invalid Credentials",
         "invalid_email": "The email is not valid",
         "email_empty": "The email cannot be empty",
-        "pass_empty": "The password cannot be empty"
+        "pass_empty": "The password cannot be empty",
+        "already_logged_in": "User already logged in"
+    },
+    "requestOK": {
+        "successfully_logged_in": "User successfully logged in"
     }
 }

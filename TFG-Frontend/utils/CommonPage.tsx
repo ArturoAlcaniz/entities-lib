@@ -5,12 +5,15 @@ import * as langSpanish from './languages/spanish.json';
 export class AppPage {
     languageSelected: string;
     setLanguage: any;
-    requestErrors: Map<string, string> 
+    requestErrors: Map<string, string>;
+    requestOK: Map<string, string>;
     setRequestErrors: any;
+    setRequestOK: any;
 
     constructor(){
         [this.languageSelected, this.setLanguage] = useState("english");
         [this.requestErrors, this.setRequestErrors] = useState(new Map());
+        [this.requestOK, this.setRequestOK] = useState(new Map());
     }
 
     translations =

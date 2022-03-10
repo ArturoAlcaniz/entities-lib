@@ -28,7 +28,10 @@ class LoginPage extends AppPage{
                 pass: page.password
             },
         }).then((response) => {
-            page.setRequestErrors(new Map<string, string>());
+            if(response.status == 200){
+                let lista: Map<string, string> = new Map<string, string>().set("loginOk", response.data.message[0])
+                page.setRequestOK(lista);
+            }
         }, (error) => {
             let lista: Map<string, string> = new Map<string, string>().set("loginError", error.response.data.message[0])
             page.setRequestErrors(lista);
@@ -70,6 +73,9 @@ const Index = () => {
                         </div>
                         <p className="help is-danger">
                             {page.translations[page.languageSelected]["requestErrors"][page.requestErrors.get('loginError')]}
+                        </p>
+                        <p className="help is-success">
+                            {page.translations[page.languageSelected]["requestOK"][page.requestOK.get('loginOk')]}
                         </p>
                         <div className="field">
                             <p className="control">

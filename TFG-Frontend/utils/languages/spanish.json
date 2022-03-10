@@ -15,9 +15,13 @@
         "registro" : "Registrarse"
     },
     "requestErrors" : {
-        "invalid_credentials" : "Credenciales no válidas",
+        "invalid_credentials": "Credenciales no válidas",
         "invalid_email": "El email introducido no es válido",
         "email_empty": "El email no puede estar vacío",
-        "pass_empty": "La contraseña no puede estar vacía"
+        "pass_empty": "La contraseña no puede estar vacía",
+        "already_logged_in": "Usuario ya logeado"
+    },
+    "requestOK": {
+        "successfully_logged_in": "Usuario logeado correctamente"
     }
 }

@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "start": "ts-node src/main"
+    "start": "ts-node --files src/main"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
