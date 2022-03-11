@@ -1,0 +1,6 @@
+{
+    "plugins": [
+      "react-v-model"
+    ],
+    "presets": ["@babel/preset-react", "@babel/preset-typescript"]
+}

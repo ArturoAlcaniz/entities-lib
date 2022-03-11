@@ -1,94 +1,96 @@
-import { AppPage } from "../utils/CommonPage";
-import React, { useState } from 'react'
-import { Fragment } from "react";
+import React from 'react'
 import axios from "axios";
-import languagesView from "../utils/Functions";
+import LanguageSelect from '../components/LanguageSelect';
+import CustomBasicPage from '../components/CustomBasicPage';
+import Router from 'next/router';
 
-class LoginPage extends AppPage{
+export default class LoginPage extends CustomBasicPage{
+    constructor(props: any) {
+        super(props);
 
-    email: String
-    password: String
-    setEmail: any;
-    setPassword: any;
-
-    constructor(){
-        super();
-        [this.email, this.setEmail] = useState("");
-        [this.password, this.setPassword] = useState("")
+        this.state = {
+            ...this.state,
+            email: "",
+            password: "",
+        }
     }
     
-    handleLogin = function(page: LoginPage) {
-        console.log(page.email);
-        console.log(page.password);
+    handleLogin(event: any) {
+        event.preventDefault()
         axios({
             method: 'post',
             url: '/api/users/login',
             data: {
-                email: page.email,
-                pass: page.password
+                email: this.state.email,
+                pass: this.state.password
             },
         }).then((response) => {
             if(response.status == 200){
                 let lista: Map<string, string> = new Map<string, string>().set("loginOk", response.data.message[0])
-                page.setRequestOK(lista);
+                this.setState({requestOK: lista, requestErrors: new Map<string, string>()});
+            }else{
+                
             }
         }, (error) => {
             let lista: Map<string, string> = new Map<string, string>().set("loginError", error.response.data.message[0])
-            page.setRequestErrors(lista);
+            this.setState({ requestErrors: lista, requestOK: new Map<string, string>()});
         });
     }
-}
 
-const Index = () => {
-    let page = new LoginPage()
-    const LanguagesView = () => languagesView(page)
+    render() {
 
-    return (
-        <Fragment>
-            <LanguagesView />
-            <div className="pageCentered">
-                <div className="card loginForm">
-                    <div className="card-content">
-                        <div className="field">
-                            <label className="label">
-                                {page.translations[page.languageSelected]["labels"]["correo"]}
-                            </label>
-                            <div className="control has-icons-left">
-                                <input onChange={event => page.setEmail(event.target.value)} className="input" type="email" autoComplete="off"></input>
-                                <span className="icon is-small is-left">
-                                    <i className="fas fa-envelope"></i>    
-                                </span>
+        let languageSelected = this.state.languageSelected
+        let obtainTextTranslated = this.translations[languageSelected]
+
+        const { email, password } = this.state
+
+        return (
+            <div>
+                <LanguageSelect setLanguageSelected={this.setLanguageSelected} initialLanguageSelected={languageSelected} />
+                <div className="pageCentered">
+                    <form onSubmit={this.handleLogin.bind(this)} >
+                        <div className="card loginForm">
+                            <div className="card-content">
+                                <div className="field">
+                                    <label className="label">
+                                        {obtainTextTranslated["labels"]["correo"]}
+                                    </label>
+                                    <div className="control has-icons-left">
+                                        <input v-model={email} className="input" type="email" autoComplete="off"></input>
+                                        <span className="icon is-small is-left">
+                                            <i className="fas fa-envelope"></i>    
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="field">
+                                    <label className="label">
+                                        {obtainTextTranslated["labels"]["pass"]}
+                                    </label>
+                                    <div className="control has-icons-left">
+                                        <input v-model={password} className="input" type="password" autoComplete="off"></input>
+                                        <span className="icon is-small is-left">
+                                            <i className="fas fa-lock"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <p className="help is-danger">
+                                    {obtainTextTranslated["requestErrors"][this.state.requestErrors.get('loginError')]}
+                                </p>
+                                <p className="help is-success">
+                                    {obtainTextTranslated["requestOK"][this.state.requestOK.get('loginOk')]}
+                                </p>
+                                <div className="field">
+                                    <p className="control">
+                                        <button className="button">
+                                            {obtainTextTranslated["buttons"]["iniciar_sesion"]}
+                                        </button>
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                        <div className="field">
-                            <label className="label">
-                                {page.translations[page.languageSelected]["labels"]["pass"]}
-                            </label>
-                            <div className="control has-icons-left">
-                                <input onChange={event => page.setPassword(event.target.value)} className="input" type="password" autoComplete="off"></input>
-                                <span className="icon is-small is-left">
-                                    <i className="fas fa-lock"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <p className="help is-danger">
-                            {page.translations[page.languageSelected]["requestErrors"][page.requestErrors.get('loginError')]}
-                        </p>
-                        <p className="help is-success">
-                            {page.translations[page.languageSelected]["requestOK"][page.requestOK.get('loginOk')]}
-                        </p>
-                        <div className="field">
-                            <p className="control">
-                                <button onClick={() => page.handleLogin(page)} className="button">
-                                    {page.translations[page.languageSelected]["buttons"]["iniciar_sesion"]}
-                                </button>
-                            </p>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
-        </Fragment>
-    )
+        )
+    }
 }
-
-export default Index

@@ -6,7 +6,7 @@ import { Module } from "@nestjs/common";
     imports: [
         JwtModule.register({
             secret: 'crQKmo6Uqw',
-            signOptions: {expiresIn: '1h'}
+            signOptions: {expiresIn: '30m'}
         }),
     ],
     exports: [ JwtModule ]

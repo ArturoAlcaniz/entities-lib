@@ -1,10 +1,11 @@
-import { BadRequestException, Body, Post, Redirect, Render, Req, Res, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Body, Post, Redirect, Render, Req, Res, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Controller, Get } from '@nestjs/common';
 import { User } from './users/entities/user.entity';
 import { LoginDto } from "./users/dtos/login.dto";
 import { UsersService } from "./users/services/users.service";
 import { Request, response, Response } from 'express';
+import { AuthenticatedGuard } from './users/guards/authenticated.guard';
 
 @Controller()
 export class AppController {
@@ -22,26 +23,11 @@ export class AppController {
     }
 
     @Get('user')
+    @UseGuards(AuthenticatedGuard)
     async user(
         @Req() request: Request
     ){
 
-        if(!request.cookies['jwt']){
-            response.status(400).json({ message: ['not_logged_in'] })
-        }
-
-        const cookie = request.cookies['jwt'];
-
-        if(!this.jwtService.verify(cookie)){
-            throw new UnauthorizedException();
-        }
-
-        const user = (this.jwtService.decode(cookie))['userId']
-
-        if(cookie != this.usersService.usersLoggedIn.get(user)) {
-            throw new UnauthorizedException();
-        }
-
-        return user;
+        return request.user
     }
 }
