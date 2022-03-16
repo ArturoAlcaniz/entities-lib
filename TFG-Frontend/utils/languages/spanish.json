@@ -5,7 +5,9 @@
     },
     "labels" : {
         "correo" : "Correo",
-        "pass" : "Contraseña"
+        "pass" : "Contraseña",
+        "confirm_pass": "Confirmación",
+        "usuario": "Nombre de usuario"
     },
     "explanations" : {
         "email" : "Nunca compartiremos su correo electrónico con nadie más."
@@ -19,9 +21,13 @@
         "invalid_email": "El email introducido no es válido",
         "email_empty": "El email no puede estar vacío",
         "pass_empty": "La contraseña no puede estar vacía",
-        "already_logged_in": "Usuario ya logeado"
+        "already_logged_in": "Usuario ya logeado",
+        "confirm_password_not_equals": "Contraseña y confirmación no coinciden",
+        "username_already_exist": "El usuario introducido ya existe",
+        "email_already_exist": "El correo introducido ya existe"
     },
     "requestOK": {
-        "successfully_logged_in": "Usuario logeado correctamente"
+        "successfully_logged_in": "Usuario logeado correctamente",
+        "successfully_registered": "Usuario registrado correctamente"
     }
 }

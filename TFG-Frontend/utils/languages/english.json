@@ -5,23 +5,29 @@
     },
     "labels" : {
         "correo" : "Email",
-        "pass" : "Password"
+        "pass" : "Password",
+        "confirm_pass": "Confirm password",
+        "usuario": "Username"
     },
     "explanations" : {
         "email" : "We'll never share your email with anyone else."
     },
     "buttons" : {
         "iniciar_sesion" : "Log in",
-        "registro" : "Register"
+        "registro" : "Sign up"
     },
     "requestErrors" : {
         "invalid_credentials": "Invalid Credentials",
         "invalid_email": "The email is not valid",
         "email_empty": "The email cannot be empty",
         "pass_empty": "The password cannot be empty",
-        "already_logged_in": "User already logged in"
+        "already_logged_in": "User already logged in",
+        "confirm_password_not_equals": "Password and Confirm password are not equals",
+        "username_already_exist": "Username already exist",
+        "email_already_exist": "Email already exist"
     },
     "requestOK": {
-        "successfully_logged_in": "User successfully logged in"
+        "successfully_logged_in": "User successfully logged in",
+        "successfully_registered": "User successfully registered"
     }
 }

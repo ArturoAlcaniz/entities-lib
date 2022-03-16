@@ -1,8 +1,6 @@
 import React from 'react'
 import axios from "axios";
-import LanguageSelect from '../components/LanguageSelect';
-import CustomBasicPage from '../components/CustomBasicPage';
-import Router from 'next/router';
+import CustomBasicPage from '@components/CustomBasicPage';
 
 export default class LoginPage extends CustomBasicPage{
     constructor(props: any) {
@@ -46,7 +44,7 @@ export default class LoginPage extends CustomBasicPage{
 
         return (
             <div>
-                <LanguageSelect setLanguageSelected={this.setLanguageSelected} initialLanguageSelected={languageSelected} />
+                {super.render()}
                 <div className="pageCentered">
                     <form onSubmit={this.handleLogin.bind(this)} >
                         <div className="card loginForm">

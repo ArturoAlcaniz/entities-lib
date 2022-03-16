@@ -25,13 +25,27 @@ export class UsersService extends BaseService<User> {
     createUser(email: string, name: string, pass: string): User{
         let user: User = new User();
         user.EMAIL = email;
-        user.NAME = name;
+        user.USERNAME = name;
         user.PASSWORD = this.hashService.stringToHash(pass);
         return user;
     }
 
     verifyPass(user: User, pass: string){
         return this.hashService.checkHash(pass, user.PASSWORD);
+    }
+
+    async validateUniqueEmail(user: User){
+        if ((await this.findOne({ where: { EMAIL: user.EMAIL}})) != null) {
+            return false;
+        }
+        return true;
+    }
+
+    async validateUniqueUsername(user: User){
+        if ((await this.findOne({ where: { USERNAME: user.USERNAME}})) != null) {
+            return false;
+        }
+        return true;
     }
 
 }

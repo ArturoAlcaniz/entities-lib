@@ -13,9 +13,19 @@ export class UsersController {
 
     @Post('register')
     async createUser(@Body() payload: CreateUserDto, @Res( {passthrough: true}) response: Response){
-        let user: User = this.usersService.createUser(payload.email, payload.name, payload.pass);
+        let user: User = this.usersService.createUser(payload.email, payload.username, payload.pass);
+
+        if(!(await this.usersService.validateUniqueEmail(user))){
+            response.status(400).json({ message: ['email_already_exist'] })
+            return;
+        }
+
+        if(!(await this.usersService.validateUniqueUsername(user))){
+            response.status(400).json({ message: ['username_already_exist'] })
+            return;
+        }
         this.usersService.save(user);
-        return true;
+        response.status(200).json({ message: ['successfully_registered'] })
     }
 
     @Post('login')

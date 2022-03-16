@@ -1,4 +1,9 @@
-module.exports = {
+const withImages = require('next-images')
+
+module.exports = withImages({
+  images: {
+    disableStaticImages: true
+  },
   async headers() {
     return [
       {
@@ -30,7 +35,11 @@ module.exports = {
         React: 'react'
       })
     );
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ["@svgr/webpack"]
+    });
     return config;
   },
-  poweredByHeader: false,
-};
+  poweredByHeader: false
+});

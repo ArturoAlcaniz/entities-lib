@@ -22,9 +22,8 @@ body{
 
 .languageSelect {
     max-width: fit-content;
-    position: absolute;
-    top: 5%;
-    left: 90%;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 @import "../node_modules/bulma/bulma.sass";

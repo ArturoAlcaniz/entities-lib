@@ -1,7 +1,8 @@
 import { Component } from 'react'
 import cookies from "next-cookies";
-import * as langEnglish from '../utils/languages/english.json';
-import * as langSpanish from '../utils/languages/spanish.json';
+import * as langEnglish from '@utils/languages/english.json';
+import * as langSpanish from '@utils/languages/spanish.json';
+import Header from "@components/Header";
 
 export default class CustomBasicPage extends Component<any, any>{
     static async getInitialProps(ctx: any) {
@@ -30,5 +31,13 @@ export default class CustomBasicPage extends Component<any, any>{
     setLanguageSelected(languageSelected: string) {
         this.setState({ languageSelected: languageSelected })
         document.cookie = `languageSelected=${languageSelected};`;
+    }
+
+    render(){
+        let languageSelected = this.state.languageSelected
+
+        return (
+            <Header setLanguageSelected={this.setLanguageSelected} initialLanguageSelected={languageSelected} />
+        )
     }
 }
