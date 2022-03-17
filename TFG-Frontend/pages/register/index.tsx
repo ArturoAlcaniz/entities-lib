@@ -2,6 +2,7 @@ import React from 'react'
 import axios from "axios";
 import CustomBasicPage from '@components/CustomBasicPage';
 import Router from 'next/router';
+import Header from '@components/Header';
 
 export default class RegisterPage extends CustomBasicPage{
     constructor(props: any) {
@@ -53,6 +54,7 @@ export default class RegisterPage extends CustomBasicPage{
         return (
             <div>
                 {super.render()}
+                <Header setLanguageSelected={this.setLanguageSelected} initialLanguageSelected={languageSelected} />
                 <div className="pageCentered">
                     <form onSubmit={this.handleRegister.bind(this)} >
                         <div className="card loginForm">

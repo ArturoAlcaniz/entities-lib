@@ -54,6 +54,9 @@ export default class Header extends Component<any,any> {
 
                 <div id="navbarBasicExample" className={styleNavbarMenu}>
                     <div className="navbar-start">
+                        <a className="navbar-custom is-active">
+                            Home
+                        </a>
                     </div>
                     <div className="navbar-end">
                         <div className="navbar-item">
@@ -71,11 +74,7 @@ export default class Header extends Component<any,any> {
                                     </div>
                                 </div>
                             </div>
-                            <div className="buttons">
-                                <a className="button is-primary">
-                                    <strong>{obtainTextTranslated["buttons"]["registro"]}</strong>
-                                </a>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>

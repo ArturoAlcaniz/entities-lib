@@ -27,3 +27,29 @@ body{
 }
 
 @import "../node_modules/bulma/bulma.sass";
+
+a.navbar-custom {
+    cursor: pointer;
+}
+
+.navbar-custom {
+    border-radius: 10px;
+    background-color: #00d1b2;
+    align-items: center;
+    display: flex;
+    flex-grow: 0;
+    flex-shrink: 0;
+    position: relative;
+    padding: 0.5rem 0.75rem;
+    line-height: 1.5;
+    color: black;
+}
+
+.navbar-custom.is-active, .navbar-custom:hover {
+    color: white;
+    background-color: #0a508a;
+}
+
+.navbar-menu {
+    margin: 5px;
+}
