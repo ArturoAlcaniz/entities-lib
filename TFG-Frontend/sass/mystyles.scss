@@ -33,21 +33,35 @@ a.navbar-custom {
 }
 
 .navbar-custom {
-    border-radius: 10px;
-    background-color: #00d1b2;
+    border-radius: 50rem;
     align-items: center;
     display: flex;
+    justify-content: center;
     flex-grow: 0;
     flex-shrink: 0;
     position: relative;
-    padding: 0.5rem 0.75rem;
     line-height: 1.5;
     color: black;
+    min-width: 95px;
+    margin-left: 1px;
+    margin-right: 1px;
 }
 
-.navbar-custom.is-active, .navbar-custom:hover {
+.navbar-custom:hover {
+    color: black;
+    background-color: aquamarine;
+}
+
+.navbar-custom.is-active:hover {
+    color: black;
+    background-color: aquamarine;
+}
+
+.navbar-custom.is-active {
     color: white;
-    background-color: #0a508a;
+    background-color: rgb(35, 41, 43);
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .navbar-menu {

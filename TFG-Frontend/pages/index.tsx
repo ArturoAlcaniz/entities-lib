@@ -2,6 +2,7 @@ import React from 'react'
 import axios from "axios";
 import CustomBasicPage from '@components/CustomBasicPage';
 import Header from '@components/Header';
+import Router from 'next/router';
 
 export default class LoginPage extends CustomBasicPage{
     constructor(props: any) {
@@ -26,9 +27,10 @@ export default class LoginPage extends CustomBasicPage{
         }).then((response) => {
             if(response.status == 200){
                 let lista: Map<string, string> = new Map<string, string>().set("loginOk", response.data.message[0])
-                this.setState({requestOK: lista, requestErrors: new Map<string, string>()});
-            }else{
-                
+                this.setState({requestOK: lista, requestErrors: new Map<string, string>()});   
+                setTimeout(() => {
+                    Router.push('home')
+                },1000)
             }
         }, (error) => {
             let lista: Map<string, string> = new Map<string, string>().set("loginError", error.response.data.message[0])

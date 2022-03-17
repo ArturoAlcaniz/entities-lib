@@ -10,6 +10,7 @@ export default class Header extends Component<any,any> {
         super(props);
 
         this.state = {
+            pathname: props.pathname,
             languageSelected: props.initialLanguageSelected || "english",
             styleNavbarBurger: "navbar-burger",
             styleNavbarMenu: "navbar-menu"
@@ -35,6 +36,10 @@ export default class Header extends Component<any,any> {
         }
     }
 
+    checkIfIsActive(navName: string): boolean{
+        return this.state.pathname === navName
+    }
+
     render() {
         const { styleNavbarBurger, styleNavbarMenu } = this.state
         let languageSelected = this.state.languageSelected
@@ -54,8 +59,11 @@ export default class Header extends Component<any,any> {
 
                 <div id="navbarBasicExample" className={styleNavbarMenu}>
                     <div className="navbar-start">
-                        <a className="navbar-custom is-active">
+                        <a className={this.checkIfIsActive("/home") ? "navbar-custom is-active" : "navbar-custom"}>
                             Home
+                        </a>
+                        <a className={this.checkIfIsActive("/profile") ? "navbar-custom is-active" : "navbar-custom"}>
+                            Profile
                         </a>
                     </div>
                     <div className="navbar-end">

@@ -6,7 +6,8 @@ import * as langSpanish from '@utils/languages/spanish.json';
 export default class CustomBasicPage extends Component<any, any>{
     static async getInitialProps(ctx: any) {
         return {
-          initialLanguageSelected: cookies(ctx).languageSelected || 'english'
+            pathname: ctx.pathname,
+            initialLanguageSelected: cookies(ctx).languageSelected || 'english'
         }
     }
     translations: { english: any; spanish: any; };

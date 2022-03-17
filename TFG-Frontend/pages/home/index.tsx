@@ -20,7 +20,7 @@ export default class LoginPage extends CustomBasicPage{
         return (
             <div>
                 {super.render()}
-                <Header setLanguageSelected={this.setLanguageSelected} initialLanguageSelected={languageSelected} />
+                <Header pathname={this.props.pathname} setLanguageSelected={this.setLanguageSelected} initialLanguageSelected={languageSelected} />
                 <div className="pageCentered">
                     
                 </div>
