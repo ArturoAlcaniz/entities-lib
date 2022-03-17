@@ -7,7 +7,8 @@ export default class CustomBasicPage extends Component<any, any>{
     static async getInitialProps(ctx: any) {
         return {
             pathname: ctx.pathname,
-            initialLanguageSelected: cookies(ctx).languageSelected || 'english'
+            initialLanguageSelected: cookies(ctx).languageSelected || 'english',
+            username: cookies(ctx).username
         }
     }
     translations: { english: any; spanish: any; };

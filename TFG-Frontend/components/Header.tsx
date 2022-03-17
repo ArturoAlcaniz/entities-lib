@@ -2,6 +2,7 @@ import { Component } from "react";
 import logo from "@assets/Logo-TISHOP.png"
 import * as langEnglish from '@utils/languages/english.json';
 import * as langSpanish from '@utils/languages/spanish.json';
+import Router from 'next/router';
 
 export default class Header extends Component<any,any> {
     translations: { english: any; spanish: any; };
@@ -10,6 +11,7 @@ export default class Header extends Component<any,any> {
         super(props);
 
         this.state = {
+            pathname: props.pathname,
             languageSelected: props.initialLanguageSelected || "english",
             styleNavbarBurger: "navbar-burger",
             styleNavbarMenu: "navbar-menu"
@@ -35,10 +37,49 @@ export default class Header extends Component<any,any> {
         }
     }
 
+    handleGoRegister() {
+        Router.push('register')
+    }
+
+    handleGoLogin() {
+        Router.push('/')
+    }
+
+    obtainButtonRegister(): JSX.Element {
+        let languageSelected = this.state.languageSelected
+        let obtainTextTranslated = this.translations[languageSelected]
+        return (
+        <a className="button is-primary" onClick={() => {this.handleGoRegister()}}>
+            <strong>{obtainTextTranslated["buttons"]["registro"]}</strong>
+        </a>)
+    }
+
+    obtainButtonLogin(): JSX.Element {
+        let languageSelected = this.state.languageSelected
+        let obtainTextTranslated = this.translations[languageSelected]
+        return (
+        <a className="button is-primary" onClick={() => {this.handleGoLogin()}}>
+            <strong>{obtainTextTranslated["buttons"]["login"]}</strong>
+        </a>)
+    }
+
+    obtainButtons(): JSX.Element {
+        let pathname = this.state.pathname
+        console.log(pathname)
+        if(pathname == "/"){
+            return this.obtainButtonRegister()
+        }else{
+            if(pathname == "/register"){
+                return this.obtainButtonLogin()
+            }
+        }
+    }
+
     render() {
         const { styleNavbarBurger, styleNavbarMenu } = this.state
         let languageSelected = this.state.languageSelected
         let obtainTextTranslated = this.translations[languageSelected]
+
 
         return (
             <nav className="navbar" role="navigation" aria-label="main navigation">
@@ -72,9 +113,7 @@ export default class Header extends Component<any,any> {
                                 </div>
                             </div>
                             <div className="buttons">
-                                <a className="button is-primary">
-                                    <strong>{obtainTextTranslated["buttons"]["registro"]}</strong>
-                                </a>
+                                { this.obtainButtons() }
                             </div>
                         </div>
                     </div>

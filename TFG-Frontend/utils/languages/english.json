@@ -10,11 +10,12 @@
         "usuario": "Username"
     },
     "explanations" : {
-        "email" : "We'll never share your email with anyone else."
+        "hello" : "Hello"
     },
     "buttons" : {
-        "iniciar_sesion" : "Log in",
-        "registro" : "Sign up"
+        "login" : "Login",
+        "registro" : "Sign up",
+        "logout": "Logout"
     },
     "requestErrors" : {
         "invalid_credentials": "Invalid Credentials",

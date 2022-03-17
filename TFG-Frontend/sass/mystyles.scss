@@ -10,13 +10,18 @@ body{
 }
 
 .pageCentered{
-    position: absolute;
-    top: 40%;
-    left: 40%;
-    overflow: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 .loginForm{
+    width: 400px;
+}
+
+.registerForm{
     width: 400px;
 }
 
@@ -66,4 +71,10 @@ a.navbar-custom {
 
 .navbar-menu {
     margin: 5px;
+}
+
+.user-info {
+    margin-left: 10px;
+    margin-right: 5px;
+    font-weight: bold;
 }

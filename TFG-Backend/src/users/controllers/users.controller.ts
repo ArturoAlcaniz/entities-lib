@@ -1,11 +1,12 @@
 import { LoginDto } from './../dtos/login.dto';
-import { Body, Param, Post, Req, Res } from '@nestjs/common';
+import { Body, Param, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { Controller, Get } from '@nestjs/common';
-import { Response } from 'express';
+import { Response, Request } from 'express';
 import { CreateUserDto } from "../dtos/createUser.dto";
 import { User } from "../entities/user.entity";
 import { UsersService } from "../services/users.service";
 import { JwtService } from '@nestjs/jwt';
+import { AuthenticatedGuard } from '../guards/authenticated.guard';
 
 @Controller('users')
 export class UsersController {
@@ -46,6 +47,16 @@ export class UsersController {
         response.cookie('jwt', jwt, {httpOnly: true, sameSite: "strict", secure: true});
         response.status(200).json({ message: ['successfully_logged_in'] })
 
+    }
+
+    @Get('logout')
+    @UseGuards(AuthenticatedGuard)
+    async logout(
+        @Res( {passthrough: true}) response: Response,
+        @Req() request: Request
+    ) {
+        this.usersService.usersLoggedIn.delete(request.user.userId)
+        response.clearCookie('jwt')
     }
 
 }

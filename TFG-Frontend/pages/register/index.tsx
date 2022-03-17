@@ -54,10 +54,12 @@ export default class RegisterPage extends CustomBasicPage{
         return (
             <div>
                 {super.render()}
-                <Header setLanguageSelected={this.setLanguageSelected} initialLanguageSelected={languageSelected} />
+                <Header setLanguageSelected={this.setLanguageSelected} 
+                        initialLanguageSelected={languageSelected} 
+                        pathname={this.props.pathname} />
                 <div className="pageCentered">
                     <form onSubmit={this.handleRegister.bind(this)} >
-                        <div className="card loginForm">
+                        <div className="card registerForm">
                             <div className="card-content">
                                 <div className="field">
                                     <label className="label">

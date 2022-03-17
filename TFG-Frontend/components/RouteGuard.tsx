@@ -33,8 +33,9 @@ function RouteGuard({ children }) {
             method: 'get',
             url: '/api/user',
             data: {},
-        }).then((response) => {
+        }).then((response: any) => {
             if(response.status == 200){
+                document.cookie = `username=${response.data.USERNAME};`;
                 setAuthorized(true);
                 if(publicPaths.includes(path)) {
                     router.push({

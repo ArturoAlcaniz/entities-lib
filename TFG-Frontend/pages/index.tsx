@@ -48,7 +48,9 @@ export default class LoginPage extends CustomBasicPage{
         return (
             <div>
                 {super.render()}
-                <Header setLanguageSelected={this.setLanguageSelected} initialLanguageSelected={languageSelected} />
+                <Header setLanguageSelected={this.setLanguageSelected} 
+                        initialLanguageSelected={languageSelected} 
+                        pathname={this.props.pathname} />
                 <div className="pageCentered">
                     <form onSubmit={this.handleLogin.bind(this)} >
                         <div className="card loginForm">
@@ -84,7 +86,7 @@ export default class LoginPage extends CustomBasicPage{
                                 <div className="field">
                                     <p className="control">
                                         <button className="button">
-                                            {obtainTextTranslated["buttons"]["iniciar_sesion"]}
+                                            {obtainTextTranslated["buttons"]["login"]}
                                         </button>
                                     </p>
                                 </div>
