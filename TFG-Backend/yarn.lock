@@ -662,6 +662,13 @@
     "semver" "^7.3.4"
     "tar" "^6.1.0"
 
+"@nestjs/axios@^0.0.7":
+  "integrity" "sha512-at8nj+1Nb8UleHcIN5QqZYeWX54m4m9s9gxzVE1qWy00neX2rg0+h2TfbWsnDi2tc23zIxqexanxMOJZbzO0CA=="
+  "resolved" "https://registry.npmjs.org/@nestjs/axios/-/axios-0.0.7.tgz"
+  "version" "0.0.7"
+  dependencies:
+    "axios" "0.26.0"
+
 "@nestjs/cli@^8.0.0":
   "integrity" "sha512-f5grQOgrRcfHfOUP94OWsMdVYy6bit0zRSxPZ5+tfsFWkiPWdcx5Ba2M2socTykkiNHruXBu07lYvcKh94do7Q=="
   "resolved" "https://registry.npmjs.org/@nestjs/cli/-/cli-8.2.0.tgz"
@@ -1972,6 +1979,13 @@
   "version" "0.24.0"
   dependencies:
     "follow-redirects" "^1.14.4"
+
+"axios@0.26.0":
+  "integrity" "sha512-lKoGLMYtHvFrPVt3r+RBMp9nh34N0M8zEfCWqdWZx6phynIEhQqAdydpyBAAG211zlhX9Rgu08cOamy6XjE5Og=="
+  "resolved" "https://registry.npmjs.org/axios/-/axios-0.26.0.tgz"
+  "version" "0.26.0"
+  dependencies:
+    "follow-redirects" "^1.14.8"
 
 "babel-jest@^27.0.6":
   "integrity" "sha512-iTJyYLNc4wRofASmofpOc5NK9QunwMk+TLFgGXsTFS8uEqmd8wdI7sga0FPe2oVH3b5Agt/EAK1QjPEuKL8VfA=="
@@ -3520,7 +3534,7 @@
   "resolved" "https://registry.npmjs.org/flatted/-/flatted-3.2.1.tgz"
   "version" "3.2.1"
 
-"follow-redirects@^1.14.4":
+"follow-redirects@^1.14.4", "follow-redirects@^1.14.8":
   "integrity" "sha512-1x0S9UVJHsQprFcEC/qnNzBLcIxsjAV905f/UkQxbclCsoTWlacCNOpQa/anodLl2uaEKFhfWOvM2Qg77+15zA=="
   "resolved" "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.14.8.tgz"
   "version" "1.14.8"
@@ -6360,7 +6374,7 @@
   "resolved" "https://registry.npmjs.org/run-async/-/run-async-2.4.1.tgz"
   "version" "2.4.1"
 
-"rxjs@^6.0.0 || ^7.2.0", "rxjs@^7.1.0", "rxjs@^7.2.0":
+"rxjs@^6.0.0 || ^7.0.0", "rxjs@^6.0.0 || ^7.2.0", "rxjs@^7.1.0", "rxjs@^7.2.0":
   "integrity" "sha512-aX8w9OpKrQmiPKfT1bqETtUr9JygIz6GZ+gql8v7CijClsP0laoFUdKzxFAoWuRdSlOdU2+crss+cMf+cqMTnw=="
   "resolved" "https://registry.npmjs.org/rxjs/-/rxjs-7.2.0.tgz"
   "version" "7.2.0"

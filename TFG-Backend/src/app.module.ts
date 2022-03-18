@@ -9,6 +9,7 @@ import { UsersModule } from './users/users.module';
 import { Module, NestMiddleware, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
 import { UsersService } from './users/services/users.service';
 import path from 'path';
+import { HttpModule } from '@nestjs/axios'
 
 const resolvePath = (file: string) => path.resolve(`./dist/ui_v1/${file}`);
 
@@ -41,7 +42,8 @@ function getRoute(route: string) {
       autoLoadEntities: true
     }),
     HashingModule,
-    UsersModule
+    UsersModule,
+    HttpModule
   ],
   providers: [],
   controllers: [AppController]

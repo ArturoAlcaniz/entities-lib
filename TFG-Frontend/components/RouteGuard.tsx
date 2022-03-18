@@ -6,13 +6,16 @@ function RouteGuard({ children }) {
 
     const router = useRouter()
     const [authorized, setAuthorized] = useState(false)
+    const publicPaths = ['/', '/register']
+    const path = router.asPath.split('?')[0];
 
     useEffect(() => {
         // on initial load - run auth check 
         authCheck(router.asPath);
 
-        // on route change start - hide page content by setting authorized to false  
-        const hideContent = () => setAuthorized(false);
+        // Hide content if the page is not public
+        const hideContent = () => setAuthorized(publicPaths.includes(path));
+
         router.events.on('routeChangeStart', hideContent);
 
         // on route change complete - run auth check 
@@ -26,7 +29,6 @@ function RouteGuard({ children }) {
     }, []);
 
     function authCheck(url: string) {
-        const publicPaths = ['/', '/register']
         const path = url.split('?')[0];
 
         axios({
@@ -45,15 +47,15 @@ function RouteGuard({ children }) {
                 }
             }
         }, (error) => {
+            setAuthorized(publicPaths.includes(path))
+            
             if(!publicPaths.includes(path)) {
-                setAuthorized(false);
                 router.push({
                     pathname: '/',
                     query: { returnUrl: router.asPath }
                 },'/');
-            }else{
-                setAuthorized(true)
             }
+            
         });
         
     }

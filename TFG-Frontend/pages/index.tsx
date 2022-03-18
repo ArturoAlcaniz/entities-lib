@@ -3,6 +3,8 @@ import axios from "axios";
 import CustomBasicPage from '@components/CustomBasicPage';
 import Header from '@components/Header';
 import Router from 'next/router';
+import { GoogleLogin } from 'react-google-login';
+
 
 export default class LoginPage extends CustomBasicPage{
     constructor(props: any) {
@@ -13,6 +15,28 @@ export default class LoginPage extends CustomBasicPage{
             email: "",
             password: "",
         }
+    }
+
+    handleLoginGoogle = (response: any) => {
+        axios({
+            method: 'post',
+            url: '/api/users/loginGoogle',
+            data: {
+                token: response.tokenObj.id_token
+            },
+            }).then((response) => {
+            if(response.status == 200){
+                let lista: Map<string, string> = new Map<string, string>().set("loginOk", response.data.message[0])
+                this.setState({requestOK: lista, requestErrors: new Map<string, string>()});
+                document.cookie = `username=${response.data.USERNAME};`;
+                setTimeout(() => {
+                    Router.push('home')
+                },1000)
+            }
+        }, (error) => {
+            let lista: Map<string, string> = new Map<string, string>().set("loginError", error.response.data.message[0])
+            this.setState({ requestErrors: lista, requestOK: new Map<string, string>()});
+        });
     }
     
     handleLogin(event: any) {
@@ -27,7 +51,8 @@ export default class LoginPage extends CustomBasicPage{
         }).then((response) => {
             if(response.status == 200){
                 let lista: Map<string, string> = new Map<string, string>().set("loginOk", response.data.message[0])
-                this.setState({requestOK: lista, requestErrors: new Map<string, string>()});   
+                this.setState({requestOK: lista, requestErrors: new Map<string, string>()});
+                document.cookie = `username=${response.data.USERNAME};`;
                 setTimeout(() => {
                     Router.push('home')
                 },1000)
@@ -90,6 +115,13 @@ export default class LoginPage extends CustomBasicPage{
                                         </button>
                                     </p>
                                 </div>
+                                <GoogleLogin
+                                    clientId="388959240870-7qf8j10dc0ktavi36k4ilrcrrqqb6sfk.apps.googleusercontent.com"
+                                    buttonText="Login with google"
+                                    onSuccess={this.handleLoginGoogle}
+                                    onFailure={this.handleLoginGoogle}
+                                    cookiePolicy={'single_host_origin'}
+                                />
                             </div>
                         </div>
                     </form>

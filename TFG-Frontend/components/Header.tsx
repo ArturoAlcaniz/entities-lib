@@ -65,7 +65,6 @@ export default class Header extends Component<any,any> {
 
     obtainButtons(): JSX.Element {
         let pathname = this.state.pathname
-        console.log(pathname)
         if(pathname == "/"){
             return this.obtainButtonRegister()
         }else{

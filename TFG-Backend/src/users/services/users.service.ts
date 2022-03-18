@@ -5,10 +5,12 @@ import { BaseService } from '../../commons/service.commons';
 import { FindOneOptions, Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 
+
 @Injectable()
 export class UsersService extends BaseService<User> {
 
     usersLoggedIn: Map<string, string> =  new Map<string, string>();
+    GOOGLE_CLIENT_ID: string = "388959240870-7qf8j10dc0ktavi36k4ilrcrrqqb6sfk.apps.googleusercontent.com"
 
     constructor(private hashService: CustomHashing, @InjectRepository(User) private userRepository : Repository<User>){
         super();
@@ -22,16 +24,42 @@ export class UsersService extends BaseService<User> {
         return this.getRepository().findOne(options);
     }
 
-    createUser(email: string, name: string, pass: string): User{
+    createUser(email: string, name: string, pass: string = null): User{
         let user: User = new User();
         user.EMAIL = email;
         user.USERNAME = name;
-        user.PASSWORD = this.hashService.stringToHash(pass);
+        if(pass != null){
+            user.PASSWORD = this.hashService.stringToHash(pass);
+        }
         return user;
     }
 
     verifyPass(user: User, pass: string){
         return this.hashService.checkHash(pass, user.PASSWORD);
+    }
+
+    async validateLoginGoogle(data: any): Promise<any>{
+        if(!(data.aud == this.GOOGLE_CLIENT_ID && data.azp == this.GOOGLE_CLIENT_ID)){
+            return false;
+        }
+        if(!(data.email_verified == "true")){
+            return false;
+        }
+        if(new Date(data.exp * 1000) < new Date()) {
+            return false;
+        }
+        return true;
+    }
+
+    async registerGoogleAccount(data: any) {
+        let username = "User"+(await this.getRepository().count())
+        let email = data.email
+        let user: User = this.createUser(email, username)
+        await this.userRepository.save(user)
+    }
+
+    async checkExistGoogleEmail(data: any){
+        return (await this.findOne({ where: {EMAIL: data.email}}));
     }
 
     async validateUniqueEmail(user: User){
