@@ -1,9 +1,9 @@
-import { FindManyOptions, Repository } from "typeorm";
+import {FindManyOptions, Repository} from "typeorm";
 
 export abstract class BaseService<T> {
-    abstract getRepository() : Repository<T>;
+    abstract getRepository(): Repository<T>;
 
-    findAll() : Promise<T[]> {
+    findAll(): Promise<T[]> {
         return this.getRepository().find();
     }
 
@@ -11,11 +11,11 @@ export abstract class BaseService<T> {
         return this.getRepository().findOne(id);
     }
 
-    save(entity: T) : Promise<T> {
+    save(entity: T): Promise<T> {
         return this.getRepository().save(entity);
     }
 
-    saveMany(entities: T[]) : Promise<T[]> {
+    saveMany(entities: T[]): Promise<T[]> {
         return this.getRepository().save(entities);
     }
 
@@ -23,7 +23,7 @@ export abstract class BaseService<T> {
         await this.getRepository().delete(id);
     }
 
-    count(options?: FindManyOptions<T>) : Promise<number> {
+    count(options?: FindManyOptions<T>): Promise<number> {
         return this.getRepository().count(options);
     }
 }

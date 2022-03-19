@@ -1,10 +1,8 @@
-import { Global, Module } from "@nestjs/common";
-import { CustomHashing } from "./hashing.service";
-
+import {Global, Module} from "@nestjs/common";
+import {CustomHashing} from "./hashing.service";
 
 @Module({
     providers: [CustomHashing],
-    exports: [CustomHashing]
+    exports: [CustomHashing],
 })
-
 export class HashingModule {}

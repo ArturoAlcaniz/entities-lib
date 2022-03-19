@@ -1,31 +1,31 @@
-import { NestFactory } from "@nestjs/core";
-import { ApplicationModule } from './app.module';
+import {NestFactory} from "@nestjs/core";
+import {ApplicationModule} from "./app.module";
 import {SwaggerModule, DocumentBuilder} from "@nestjs/swagger";
-import { ValidationPipe } from "@nestjs/common";
+import {ValidationPipe} from "@nestjs/common";
 import cookieParser from "cookie-parser";
 
 async function bootstrap() {
+    const app = await NestFactory.create(ApplicationModule);
 
-  const app = await NestFactory.create(ApplicationModule);
-  
-  const config = new DocumentBuilder()
-    .setTitle('API Document')
-    .setDescription('TFG')
-    .setVersion('1.0')
-    .build();
+    const config = new DocumentBuilder()
+        .setTitle("API Document")
+        .setDescription("TFG")
+        .setVersion("1.0")
+        .build();
 
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('docs', app, document);
+    const document = SwaggerModule.createDocument(app, config);
+    SwaggerModule.setup("docs", app, document);
 
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      forbidNonWhitelisted: true,
-    }),
-  );
+    app.useGlobalPipes(
+        new ValidationPipe({
+            whitelist: true,
+            forbidNonWhitelisted: true,
+            forbidUnknownValues: true,
+        })
+    );
 
-  app.use(cookieParser());
+    app.use(cookieParser());
 
-  await app.listen(3020);
+    await app.listen(3020);
 }
 bootstrap();

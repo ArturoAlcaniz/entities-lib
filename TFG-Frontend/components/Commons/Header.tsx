@@ -2,6 +2,7 @@ import { Component } from "react";
 import logo from "@assets/Logo-TISHOP.png"
 import * as langEnglish from '@utils/languages/english.json';
 import * as langSpanish from '@utils/languages/spanish.json';
+import Image from 'next/image'
 import Router from 'next/router';
 
 export default class Header extends Component<any,any> {
@@ -83,7 +84,7 @@ export default class Header extends Component<any,any> {
         return (
             <nav className="navbar" role="navigation" aria-label="main navigation">
                 <div className="navbar-brand">
-                    <img src={logo} width="200" height="60" alt="Logo"/>
+                    <Image width={200} height={60} src={logo} alt="Logo"/>
 
                     <a role="button" className={styleNavbarBurger} aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" onClick={()=>{this.handleNavbarBurger()}}>
                         <span aria-hidden="true"></span>

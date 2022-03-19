@@ -1,23 +1,24 @@
 {
-    "titles" : {
-        "iniciar_sesion" : "Iniciar sesion",
-        "inicio" : "Inicio"
+    "titles": {
+        "iniciar_sesion": "Iniciar sesion",
+        "inicio": "Inicio"
     },
-    "labels" : {
-        "correo" : "Correo",
-        "pass" : "Contraseña",
+    "labels": {
+        "correo": "Correo",
+        "pass": "Contraseña",
         "confirm_pass": "Confirmación",
         "usuario": "Nombre de usuario"
     },
-    "explanations" : {
-        "hello" : "Hola"
+    "explanations": {
+        "hello": "Bienvenido"
     },
-    "buttons" : {
-        "login" : "Iniciar sesión",
-        "registro" : "Registrarse",
-        "logout" : "Cerrar sesión"
+    "buttons": {
+        "login": "Iniciar sesión",
+        "registro": "Registrarse",
+        "logout": "Cerrar sesión",
+        "login_google": "Iniciar sesión con Google"
     },
-    "requestErrors" : {
+    "requestErrors": {
         "invalid_credentials": "Credenciales no válidas",
         "invalid_email": "El email introducido no es válido",
         "email_empty": "El email no puede estar vacío",

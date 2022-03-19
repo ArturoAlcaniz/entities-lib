@@ -1,23 +1,24 @@
 {
-    "titles" : {
-        "iniciar_sesion" : "Log in",
-        "inicio" : "Home"
+    "titles": {
+        "iniciar_sesion": "Log in",
+        "inicio": "Home"
     },
-    "labels" : {
-        "correo" : "Email",
-        "pass" : "Password",
+    "labels": {
+        "correo": "Email",
+        "pass": "Password",
         "confirm_pass": "Confirm password",
         "usuario": "Username"
     },
-    "explanations" : {
-        "hello" : "Hello"
+    "explanations": {
+        "hello": "Welcome"
     },
-    "buttons" : {
-        "login" : "Login",
-        "registro" : "Sign up",
-        "logout": "Logout"
+    "buttons": {
+        "login": "Login",
+        "registro": "Sign up",
+        "logout": "Logout",
+        "login_google": "Login with Google"
     },
-    "requestErrors" : {
+    "requestErrors": {
         "invalid_credentials": "Invalid Credentials",
         "invalid_email": "The email is not valid",
         "email_empty": "The email cannot be empty",

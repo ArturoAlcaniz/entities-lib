@@ -1,9 +1,9 @@
 import React from 'react'
 import axios from "axios";
 import CustomBasicPage from '@components/CustomBasicPage';
-import Header from '@components/Header';
-import Router from 'next/router';
+import Header from '@components/Commons/Header';
 import { GoogleLogin } from 'react-google-login';
+import { handleLogin, handleLoginGoogle } from '@components/Login/LoginLogic';
 
 
 export default class LoginPage extends CustomBasicPage{
@@ -15,52 +15,6 @@ export default class LoginPage extends CustomBasicPage{
             email: "",
             password: "",
         }
-    }
-
-    handleLoginGoogle = (response: any) => {
-        axios({
-            method: 'post',
-            url: '/api/users/loginGoogle',
-            data: {
-                token: response.tokenObj.id_token
-            },
-            }).then((response) => {
-            if(response.status == 200){
-                let lista: Map<string, string> = new Map<string, string>().set("loginOk", response.data.message[0])
-                this.setState({requestOK: lista, requestErrors: new Map<string, string>()});
-                document.cookie = `username=${response.data.USERNAME};`;
-                setTimeout(() => {
-                    Router.push('home')
-                },1000)
-            }
-        }, (error) => {
-            let lista: Map<string, string> = new Map<string, string>().set("loginError", error.response.data.message[0])
-            this.setState({ requestErrors: lista, requestOK: new Map<string, string>()});
-        });
-    }
-    
-    handleLogin(event: any) {
-        event.preventDefault()
-        axios({
-            method: 'post',
-            url: '/api/users/login',
-            data: {
-                email: this.state.email,
-                pass: this.state.password
-            },
-        }).then((response) => {
-            if(response.status == 200){
-                let lista: Map<string, string> = new Map<string, string>().set("loginOk", response.data.message[0])
-                this.setState({requestOK: lista, requestErrors: new Map<string, string>()});
-                document.cookie = `username=${response.data.USERNAME};`;
-                setTimeout(() => {
-                    Router.push('home')
-                },1000)
-            }
-        }, (error) => {
-            let lista: Map<string, string> = new Map<string, string>().set("loginError", error.response.data.message[0])
-            this.setState({ requestErrors: lista, requestOK: new Map<string, string>()});
-        });
     }
 
     render() {
@@ -77,7 +31,7 @@ export default class LoginPage extends CustomBasicPage{
                         initialLanguageSelected={languageSelected} 
                         pathname={this.props.pathname} />
                 <div className="pageCentered">
-                    <form onSubmit={this.handleLogin.bind(this)} >
+                    <form onSubmit={handleLogin.bind(this)} >
                         <div className="card loginForm">
                             <div className="card-content">
                                 <div className="field">
@@ -117,9 +71,9 @@ export default class LoginPage extends CustomBasicPage{
                                 </div>
                                 <GoogleLogin
                                     clientId="388959240870-7qf8j10dc0ktavi36k4ilrcrrqqb6sfk.apps.googleusercontent.com"
-                                    buttonText="Login with google"
-                                    onSuccess={this.handleLoginGoogle}
-                                    onFailure={this.handleLoginGoogle}
+                                    buttonText={obtainTextTranslated["buttons"]["login_google"]}
+                                    onSuccess={handleLoginGoogle.bind(this)}
+                                    onFailure={handleLoginGoogle.bind(this)}
                                     cookiePolicy={'single_host_origin'}
                                 />
                             </div>

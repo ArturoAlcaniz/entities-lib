@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from "axios";
 import CustomBasicPage from '@components/CustomBasicPage';
-import Header from '@components/HeaderLogged';
+import Header from '@components/Commons/HeaderLogged';
 
 export default class LoginPage extends CustomBasicPage{
     constructor(props: any) {

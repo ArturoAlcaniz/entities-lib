@@ -1,4 +1,4 @@
-import { RouteGuard } from '@components/RouteGuard'
+import { RouteGuard } from '@components/Guards/RouteGuard'
 import '../stylesheets/main.css'
 import '../utils/icons.css'
 

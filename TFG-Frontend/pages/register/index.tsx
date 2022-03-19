@@ -2,7 +2,8 @@ import React from 'react'
 import axios from "axios";
 import CustomBasicPage from '@components/CustomBasicPage';
 import Router from 'next/router';
-import Header from '@components/Header';
+import Header from '@components/Commons/Header';
+import handleRegister from '@components/Register/RegisterLogic';
 
 export default class RegisterPage extends CustomBasicPage{
     constructor(props: any) {
@@ -15,33 +16,6 @@ export default class RegisterPage extends CustomBasicPage{
             password: "",
             confirmPassword: "",
         }
-    }
-    
-    handleRegister(event: any) {
-        event.preventDefault()
-        if(this.state.password != this.state.confirmPassword) {
-            let lista: Map<string, string> = new Map<string, string>().set("registerError", "confirm_password_not_equals")
-            this.setState({ requestErrors: lista, requestOK: new Map<string, string>()});
-            this.setState({ password: "", confirmPassword: ""})
-            return
-        }
-        axios({
-            method: 'post',
-            url: '/api/users/register',
-            data: {
-                username: this.state.username,
-                email: this.state.email,
-                pass: this.state.password
-            },
-        }).then((response) => {
-            if(response.status == 200){
-                let lista: Map<string, string> = new Map<string, string>().set("registerOk", response.data.message[0])
-                this.setState({requestOK: lista, requestErrors: new Map<string, string>()});
-            }
-        }, (error) => {
-            let lista: Map<string, string> = new Map<string, string>().set("registerError", error.response.data.message[0])
-            this.setState({ requestErrors: lista, requestOK: new Map<string, string>()});
-        });
     }
 
     render() {
@@ -58,7 +32,7 @@ export default class RegisterPage extends CustomBasicPage{
                         initialLanguageSelected={languageSelected} 
                         pathname={this.props.pathname} />
                 <div className="pageCentered">
-                    <form onSubmit={this.handleRegister.bind(this)} >
+                    <form onSubmit={handleRegister.bind(this)} >
                         <div className="card registerForm">
                             <div className="card-content">
                                 <div className="field">
