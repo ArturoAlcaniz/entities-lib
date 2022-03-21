@@ -6,6 +6,10 @@ export default function handleRegister(event: any) {
 
     registerValidation(this);
 
+    if (this.state.requestErrors.size > 0) {
+        return;
+    }
+
     registerRequest(this).then(
         (response) => {
             if (response.status == 200) {

@@ -1,5 +1,6 @@
 import Router from "next/router";
 import {loginGoogleRequest, loginRequest} from "./LoginRequest";
+import loginValidation from "./LoginValidation";
 
 function handleLoginGoogle(response: any) {
     loginGoogleRequest(response).then(
@@ -34,6 +35,13 @@ function handleLoginGoogle(response: any) {
 
 function handleLogin(event: any) {
     event.preventDefault();
+
+    loginValidation(this);
+
+    if (this.state.requestErrors.size > 0) {
+        return;
+    }
+
     loginRequest(this).then(
         (response) => {
             if (response.status == 200) {

@@ -1,5 +1,4 @@
 import React from 'react'
-import axios from "axios";
 import CustomBasicPage from '@components/CustomBasicPage';
 import Header from '@components/Commons/HeaderLogged';
 

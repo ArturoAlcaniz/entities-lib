@@ -1,6 +1,6 @@
 import { RouteGuard } from '@components/Guards/RouteGuard'
-import '../stylesheets/main.css'
-import '../utils/icons.css'
+import '@styles/main.css'
+import '@utils/icons.css'
 
 // This default export is required in a new `pages/_app.js` file.
 export default function MyApp({ Component, pageProps }) {
