@@ -54,7 +54,6 @@ function getRoute(route: string) {
 })
 export class ApplicationModule {
     configure(frontEnd: MiddlewareConsumer) {
-        frontEnd
-            .apply(FrontendMiddleware)
+        frontEnd.apply(FrontendMiddleware);
     }
 }

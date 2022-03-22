@@ -11,7 +11,7 @@ function handleLoginGoogle(response: any) {
                     response.data.message[0]
                 );
                 this.setState({
-                    formError: '',
+                    formError: "",
                     requestOK: lista,
                     requestErrors: new Map<string, string>(),
                 });
@@ -27,12 +27,17 @@ function handleLoginGoogle(response: any) {
                 error.response.data.message[0]
             );
             this.setState({
-                formError: '',
+                formError: "",
                 requestErrors: lista,
                 requestOK: new Map<string, string>(),
             });
         }
     );
+}
+
+function showPass(event: any) {
+    event.preventDefault();
+    this.setState({showPassword: !this.state.showPassword});
 }
 
 function handleLogin(event: any) {
@@ -50,7 +55,7 @@ function handleLogin(event: any) {
                     response.data.message[0]
                 );
                 this.setState({
-                    formError: '',
+                    formError: "",
                     requestOK: lista,
                     requestErrors: new Map<string, string>(),
                 });
@@ -74,4 +79,4 @@ function handleLogin(event: any) {
     );
 }
 
-export {handleLogin, handleLoginGoogle};
+export {handleLogin, handleLoginGoogle, showPass};

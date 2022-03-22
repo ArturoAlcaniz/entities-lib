@@ -7,7 +7,7 @@ export default function loginValidation(thisComponent: any) {
         thisComponent.setState({
             requestErrors: lista,
             requestOk: new Map<string, string>(),
-            formError: 'email',
+            formError: "email",
         });
         return false;
     }
@@ -20,7 +20,7 @@ export default function loginValidation(thisComponent: any) {
         thisComponent.setState({
             requestErrors: lista,
             requestOk: new Map<string, string>(),
-            formError: 'password',
+            formError: "password",
         });
         return false;
     }

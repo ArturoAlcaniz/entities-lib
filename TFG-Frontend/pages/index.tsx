@@ -2,7 +2,7 @@ import React from 'react'
 import CustomBasicPage from '@components/CustomBasicPage';
 import Header from '@components/Commons/Header';
 import { GoogleLogin } from 'react-google-login';
-import { handleLogin, handleLoginGoogle } from '@components/Login/LoginLogic';
+import { handleLogin, handleLoginGoogle, showPass } from '@components/Login/LoginLogic';
 import CustomErrorMessage from '@utils/CustomErrorMessage';
 
 
@@ -14,6 +14,7 @@ export default class LoginPage extends CustomBasicPage{
             ...this.state,
             email: "",
             password: "",
+            showPassword: false,
             formError: "",
         }
     }
@@ -23,7 +24,7 @@ export default class LoginPage extends CustomBasicPage{
         let languageSelected = this.state.languageSelected
         let obtainTextTranslated = this.translations[languageSelected]
 
-        const { email, password, formError } = this.state
+        const { email, password, showPassword, formError } = this.state
         let msgError = obtainTextTranslated["requestErrors"][this.state.requestErrors.get('loginError')]
 
         return (
@@ -52,10 +53,13 @@ export default class LoginPage extends CustomBasicPage{
                                     <label className="label">
                                         {obtainTextTranslated["labels"]["pass"]}
                                     </label>
-                                    <div className="control has-icons-left">
-                                        <input v-model={password} className={`input ${formError=='password' ? 'is-danger' : ''}`} type="password" autoComplete="off"></input>
+                                    <div className="control has-icons-left has-icons-right">
+                                        <input v-model={password} className={`input inputpass fas ${formError=='password' ? 'is-danger' : ''}`} type={showPassword ? "text" : "password"} autoComplete="off"></input>
                                         <span className="icon is-small is-left">
                                             <i className="fas fa-lock"></i>
+                                        </span>
+                                        <span className="icon is-small is-right">
+                                            <i onMouseUp={(e) => {e.preventDefault()}} onMouseDown={(e) => {e.preventDefault()}} className={`showpass fas fa-eye${showPassword ? '' : '-slash'}`} onClick={showPass.bind(this)}></i>
                                         </span>
                                     </div>
                                     { formError=='password' && CustomErrorMessage(msgError) }

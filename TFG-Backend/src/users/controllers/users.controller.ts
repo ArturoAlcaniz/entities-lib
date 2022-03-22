@@ -34,12 +34,19 @@ export class UsersController {
         );
 
         if (!(await this.usersService.validateUniqueEmail(user))) {
-            response.status(400).json({message: ["email_already_exist"], formError: 'email'});
+            response
+                .status(400)
+                .json({message: ["email_already_exist"], formError: "email"});
             return;
         }
 
         if (!(await this.usersService.validateUniqueUsername(user))) {
-            response.status(400).json({message: ["username_already_exist"], formError: 'username'});
+            response
+                .status(400)
+                .json({
+                    message: ["username_already_exist"],
+                    formError: "username",
+                });
             return;
         }
         this.usersService.save(user);
@@ -57,7 +64,12 @@ export class UsersController {
         });
 
         if (user == null || !this.usersService.verifyPass(user, payload.pass)) {
-            response.status(400).json({message: ["invalid_credentials"], formError: 'password'});
+            response
+                .status(400)
+                .json({
+                    message: ["invalid_credentials"],
+                    formError: "password",
+                });
             return;
         }
 
@@ -69,12 +81,10 @@ export class UsersController {
             sameSite: "strict",
             secure: true,
         });
-        response
-            .status(200)
-            .json({
-                message: ["successfully_logged_in"],
-                USERNAME: user.USERNAME,
-            });
+        response.status(200).json({
+            message: ["successfully_logged_in"],
+            USERNAME: user.USERNAME,
+        });
     }
 
     @ApiOkResponse()
@@ -123,12 +133,10 @@ export class UsersController {
             sameSite: "strict",
             secure: true,
         });
-        response
-            .status(200)
-            .json({
-                message: ["successfully_logged_in"],
-                USERNAME: user.USERNAME,
-            });
+        response.status(200).json({
+            message: ["successfully_logged_in"],
+            USERNAME: user.USERNAME,
+        });
     }
 
     @ApiOkResponse()

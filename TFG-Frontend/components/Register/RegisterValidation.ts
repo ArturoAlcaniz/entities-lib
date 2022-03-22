@@ -7,7 +7,7 @@ export default function registerValidation(thisComponent: any) {
         thisComponent.setState({
             requestErrors: lista,
             requestOk: new Map<string, string>(),
-            formError: 'username',
+            formError: "username",
         });
         return false;
     }
@@ -19,7 +19,7 @@ export default function registerValidation(thisComponent: any) {
         thisComponent.setState({
             requestErrors: lista,
             requestOk: new Map<string, string>(),
-            formError: 'email',
+            formError: "email",
         });
         return false;
     }
@@ -31,7 +31,7 @@ export default function registerValidation(thisComponent: any) {
         thisComponent.setState({
             requestErrors: lista,
             requestOk: new Map<string, string>(),
-            formError: 'password',
+            formError: "password",
         });
         return false;
     }
@@ -43,7 +43,7 @@ export default function registerValidation(thisComponent: any) {
         thisComponent.setState({
             requestErrors: lista,
             requestOK: new Map<string, string>(),
-            formError: 'cPassword',
+            formError: "cPassword",
         });
         thisComponent.setState({password: "", confirmPassword: ""});
         return false;

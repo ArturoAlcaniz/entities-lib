@@ -4,7 +4,7 @@ import registerValidation from "./RegisterValidation";
 export default function handleRegister(event: any) {
     event.preventDefault();
 
-    if(!registerValidation(this)) {
+    if (!registerValidation(this)) {
         return;
     }
 
@@ -16,7 +16,7 @@ export default function handleRegister(event: any) {
                     response.data.message[0]
                 );
                 this.setState({
-                    formError: '',
+                    formError: "",
                     requestOK: lista,
                     requestErrors: new Map<string, string>(),
                 });

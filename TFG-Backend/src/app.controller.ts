@@ -1,7 +1,4 @@
-import {
-    Req,
-    UseGuards,
-} from "@nestjs/common";
+import {Req, UseGuards} from "@nestjs/common";
 import {JwtService} from "@nestjs/jwt";
 import {Controller, Get} from "@nestjs/common";
 import {User} from "./users/entities/user.entity";

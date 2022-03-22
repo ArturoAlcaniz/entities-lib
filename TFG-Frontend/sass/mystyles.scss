@@ -94,3 +94,12 @@ a.navbar-custom {
     display: flex;
     align-items: center;
 }
+
+.showpass {
+    cursor: pointer;
+    pointer-events: all !important;
+}
+
+.inputpass {
+    font-weight: normal !important;
+}
