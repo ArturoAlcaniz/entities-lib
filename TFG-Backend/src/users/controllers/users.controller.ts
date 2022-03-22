@@ -34,12 +34,12 @@ export class UsersController {
         );
 
         if (!(await this.usersService.validateUniqueEmail(user))) {
-            response.status(400).json({message: ["email_already_exist"]});
+            response.status(400).json({message: ["email_already_exist"], formError: 'email'});
             return;
         }
 
         if (!(await this.usersService.validateUniqueUsername(user))) {
-            response.status(400).json({message: ["username_already_exist"]});
+            response.status(400).json({message: ["username_already_exist"], formError: 'username'});
             return;
         }
         this.usersService.save(user);
@@ -57,7 +57,7 @@ export class UsersController {
         });
 
         if (user == null || !this.usersService.verifyPass(user, payload.pass)) {
-            response.status(400).json({message: ["invalid_credentials"]});
+            response.status(400).json({message: ["invalid_credentials"], formError: 'password'});
             return;
         }
 
@@ -111,7 +111,7 @@ export class UsersController {
         });
 
         if (user == null) {
-            response.status(400).json({message: ["invalid_credentials"]});
+            response.status(400).json({message: ["google_login_not_valid"]});
             return;
         }
 

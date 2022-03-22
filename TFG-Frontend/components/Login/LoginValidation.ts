@@ -7,19 +7,22 @@ export default function loginValidation(thisComponent: any) {
         thisComponent.setState({
             requestErrors: lista,
             requestOk: new Map<string, string>(),
+            formError: 'email',
         });
-        return;
+        return false;
     }
 
-    if (!thisComponent.state.pass) {
+    if (!thisComponent.state.password) {
         let lista: Map<string, string> = new Map<string, string>().set(
-            "registerError",
+            "loginError",
             "pass_empty"
         );
         thisComponent.setState({
             requestErrors: lista,
             requestOk: new Map<string, string>(),
+            formError: 'password',
         });
-        return;
+        return false;
     }
+    return true;
 }

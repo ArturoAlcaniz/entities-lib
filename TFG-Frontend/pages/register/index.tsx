@@ -84,7 +84,7 @@ export default class RegisterPage extends CustomBasicPage{
                                     </div>
                                     { formError=='cPassword' && CustomErrorMessage(msgError) }
                                 </div>
-                                <p className="help is-success">
+                                <p className="help form-feedback-ok">
                                     {obtainTextTranslated["requestOK"][this.state.requestOK.get('registerOk')]}
                                 </p>
                                 <div className="field">

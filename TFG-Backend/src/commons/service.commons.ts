@@ -1,4 +1,4 @@
-import {FindManyOptions, Repository} from "typeorm";
+import {DeepPartial, FindManyOptions, Repository} from "typeorm";
 
 export abstract class BaseService<T> {
     abstract getRepository(): Repository<T>;
@@ -11,11 +11,11 @@ export abstract class BaseService<T> {
         return this.getRepository().findOne(id);
     }
 
-    save(entity: T): Promise<T> {
+    save(entity: DeepPartial<T>): Promise<DeepPartial<T>> {
         return this.getRepository().save(entity);
     }
 
-    saveMany(entities: T[]): Promise<T[]> {
+    saveMany(entities: DeepPartial<T[]>): Promise<DeepPartial<T[]>> {
         return this.getRepository().save(entities);
     }
 

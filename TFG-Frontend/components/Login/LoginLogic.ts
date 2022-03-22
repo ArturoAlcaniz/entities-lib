@@ -11,6 +11,7 @@ function handleLoginGoogle(response: any) {
                     response.data.message[0]
                 );
                 this.setState({
+                    formError: '',
                     requestOK: lista,
                     requestErrors: new Map<string, string>(),
                 });
@@ -26,6 +27,7 @@ function handleLoginGoogle(response: any) {
                 error.response.data.message[0]
             );
             this.setState({
+                formError: '',
                 requestErrors: lista,
                 requestOK: new Map<string, string>(),
             });
@@ -36,9 +38,7 @@ function handleLoginGoogle(response: any) {
 function handleLogin(event: any) {
     event.preventDefault();
 
-    loginValidation(this);
-
-    if (this.state.requestErrors.size > 0) {
+    if (!loginValidation(this)) {
         return;
     }
 
@@ -50,6 +50,7 @@ function handleLogin(event: any) {
                     response.data.message[0]
                 );
                 this.setState({
+                    formError: '',
                     requestOK: lista,
                     requestErrors: new Map<string, string>(),
                 });
@@ -65,6 +66,7 @@ function handleLogin(event: any) {
                 error.response.data.message[0]
             );
             this.setState({
+                formError: error.response.data.formError,
                 requestErrors: lista,
                 requestOK: new Map<string, string>(),
             });

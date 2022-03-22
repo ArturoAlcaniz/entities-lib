@@ -28,7 +28,7 @@ export default function handleRegister(event: any) {
                 error.response.data.message[0]
             );
             this.setState({
-                formError: '',
+                formError: error.response.data.formError,
                 requestErrors: lista,
                 requestOK: new Map<string, string>(),
             });

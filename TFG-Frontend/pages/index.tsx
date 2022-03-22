@@ -3,6 +3,7 @@ import CustomBasicPage from '@components/CustomBasicPage';
 import Header from '@components/Commons/Header';
 import { GoogleLogin } from 'react-google-login';
 import { handleLogin, handleLoginGoogle } from '@components/Login/LoginLogic';
+import CustomErrorMessage from '@utils/CustomErrorMessage';
 
 
 export default class LoginPage extends CustomBasicPage{
@@ -13,6 +14,7 @@ export default class LoginPage extends CustomBasicPage{
             ...this.state,
             email: "",
             password: "",
+            formError: "",
         }
     }
 
@@ -21,7 +23,8 @@ export default class LoginPage extends CustomBasicPage{
         let languageSelected = this.state.languageSelected
         let obtainTextTranslated = this.translations[languageSelected]
 
-        const { email, password } = this.state
+        const { email, password, formError } = this.state
+        let msgError = obtainTextTranslated["requestErrors"][this.state.requestErrors.get('loginError')]
 
         return (
             <div>
@@ -38,27 +41,26 @@ export default class LoginPage extends CustomBasicPage{
                                         {obtainTextTranslated["labels"]["correo"]}
                                     </label>
                                     <div className="control has-icons-left">
-                                        <input v-model={email} className="input" type="email" autoComplete="off"></input>
+                                        <input v-model={email} className={`input ${formError=='email' ? 'is-danger' : ''}`} type="email" autoComplete="off"></input>
                                         <span className="icon is-small is-left">
                                             <i className="fas fa-envelope"></i>    
                                         </span>
                                     </div>
+                                    { formError=='email' && CustomErrorMessage(msgError) }
                                 </div>
                                 <div className="field">
                                     <label className="label">
                                         {obtainTextTranslated["labels"]["pass"]}
                                     </label>
                                     <div className="control has-icons-left">
-                                        <input v-model={password} className="input" type="password" autoComplete="off"></input>
+                                        <input v-model={password} className={`input ${formError=='password' ? 'is-danger' : ''}`} type="password" autoComplete="off"></input>
                                         <span className="icon is-small is-left">
                                             <i className="fas fa-lock"></i>
                                         </span>
                                     </div>
+                                    { formError=='password' && CustomErrorMessage(msgError) }
                                 </div>
-                                <p className="help is-danger">
-                                    {obtainTextTranslated["requestErrors"][this.state.requestErrors.get('loginError')]}
-                                </p>
-                                <p className="help is-success">
+                                <p className="help form-feedback-ok">
                                     {obtainTextTranslated["requestOK"][this.state.requestOK.get('loginOk')]}
                                 </p>
                                 <div className="field">
