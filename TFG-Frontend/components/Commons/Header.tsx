@@ -85,7 +85,22 @@ export default class Header extends Component<any,any> {
             <nav className="navbar" role="navigation" aria-label="main navigation">
                 <div className="navbar-brand">
                     <Image width={200} height={60} src={logo} alt="Logo"/>
-
+                    <div className="navbar-item">
+                        <div className="languageSelect not-border">
+                            <div className="control">
+                                <div className="select">
+                                    <select className="not-border" onChange={this.handleLanguageChange} value={this.state.languageSelected}>
+                                        <option className="not-border" value="english">
+                                            English
+                                        </option>
+                                        <option className="not-border" value="spanish">
+                                            Spanish
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <a role="button" className={styleNavbarBurger} aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" onClick={()=>{this.handleNavbarBurger()}}>
                         <span aria-hidden="true"></span>
                         <span aria-hidden="true"></span>
@@ -98,20 +113,6 @@ export default class Header extends Component<any,any> {
                     </div>
                     <div className="navbar-end">
                         <div className="navbar-item">
-                            <div className="languageSelect">
-                                <div className="control">
-                                    <div className="select">
-                                        <select onChange={this.handleLanguageChange} value={this.state.languageSelected}>
-                                            <option value="english">
-                                                English
-                                            </option>
-                                            <option value="spanish">
-                                                Spanish
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
                             <div className="buttons">
                                 { this.obtainButtons() }
                             </div>

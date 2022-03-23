@@ -27,8 +27,6 @@ body{
 
 .languageSelect {
     max-width: fit-content;
-    margin-left: 20px;
-    margin-right: 20px;
 }
 
 @import "../node_modules/bulma/bulma.sass";
@@ -102,4 +100,32 @@ a.navbar-custom {
 
 .inputpass {
     font-weight: normal !important;
+}
+
+.customIcon {
+    font-size: x-large;
+    text-align: center;
+    position: inherit;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.not-border {
+    border: none !important;
+    box-shadow: unset !important;
+}
+
+.languageSelect select {
+    border-radius: 15px;
+}
+
+.languageSelect select:hover {
+    background: #e4e3e3;
+}
+
+.customIcon:hover {
+    background: #e4e3e3;
 }

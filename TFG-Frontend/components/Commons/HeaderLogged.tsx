@@ -17,7 +17,8 @@ export default class Header extends Component<any,any> {
             username: props.username || "",
             languageSelected: props.initialLanguageSelected || "english",
             styleNavbarBurger: "navbar-burger",
-            styleNavbarMenu: "navbar-menu"
+            styleNavbarMenu: "navbar-menu",
+            showNotifications: false,
         }
 
         this.translations =
@@ -66,7 +67,7 @@ export default class Header extends Component<any,any> {
     }
 
     render() {
-        const { username, styleNavbarBurger, styleNavbarMenu } = this.state
+        const { showNotifications, styleNavbarBurger, styleNavbarMenu } = this.state
         let languageSelected = this.state.languageSelected
         let obtainTextTranslated = this.translations[languageSelected]
 
@@ -74,7 +75,22 @@ export default class Header extends Component<any,any> {
             <nav className="navbar" role="navigation" aria-label="main navigation">
                 <div className="navbar-brand">
                     <Image width={200} height={60} src={logo} alt="Logo"/>
-
+                    <div className="navbar-item">
+                        <div className="languageSelect">
+                            <div className="control">
+                                <div className="select">
+                                    <select className="not-border" onChange={this.handleLanguageChange} value={this.state.languageSelected}>
+                                        <option className="not-border" value="english">
+                                            English
+                                        </option>
+                                        <option className="not-border" value="spanish">
+                                            Spanish
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <a role="button" className={styleNavbarBurger} aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" onClick={()=>{this.handleNavbarBurger()}}>
                         <span aria-hidden="true"></span>
                         <span aria-hidden="true"></span>
@@ -87,26 +103,13 @@ export default class Header extends Component<any,any> {
                         <a className={this.checkIfIsActive("/home") ? "navbar-custom is-active" : "navbar-custom"}>
                             Home
                         </a>
-                        <a className={this.checkIfIsActive("/profile") ? "navbar-custom is-active" : "navbar-custom"}>
-                            Profile
-                        </a>
                     </div>
                     <div className="navbar-end">
+
                         <div className="navbar-item">
-                            <div className="languageSelect">
-                                <div className="control">
-                                    <div className="select">
-                                        <select onChange={this.handleLanguageChange} value={this.state.languageSelected}>
-                                            <option value="english">
-                                                English
-                                            </option>
-                                            <option value="spanish">
-                                                Spanish
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+                            <span className="customIcon">
+                                <i className={`${showNotifications ? 'fas' : 'far'} fa-bell`}></i>
+                            </span>
                         </div>
                         <div className="navbar-brand">
                             <Image src={userProfile} width={60} height={60} alt="User Profile"/>
