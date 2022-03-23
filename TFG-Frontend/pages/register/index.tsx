@@ -1,7 +1,7 @@
 import React from 'react'
 import CustomBasicPage from '@components/CustomBasicPage';
 import Header from '@components/Commons/Header';
-import handleRegister from '@components/Register/RegisterLogic';
+import {handleRegister, showCPass, showPass} from '@components/Register/RegisterLogic';
 import CustomErrorMessage from '@utils/CustomErrorMessage';
 
 export default class RegisterPage extends CustomBasicPage{
@@ -14,7 +14,9 @@ export default class RegisterPage extends CustomBasicPage{
             email: "",
             password: "",
             confirmPassword: "",
-            formError: ""
+            formError: "",
+            showPassword: false,
+            showCPassword: false,
         }
     }
 
@@ -23,7 +25,7 @@ export default class RegisterPage extends CustomBasicPage{
         let languageSelected = this.state.languageSelected
         let obtainTextTranslated = this.translations[languageSelected]
 
-        const { username, email, password, confirmPassword, formError } = this.state
+        const { username, email, password, confirmPassword, showPassword, showCPassword, formError } = this.state
         let msgError = obtainTextTranslated["requestErrors"][this.state.requestErrors.get('registerError')]
 
         return (
@@ -64,10 +66,13 @@ export default class RegisterPage extends CustomBasicPage{
                                     <label className="label">
                                         {obtainTextTranslated["labels"]["pass"]}
                                     </label>
-                                    <div className="control has-icons-left">
-                                        <input v-model={password} className={`input ${formError=='password' ? 'is-danger' : ''}`} type="password" autoComplete="off"></input>
+                                    <div className="control has-icons-left has-icons-right">
+                                        <input v-model={password} className={`input inputpass fas ${formError=='password' ? 'is-danger' : ''}`} type={showPassword ? "text" : "password"} autoComplete="off"></input>
                                         <span className="icon is-small is-left">
                                             <i className="fas fa-lock"></i>
+                                        </span>
+                                        <span className="icon is-small is-right">
+                                            <i onMouseUp={(e) => {e.preventDefault()}} onMouseDown={(e) => {e.preventDefault()}} className={`showpass fas fa-eye${showPassword ? '' : '-slash'}`} onClick={showPass.bind(this)}></i>
                                         </span>
                                     </div>
                                     { formError=='password' && CustomErrorMessage(msgError) }
@@ -76,10 +81,13 @@ export default class RegisterPage extends CustomBasicPage{
                                     <label className="label">
                                         {obtainTextTranslated["labels"]["confirm_pass"]}
                                     </label>
-                                    <div className="control has-icons-left">
-                                        <input v-model={confirmPassword} className={`input ${formError=='cPassword' ? 'is-danger' : ''}`} type="password" autoComplete="off"></input>
+                                    <div className="control has-icons-left has-icons-right">
+                                        <input v-model={confirmPassword} className={`input inputpass fas ${formError=='cPassword' ? 'is-danger' : ''}`} type={showCPassword ? "text" : "password"} autoComplete="off"></input>
                                         <span className="icon is-small is-left">
                                             <i className="fas fa-lock"></i>
+                                        </span>
+                                        <span className="icon is-small is-right">
+                                            <i onMouseUp={(e) => {e.preventDefault()}} onMouseDown={(e) => {e.preventDefault()}} className={`showpass fas fa-eye${showCPassword ? '' : '-slash'}`} onClick={showCPass.bind(this)}></i>
                                         </span>
                                     </div>
                                     { formError=='cPassword' && CustomErrorMessage(msgError) }

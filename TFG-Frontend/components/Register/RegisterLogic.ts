@@ -1,7 +1,7 @@
 import registerRequest from "./RegisterRequest";
 import registerValidation from "./RegisterValidation";
 
-export default function handleRegister(event: any) {
+function handleRegister(event: any) {
     event.preventDefault();
 
     if (!registerValidation(this)) {
@@ -35,3 +35,15 @@ export default function handleRegister(event: any) {
         }
     );
 }
+
+function showPass(event: any) {
+    event.preventDefault();
+    this.setState({showPassword: !this.state.showPassword});
+}
+
+function showCPass(event: any) {
+    event.preventDefault();
+    this.setState({showCPassword: !this.state.showCPassword});
+}
+
+export { handleRegister, showCPass, showPass }
