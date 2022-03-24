@@ -1,7 +1,8 @@
 {
     "titles": {
         "iniciar_sesion": "Iniciar sesion",
-        "inicio": "Inicio"
+        "inicio": "Inicio",
+        "notificaciones": "Notificaciones"
     },
     "labels": {
         "correo": "Correo",

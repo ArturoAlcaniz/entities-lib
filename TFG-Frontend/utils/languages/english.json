@@ -1,7 +1,8 @@
 {
     "titles": {
         "iniciar_sesion": "Log in",
-        "inicio": "Home"
+        "inicio": "Home",
+        "notificaciones": "Notifications"
     },
     "labels": {
         "correo": "Email",

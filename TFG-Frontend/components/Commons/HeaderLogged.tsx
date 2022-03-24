@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { Component, createRef, RefObject } from "react";
 import logo from "@assets/Logo-TISHOP.png"
 import userProfile from "@assets/UserProfile.png"
 import * as langEnglish from '@utils/languages/english.json';
@@ -6,9 +6,11 @@ import * as langSpanish from '@utils/languages/spanish.json';
 import Image from 'next/image'
 import Router from 'next/router';
 import axios from "axios";
+import NotificationsView from "./NotificationsView";
 
 export default class Header extends Component<any,any> {
     translations: { english: any; spanish: any; };
+    notificationViewRef: RefObject<any>;
     constructor(props: any) {
         super(props);
 
@@ -18,8 +20,10 @@ export default class Header extends Component<any,any> {
             languageSelected: props.initialLanguageSelected || "english",
             styleNavbarBurger: "navbar-burger",
             styleNavbarMenu: "navbar-menu",
-            showNotifications: false,
+            showNotifications: false
         }
+
+        this.notificationViewRef = createRef();
 
         this.translations =
         { "english": langEnglish
@@ -66,65 +70,84 @@ export default class Header extends Component<any,any> {
         return obtainTextTranslated["explanations"]["hello"] + ", " + this.state.username
     }
 
+    showNotificationView() {
+        this.setState({ showNotifications: !this.state.showNotifications })
+    }
+
+    blurNotificationView(event) {
+        if (!event?.relatedTarget || !this.notificationViewRef.current?.contains(event?.relatedTarget)) {
+            this.setState({ showNotifications: false })
+        }else{
+            event?.currentTarget.focus()
+        }
+    }
+
     render() {
-        const { showNotifications, styleNavbarBurger, styleNavbarMenu } = this.state
+        const { showNotifications, styleNavbarBurger, styleNavbarMenu, notificationsViewRef } = this.state
         let languageSelected = this.state.languageSelected
         let obtainTextTranslated = this.translations[languageSelected]
 
         return (
-            <nav className="navbar" role="navigation" aria-label="main navigation">
-                <div className="navbar-brand">
-                    <Image width={200} height={60} src={logo} alt="Logo"/>
-                    <div className="navbar-item">
-                        <div className="languageSelect">
-                            <div className="control">
-                                <div className="select">
-                                    <select className="not-border" onChange={this.handleLanguageChange} value={this.state.languageSelected}>
-                                        <option className="not-border" value="english">
-                                            English
-                                        </option>
-                                        <option className="not-border" value="spanish">
-                                            Spanish
-                                        </option>
-                                    </select>
+            <div>
+                <nav className="navbar navbar-index" role="navigation" aria-label="main navigation">
+                    <div className="navbar-brand">
+                        <Image width={200} height={60} src={logo} alt="Logo"/>
+                        <div className="navbar-item">
+                            <div className="languageSelect">
+                                <div className="control">
+                                    <div className="select">
+                                        <select className="not-border" onChange={this.handleLanguageChange} value={this.state.languageSelected}>
+                                            <option className="not-border" value="english">
+                                                English
+                                            </option>
+                                            <option className="not-border" value="spanish">
+                                                Spanish
+                                            </option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <a role="button" className={styleNavbarBurger} aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" onClick={()=>{this.handleNavbarBurger()}}>
-                        <span aria-hidden="true"></span>
-                        <span aria-hidden="true"></span>
-                        <span aria-hidden="true"></span>
-                    </a>
-                </div>
-
-                <div id="navbarBasicExample" className={styleNavbarMenu}>
-                    <div className="navbar-start">
-                        <a className={this.checkIfIsActive("/home") ? "navbar-custom is-active" : "navbar-custom"}>
-                            Home
+                        <a role="button" className={styleNavbarBurger} aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" onClick={()=>{this.handleNavbarBurger()}}>
+                            <span aria-hidden="true"></span>
+                            <span aria-hidden="true"></span>
+                            <span aria-hidden="true"></span>
                         </a>
                     </div>
-                    <div className="navbar-end">
 
-                        <div className="navbar-item">
-                            <span className="customIcon">
-                                <i className={`${showNotifications ? 'fas' : 'far'} fa-bell`}></i>
-                            </span>
+                    <div id="navbarBasicExample" className={styleNavbarMenu}>
+                        <div className="navbar-start">
+                            <a className={this.checkIfIsActive("/home") ? "navbar-custom is-active" : "navbar-custom"}>
+                                Home
+                            </a>
                         </div>
-                        <div className="navbar-brand">
-                            <Image src={userProfile} width={60} height={60} alt="User Profile"/>
-                            <div className="user-info">
-                                {this.obtainUserInfo()}
-                                <div className="user-logout">
-                                    <a onClick={() => {this.handleLogout()}}>
-                                        {obtainTextTranslated["buttons"]["logout"]}
-                                    </a>
+                        <div className="navbar-end">
+
+                            <div className="navbar-item">
+                                <span tabIndex={-1} onBlur={this.blurNotificationView.bind(this)} onClick={() => {this.showNotificationView()}} className="customIcon">
+                                    <i className={`${showNotifications ? 'fas' : 'far'} fa-bell`}></i>
+                                </span>
+                            </div>
+                            <div className="navbar-brand">
+                                <div className="profile-picture">
+                                    <Image src={userProfile} width={60} height={60} alt="User Profile"/>
+                                </div>
+                                <div className="user-info">
+                                    {this.obtainUserInfo()}
+                                    <div className="user-logout">
+                                        <a onClick={() => {this.handleLogout()}}>
+                                            {obtainTextTranslated["buttons"]["logout"]}
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </nav>
+                </nav>
+                {
+                    showNotifications ? NotificationsView(this, notificationsViewRef) : (<div></div>) 
+                }
+            </div>
         )
     }
 }

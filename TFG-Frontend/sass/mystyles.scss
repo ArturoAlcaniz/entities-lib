@@ -4,6 +4,7 @@
 $body-background-color: #3498dbd1;
 $body-overflow-x: hidden;
 $body-overflow-y: hidden;
+$divider-color: black;
 
 body{
     overflow: hidden;
@@ -71,6 +72,10 @@ a.navbar-custom {
     margin: 5px;
 }
 
+.navbar-index {
+    z-index: 1 !important;
+}
+
 .user-info {
     margin-left: 10px;
     margin-right: 5px;
@@ -128,4 +133,39 @@ a.navbar-custom {
 
 .customIcon:hover {
     background: #e4e3e3;
+}
+
+.profile-picture {
+    border-radius: 50%;
+    overflow: hidden;
+    background: #ffffff0f;
+    width: 60px;
+    height: 60px;
+    filter: drop-shadow(0px 0px 0px black);
+}
+
+.customBox {
+    width: 450px;
+    height: 550px;
+    position: fixed;
+    right: 230px;
+    background: #fffefe;
+    z-index: 2;
+    top: 65px;
+    padding: 0;
+}
+
+.notificationTitleContainer {
+    background: #cecece;
+    height: 40px;
+}
+
+.notificationTitle {
+    display: flex;
+    margin-left: 20px;
+    font-weight: bold;
+    font-size: large;
+    font-family: sans-serif;
+    align-items: center;
+    height: 100%;
 }
