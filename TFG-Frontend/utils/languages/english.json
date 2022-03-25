@@ -11,7 +11,8 @@
         "usuario": "Username"
     },
     "explanations": {
-        "hello": "Welcome"
+        "hello": "Welcome",
+        "seconds": "seconds"
     },
     "buttons": {
         "login": "Login",
@@ -29,7 +30,8 @@
         "confirm_password_not_equals": "Password and Confirm password are not equals",
         "username_already_exist": "Username already exist",
         "email_already_exist": "Email already exist",
-        "token_empty": "Error logging with google"
+        "token_empty": "Error logging with google",
+        "too_many_attempts": "You made too many attempts, banned during "
     },
     "requestOK": {
         "successfully_logged_in": "User successfully logged in",

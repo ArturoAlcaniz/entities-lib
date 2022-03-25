@@ -11,7 +11,8 @@
         "usuario": "Nombre de usuario"
     },
     "explanations": {
-        "hello": "Bienvenido"
+        "hello": "Bienvenido",
+        "seconds": "segundos"
     },
     "buttons": {
         "login": "Iniciar sesión",
@@ -29,7 +30,8 @@
         "confirm_password_not_equals": "Contraseña y confirmación no coinciden",
         "username_already_exist": "El usuario introducido ya existe",
         "email_already_exist": "El correo introducido ya existe",
-        "token_empty": "Error al iniciar sesión con google"
+        "token_empty": "Error al iniciar sesión con google",
+        "too_many_attempts": "Realizaste demasiados intentos, estas baneado durante "
     },
     "requestOK": {
         "successfully_logged_in": "Usuario logeado correctamente",

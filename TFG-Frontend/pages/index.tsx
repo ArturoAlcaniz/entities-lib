@@ -14,6 +14,7 @@ export default class LoginPage extends CustomBasicPage{
             password: "",
             showPassword: false,
             formError: "",
+            bannedSeconds: "",
         }
     }
 
@@ -22,7 +23,7 @@ export default class LoginPage extends CustomBasicPage{
         let languageSelected = this.state.languageSelected
         let obtainTextTranslated = this.translations[languageSelected]
 
-        const { email, password, showPassword, formError } = this.state
+        const { email, password, showPassword, formError, bannedSeconds } = this.state
         let msgError = obtainTextTranslated["requestErrors"][this.state.requestErrors.get('loginError')]
 
         return (
@@ -61,6 +62,7 @@ export default class LoginPage extends CustomBasicPage{
                                         </span>
                                     </div>
                                     { formError=='password' && CustomErrorMessage(msgError) }
+                                    { formError=='too_many_attempts' && CustomErrorMessage(msgError+' '+bannedSeconds+' '+obtainTextTranslated["explanations"]["seconds"]) }
                                 </div>
                                 <p className="help form-feedback-ok">
                                     {obtainTextTranslated["requestOK"][this.state.requestOK.get('loginOk')]}

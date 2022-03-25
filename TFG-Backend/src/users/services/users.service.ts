@@ -4,10 +4,12 @@ import {CustomHashing} from "../../hashing/hashing.service";
 import {BaseService} from "../../commons/service.commons";
 import {FindOneOptions, Repository} from "typeorm";
 import {Injectable} from "@nestjs/common";
+import { UserBlocked } from "../types/user-blocked.type";
 
 @Injectable()
 export class UsersService extends BaseService<User> {
     usersLoggedIn: Map<string, string> = new Map<string, string>();
+    usersBlocked: Map<string, UserBlocked> = new Map<string, UserBlocked>();
     GOOGLE_CLIENT_ID: string =
         "388959240870-o8ngd13pcgpdp7g8fneg5un7mkgahj73.apps.googleusercontent.com";
 

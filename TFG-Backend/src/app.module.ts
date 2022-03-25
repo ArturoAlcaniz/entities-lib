@@ -14,6 +14,9 @@ import {
 } from "@nestjs/common";
 import path from "path";
 import {HttpModule} from "@nestjs/axios";
+import {ThrottlerModule} from "@nestjs/throttler";
+import {WinstonModule} from "nest-winston";
+import * as winston from 'winston';
 
 const resolvePath = (file: string) => path.resolve(`./dist/ui_v1/${file}`);
 
@@ -48,9 +51,28 @@ function getRoute(route: string) {
         HashingModule,
         UsersModule,
         HttpModule,
+        ThrottlerModule.forRoot({
+            ttl: 60,
+            limit: 10,
+        }),
+        WinstonModule.forRoot({
+            format: winston.format.combine(
+                winston.format.timestamp(),
+                winston.format.json(),
+            ),
+            transports: [
+                new winston.transports.Console(),
+                new winston.transports.File({
+                    dirname: path.join(__dirname, './../log/info/'),
+                    filename: 'info.log',
+                    level: 'info',
+                }),
+            ],
+        }),
     ],
     providers: [],
     controllers: [AppController],
+    exports: [WinstonModule, ThrottlerModule],
 })
 export class ApplicationModule {
     configure(frontEnd: MiddlewareConsumer) {

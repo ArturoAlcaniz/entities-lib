@@ -6,6 +6,8 @@ import {UsersService} from "./services/users.service";
 import {User} from "./entities/user.entity";
 import {Global, Module} from "@nestjs/common";
 import {HttpModule} from "@nestjs/axios";
+import { WinstonModule } from "nest-winston";
+import { ThrottlerModule } from "@nestjs/throttler";
 
 @Global()
 @Module({
@@ -17,6 +19,8 @@ import {HttpModule} from "@nestjs/axios";
             timeout: 5000,
             maxRedirects: 5,
         }),
+        WinstonModule,
+        ThrottlerModule,
     ],
     providers: [UsersService],
     controllers: [UsersController],
