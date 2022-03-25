@@ -4,6 +4,7 @@
         "lib": ["dom", "dom.iterable", "esnext"],
         "baseUrl": "./",
         "paths": {
+            "@root/*": ["./*"],
             "@components/*": ["components/*"],
             "@styles/*": ["stylesheets/*"],
             "@utils/*": ["utils/*"],

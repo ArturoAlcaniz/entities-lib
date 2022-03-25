@@ -9,7 +9,7 @@ import {Injectable} from "@nestjs/common";
 export class UsersService extends BaseService<User> {
     usersLoggedIn: Map<string, string> = new Map<string, string>();
     GOOGLE_CLIENT_ID: string =
-        "388959240870-7qf8j10dc0ktavi36k4ilrcrrqqb6sfk.apps.googleusercontent.com";
+        "388959240870-o8ngd13pcgpdp7g8fneg5un7mkgahj73.apps.googleusercontent.com";
 
     constructor(
         private hashService: CustomHashing,

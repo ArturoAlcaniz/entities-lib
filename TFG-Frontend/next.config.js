@@ -11,7 +11,7 @@ module.exports = withImages({
                 headers: [
                     {
                         key: "x-frame-options",
-                        value: "SAMEORIGIN",
+                        value: "deny",
                     },
                     {
                         key: "x-content-type-options",

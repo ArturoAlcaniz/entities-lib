@@ -1,9 +1,10 @@
-import { Component } from "react";
+import { Component, createRef, RefObject } from "react";
 import logo from "@assets/Logo-TISHOP.png"
 import * as langEnglish from '@utils/languages/english.json';
 import * as langSpanish from '@utils/languages/spanish.json';
 import Image from 'next/image'
 import Router from 'next/router';
+import LanguageSelect from "./LanguageSelect";
 
 export default class Header extends Component<any,any> {
     translations: { english: any; spanish: any; };
@@ -15,7 +16,7 @@ export default class Header extends Component<any,any> {
             pathname: props.pathname,
             languageSelected: props.initialLanguageSelected || "english",
             styleNavbarBurger: "navbar-burger",
-            styleNavbarMenu: "navbar-menu"
+            styleNavbarMenu: "navbar-menu",
         }
 
         this.translations =
@@ -59,20 +60,9 @@ export default class Header extends Component<any,any> {
         let languageSelected = this.state.languageSelected
         let obtainTextTranslated = this.translations[languageSelected]
         return (
-        <a className="button is-primary" onClick={() => {this.handleGoLogin()}}>
-            <strong>{obtainTextTranslated["buttons"]["login"]}</strong>
-        </a>)
-    }
-
-    obtainButtons(): JSX.Element {
-        let pathname = this.state.pathname
-        if(pathname == "/"){
-            return this.obtainButtonRegister()
-        }else{
-            if(pathname == "/register"){
-                return this.obtainButtonLogin()
-            }
-        }
+        <div className="buttonLogin" onClick={() => {this.handleGoLogin()}}>
+            <div className="loginText">{obtainTextTranslated["buttons"]["login"]}</div>
+        </div>)
     }
 
     render() {
@@ -86,20 +76,7 @@ export default class Header extends Component<any,any> {
                 <div className="navbar-brand">
                     <Image width={200} height={60} src={logo} alt="Logo"/>
                     <div className="navbar-item">
-                        <div className="languageSelect not-border">
-                            <div className="control">
-                                <div className="select">
-                                    <select className="not-border" onChange={this.handleLanguageChange} value={this.state.languageSelected}>
-                                        <option className="not-border" value="english">
-                                            English
-                                        </option>
-                                        <option className="not-border" value="spanish">
-                                            Spanish
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+                        {LanguageSelect(this)}
                     </div>
                     <a role="button" className={styleNavbarBurger} aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" onClick={()=>{this.handleNavbarBurger()}}>
                         <span aria-hidden="true"></span>
@@ -113,9 +90,10 @@ export default class Header extends Component<any,any> {
                     </div>
                     <div className="navbar-end">
                         <div className="navbar-item">
-                            <div className="buttons">
-                                { this.obtainButtons() }
-                            </div>
+                            { this.obtainButtonLogin() }
+                        </div>
+                        <div className="navbar-item">
+                            { this.obtainButtonRegister() }
                         </div>
                     </div>
                 </div>

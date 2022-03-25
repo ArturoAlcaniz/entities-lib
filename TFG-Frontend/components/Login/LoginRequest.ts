@@ -1,11 +1,11 @@
 import axios, {AxiosPromise} from "axios";
 
-function loginGoogleRequest(response: any): AxiosPromise<any> {
+function loginGoogleRequest(idToken: string): AxiosPromise<any> {
     return axios({
         method: "post",
         url: "/api/users/loginGoogle",
         data: {
-            token: response.tokenObj.id_token,
+            token: idToken,
         },
     });
 }

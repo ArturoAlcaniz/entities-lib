@@ -7,10 +7,13 @@ import Image from 'next/image'
 import Router from 'next/router';
 import axios from "axios";
 import NotificationsView from "./NotificationsView";
+import LanguageSelect from "./LanguageSelect";
+import { getAuth, signOut } from "firebase/auth";
+import { firebaseApp } from "@root/firebase-config";
 
 export default class Header extends Component<any,any> {
     translations: { english: any; spanish: any; };
-    notificationViewRef: RefObject<any>;
+    notificationViewRef: RefObject<HTMLDivElement>;
     constructor(props: any) {
         super(props);
 
@@ -20,7 +23,7 @@ export default class Header extends Component<any,any> {
             languageSelected: props.initialLanguageSelected || "english",
             styleNavbarBurger: "navbar-burger",
             styleNavbarMenu: "navbar-menu",
-            showNotifications: false
+            showNotifications: false,
         }
 
         this.notificationViewRef = createRef();
@@ -50,17 +53,21 @@ export default class Header extends Component<any,any> {
     }
 
     handleLogout(){
-        axios({
-            method: 'get',
-            url: '/api/users/logout',
-            data: {},
-        }).then((response) => {
-            if(response.status == 200){
-                document.cookie = `username="";`;
-                Router.push('')
-            }
-        }, (error) => {
-        });
+        const auth = getAuth()
+        signOut(auth).then(() => {
+            axios({
+                method: 'get',
+                url: '/api/users/logout',
+                data: {},
+            }).then((response) => {
+                if(response.status == 200){
+                    localStorage.clear()
+                    document.cookie = `username="";`;
+                    Router.push('')
+                }
+            }, (error) => {
+            });
+        })
     }
 
     obtainUserInfo(): string{
@@ -93,20 +100,7 @@ export default class Header extends Component<any,any> {
                     <div className="navbar-brand">
                         <Image width={200} height={60} src={logo} alt="Logo"/>
                         <div className="navbar-item">
-                            <div className="languageSelect">
-                                <div className="control">
-                                    <div className="select">
-                                        <select className="not-border" onChange={this.handleLanguageChange} value={this.state.languageSelected}>
-                                            <option className="not-border" value="english">
-                                                English
-                                            </option>
-                                            <option className="not-border" value="spanish">
-                                                Spanish
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+                            {LanguageSelect(this)}
                         </div>
                         <a role="button" className={styleNavbarBurger} aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" onClick={()=>{this.handleNavbarBurger()}}>
                             <span aria-hidden="true"></span>

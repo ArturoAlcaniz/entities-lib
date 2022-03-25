@@ -11,8 +11,7 @@ function RouteGuard({ children }) {
     useEffect((router: NextRouter = routing) => {
         const path: string = router.asPath.split('?')[0]
 
-        function authCheck(url: string, router: NextRouter) {
-            const path: string = router.asPath.split('?')[0];
+        function authCheck(router: NextRouter) {
     
             axios({
                 method: 'get',
@@ -23,20 +22,24 @@ function RouteGuard({ children }) {
                     document.cookie = `username=${response.data.USERNAME};`;
                     setAuthorized(true);
                     if(publicPaths().includes(path)) {
-                        router.push({
-                            pathname: '/home',
-                            query: { returnUrl: router.asPath }
-                        },'/home');
+                        if(router) {
+                            router.push({
+                                pathname: '/home',
+                                query: { returnUrl: router.asPath }
+                            },'/home');
+                        }
                     }
                 }
             }, () => {
                 setAuthorized(publicPaths().includes(path))
                 
                 if(!publicPaths().includes(path)) {
-                    router.push({
-                        pathname: '/',
-                        query: { returnUrl: router.asPath }
-                    },'/');
+                    if(router){
+                        router.push({
+                            pathname: '/',
+                            query: { returnUrl: router.asPath }
+                        },'/');
+                    }
                 }
                 
             });
@@ -44,7 +47,7 @@ function RouteGuard({ children }) {
         }
 
         // on initial load - run auth check 
-        authCheck(router.asPath, routing);
+        authCheck(routing);
 
         // Hide content if the page is not public
         const hideContent = () => setAuthorized(publicPaths().includes(path));

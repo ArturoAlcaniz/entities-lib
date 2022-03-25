@@ -1,10 +1,8 @@
 import React from 'react'
 import CustomBasicPage from '@components/CustomBasicPage';
 import Header from '@components/Commons/Header';
-import { GoogleLogin } from 'react-google-login';
-import { handleLogin, handleLoginGoogle, showPass } from '@components/Login/LoginLogic';
+import { handleLogin, handleButtonLoginGoogle, showPass } from '@components/Login/LoginLogic';
 import CustomErrorMessage from '@utils/CustomErrorMessage';
-
 
 export default class LoginPage extends CustomBasicPage{
     constructor(props: any) {
@@ -74,13 +72,12 @@ export default class LoginPage extends CustomBasicPage{
                                         </button>
                                     </p>
                                 </div>
-                                <GoogleLogin
-                                    clientId="388959240870-7qf8j10dc0ktavi36k4ilrcrrqqb6sfk.apps.googleusercontent.com"
-                                    buttonText={obtainTextTranslated["buttons"]["login_google"]}
-                                    onSuccess={handleLoginGoogle.bind(this)}
-                                    onFailure={handleLoginGoogle.bind(this)}
-                                    cookiePolicy={'single_host_origin'}
-                                />
+                                <div className="google-btn" onClick={handleButtonLoginGoogle.bind(this)}>
+                                    <div className="google-icon-wrapper">
+                                        <img className="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
+                                    </div>
+                                    <p className="btn-text"><b>{obtainTextTranslated["buttons"]["login_google"]}</b></p>
+                                </div>
                             </div>
                         </div>
                     </form>
