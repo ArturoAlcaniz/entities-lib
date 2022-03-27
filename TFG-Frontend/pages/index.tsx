@@ -5,6 +5,7 @@ import { handleLogin, handleButtonLoginGoogle, showPass } from '@components/Logi
 import CustomErrorMessage from '@utils/CustomErrorMessage';
 
 export default class LoginPage extends CustomBasicPage{
+    bannedInterval: any;
     constructor(props: any) {
         super(props);
 
@@ -16,6 +17,8 @@ export default class LoginPage extends CustomBasicPage{
             formError: "",
             bannedSeconds: "",
         }
+
+        this.bannedInterval = null
     }
 
     render() {

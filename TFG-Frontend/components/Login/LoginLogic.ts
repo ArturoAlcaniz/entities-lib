@@ -96,8 +96,29 @@ function handleLogin(event: any) {
                 bannedSeconds: secondsBanned,
                 requestOK: new Map<string, string>(),
             });
+            bannedCountdown(this)
         }
     );
+}
+
+function bannedCountdown(thisComponent) {
+    if(thisComponent.bannedInterval){
+        clearInterval(thisComponent.bannedInterval)
+    }
+    thisComponent.bannedInterval = setInterval(function(){
+        let actualValue = parseInt(thisComponent.state.bannedSeconds)
+        let newValue = 0
+        
+        if(actualValue>0)
+            newValue = actualValue - 1
+
+        thisComponent.setState({bannedSeconds: newValue.toString()})
+        
+        if(newValue === 0) {
+            clearInterval(thisComponent.bannedInterval)
+            return;
+        }
+    }, 1000) 
 }
 
 export {handleLogin, handleButtonLoginGoogle, showPass};

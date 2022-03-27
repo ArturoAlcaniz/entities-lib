@@ -69,7 +69,6 @@ export class UsersController {
         @Res({passthrough: true}) response: Response,
         @Req() request: Request
     ) {
-        this.logger.info("Logging "+request.headers['x-forwarded-for'])
         let user: User = await this.usersService.findOne({
             where: {EMAIL: payload.email},
         });
@@ -82,6 +81,7 @@ export class UsersController {
                     formError: "too_many_attempts",
                     bannedDuring: this.obtainSecondsBanned(request, payload.email)
                 });
+            this.logger.info("Fail Login (attempts) {IP}".replace('{IP}',request.headers['x-forwarded-for'].toString()))
             return;
         }
 
@@ -92,6 +92,7 @@ export class UsersController {
                     message: ["invalid_credentials"],
                     formError: "password",
                 });
+            this.logger.info("Fail Login (invalid) {IP}".replace('{IP}',request.headers['x-forwarded-for'].toString()))
             this.countFailAttempt(request, payload.email);
             return;
         }
@@ -108,6 +109,7 @@ export class UsersController {
             message: ["successfully_logged_in"],
             USERNAME: user.USERNAME,
         });
+        this.logger.info("Login Sucessfully {IP}".replace('{IP}',request.headers['x-forwarded-for'].toString()))
     }
 
     @UseGuards(ThrottlerGuard)
