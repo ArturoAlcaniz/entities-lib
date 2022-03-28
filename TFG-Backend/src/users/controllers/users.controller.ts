@@ -11,9 +11,9 @@ import {LoginGoogleDto} from "../dtos/loginGoogle.dto";
 import {HttpService} from "@nestjs/axios";
 import {firstValueFrom} from "rxjs";
 import {ApiOkResponse, ApiTags} from "@nestjs/swagger";
-import { Logger } from 'winston';
-import { UserBlocked } from "../types/user-blocked.type";
-import { Throttle, ThrottlerGuard } from "@nestjs/throttler";
+import {Logger} from "winston";
+import {UserBlocked} from "../types/user-blocked.type";
+import {Throttle, ThrottlerGuard} from "@nestjs/throttler";
 
 @ApiTags("User Controller")
 @Controller("users")
@@ -22,8 +22,8 @@ export class UsersController {
         private usersService: UsersService,
         private jwtService: JwtService,
         private httpService: HttpService,
-        @Inject('winston')
-        private readonly logger: Logger,
+        @Inject("winston")
+        private readonly logger: Logger
     ) {}
 
     @UseGuards(ThrottlerGuard)
@@ -48,12 +48,10 @@ export class UsersController {
         }
 
         if (!(await this.usersService.validateUniqueUsername(user))) {
-            response
-                .status(400)
-                .json({
-                    message: ["username_already_exist"],
-                    formError: "username",
-                });
+            response.status(400).json({
+                message: ["username_already_exist"],
+                formError: "username",
+            });
             return;
         }
         this.usersService.save(user);
@@ -73,26 +71,32 @@ export class UsersController {
             where: {EMAIL: payload.email},
         });
 
-        if(this.verifyBlockUser(request, payload.email)){
-            response
-                .status(400)
-                .json({
-                    message: ["too_many_attempts"],
-                    formError: "too_many_attempts",
-                    bannedDuring: this.obtainSecondsBanned(request, payload.email)
-                });
-            this.logger.info("Fail Login (attempts) {IP}".replace('{IP}',request.headers['x-forwarded-for'].toString()))
+        if (this.verifyBlockUser(request, payload.email)) {
+            response.status(400).json({
+                message: ["too_many_attempts"],
+                formError: "too_many_attempts",
+                bannedDuring: this.obtainSecondsBanned(request, payload.email),
+            });
+            this.logger.info(
+                "Fail Login (attempts) {IP}".replace(
+                    "{IP}",
+                    request.headers["x-forwarded-for"].toString()
+                )
+            );
             return;
         }
 
         if (user == null || !this.usersService.verifyPass(user, payload.pass)) {
-            response
-                .status(400)
-                .json({
-                    message: ["invalid_credentials"],
-                    formError: "password",
-                });
-            this.logger.info("Fail Login (invalid) {IP}".replace('{IP}',request.headers['x-forwarded-for'].toString()))
+            response.status(400).json({
+                message: ["invalid_credentials"],
+                formError: "password",
+            });
+            this.logger.info(
+                "Fail Login (invalid) {IP}".replace(
+                    "{IP}",
+                    request.headers["x-forwarded-for"].toString()
+                )
+            );
             this.countFailAttempt(request, payload.email);
             return;
         }
@@ -109,7 +113,12 @@ export class UsersController {
             message: ["successfully_logged_in"],
             USERNAME: user.USERNAME,
         });
-        this.logger.info("Login Sucessfully {IP}".replace('{IP}',request.headers['x-forwarded-for'].toString()))
+        this.logger.info(
+            "Login Sucessfully {IP}".replace(
+                "{IP}",
+                request.headers["x-forwarded-for"].toString()
+            )
+        );
     }
 
     @UseGuards(ThrottlerGuard)
@@ -179,69 +188,79 @@ export class UsersController {
         response.clearCookie("jwt");
     }
 
-    countFailAttempt(request: Request, email: string){
-        const userToCount = this.obtainIpWithEmail(request.headers['x-forwarded-for'].toString(), email)
-        const userBlocked = this.usersService.usersBlocked.get(userToCount)
-        if(userBlocked.attempts == 0){
+    countFailAttempt(request: Request, email: string) {
+        const userToCount = this.obtainIpWithEmail(
+            request.headers["x-forwarded-for"].toString(),
+            email
+        );
+        const userBlocked = this.usersService.usersBlocked.get(userToCount);
+        if (userBlocked.attempts == 0) {
             let newUserBlocked: UserBlocked = {
                 firstAttempt: new Date().getTime(),
                 until: 0,
-                attempts: 1
-            }
-            this.usersService.usersBlocked.set(userToCount, newUserBlocked)
+                attempts: 1,
+            };
+            this.usersService.usersBlocked.set(userToCount, newUserBlocked);
             return;
         }
-        if(userBlocked.attempts == 1){
-            let newAttempts = 0
-            if((userBlocked.firstAttempt+60000)>(new Date().getTime())){
-                newAttempts = 2
+        if (userBlocked.attempts == 1) {
+            let newAttempts = 0;
+            if (userBlocked.firstAttempt + 60000 > new Date().getTime()) {
+                newAttempts = 2;
             }
             let newUserBlocked: UserBlocked = {
                 firstAttempt: userBlocked.firstAttempt,
                 until: 0,
-                attempts: 2
-            }
-            this.usersService.usersBlocked.set(userToCount, newUserBlocked)
+                attempts: 2,
+            };
+            this.usersService.usersBlocked.set(userToCount, newUserBlocked);
             return;
         }
-        if(userBlocked.attempts == 2){
-            let newUntil = 0
-            if((userBlocked.firstAttempt+60000)>(new Date().getTime())){
-                newUntil = new Date().getTime()+120000
+        if (userBlocked.attempts == 2) {
+            let newUntil = 0;
+            if (userBlocked.firstAttempt + 60000 > new Date().getTime()) {
+                newUntil = new Date().getTime() + 120000;
             }
             let newUserBlocked: UserBlocked = {
                 firstAttempt: 0,
                 until: newUntil,
-                attempts: 0
-            }
-            this.usersService.usersBlocked.set(userToCount, newUserBlocked)
+                attempts: 0,
+            };
+            this.usersService.usersBlocked.set(userToCount, newUserBlocked);
             return;
         }
     }
 
-    verifyBlockUser(request: Request, email: string){
-        const userToCheck = this.obtainIpWithEmail(request.headers['x-forwarded-for'].toString(), email)
-        if(!this.usersService.usersBlocked.get(userToCheck)){
+    verifyBlockUser(request: Request, email: string) {
+        const userToCheck = this.obtainIpWithEmail(
+            request.headers["x-forwarded-for"].toString(),
+            email
+        );
+        if (!this.usersService.usersBlocked.get(userToCheck)) {
             let userBlocked: UserBlocked = {
                 firstAttempt: 0,
                 until: 0,
-                attempts: 0
-            }
-            this.usersService.usersBlocked.set(userToCheck, userBlocked)
+                attempts: 0,
+            };
+            this.usersService.usersBlocked.set(userToCheck, userBlocked);
         }
-        const timeBanned = this.usersService.usersBlocked.get(userToCheck).until
-        return timeBanned>(new Date().getTime());
+        const timeBanned = this.usersService.usersBlocked.get(userToCheck)
+            .until;
+        return timeBanned > new Date().getTime();
     }
 
-    obtainSecondsBanned(request: Request, email: string): number{
-        const userToCheck = this.obtainIpWithEmail(request.headers['x-forwarded-for'].toString(), email)
-        const userBlocked = this.usersService.usersBlocked.get(userToCheck)
-        const untilTimestamp = userBlocked.until
-        return Math.round((untilTimestamp-(new Date().getTime()))/1000);
+    obtainSecondsBanned(request: Request, email: string): number {
+        const userToCheck = this.obtainIpWithEmail(
+            request.headers["x-forwarded-for"].toString(),
+            email
+        );
+        const userBlocked = this.usersService.usersBlocked.get(userToCheck);
+        const untilTimestamp = userBlocked.until;
+        return Math.round((untilTimestamp - new Date().getTime()) / 1000);
     }
 
-    obtainIpWithEmail(ip: string, email: string): string{
-        let ipRequest = ip+"[*]";
-        return ipRequest.replace('*', email);
+    obtainIpWithEmail(ip: string, email: string): string {
+        let value = "{IP}[{EMAIL}]";
+        return value.replace("{IP}", ip).replace("{EMAIL}", email);
     }
 }

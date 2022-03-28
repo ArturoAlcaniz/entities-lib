@@ -1,24 +1,22 @@
 import Router from "next/router";
 import {loginGoogleRequest, loginRequest} from "./LoginRequest";
 import loginValidation from "./LoginValidation";
-import {getAuth, signInWithPopup, GoogleAuthProvider} from 'firebase/auth'
-import {firebaseApp} from '@root/firebase-config'
+import {getAuth, signInWithPopup, GoogleAuthProvider} from "firebase/auth";
+import {firebaseApp} from "@root/firebase-config";
 
 function handleButtonLoginGoogle() {
-    const firebaseAuth = getAuth(firebaseApp)
-    const provider = new GoogleAuthProvider()
+    const firebaseAuth = getAuth(firebaseApp);
+    const provider = new GoogleAuthProvider();
     provider.setCustomParameters({
-        prompt: 'select_account'
+        prompt: "select_account",
     });
 
-    signInWithPopup(firebaseAuth, provider)
-        .then((response:any) => {
-            handleLoginToBack(this,response._tokenResponse.oauthIdToken)
-        }
-    )
+    signInWithPopup(firebaseAuth, provider).then((response: any) => {
+        handleLoginToBack(this, response._tokenResponse.oauthIdToken);
+    });
 }
 
-function handleLoginToBack(thisComponent,idToken: string){
+function handleLoginToBack(thisComponent, idToken: string) {
     loginGoogleRequest(idToken).then(
         (response) => {
             if (response.status == 200) {
@@ -86,9 +84,9 @@ function handleLogin(event: any) {
                 "loginError",
                 error.response.data.message[0]
             );
-            let secondsBanned = ""
-            if(error.response.data.bannedDuring){
-                secondsBanned = error.response.data.bannedDuring
+            let secondsBanned = "";
+            if (error.response.data.bannedDuring) {
+                secondsBanned = error.response.data.bannedDuring;
             }
             this.setState({
                 formError: error.response.data.formError,
@@ -96,29 +94,28 @@ function handleLogin(event: any) {
                 bannedSeconds: secondsBanned,
                 requestOK: new Map<string, string>(),
             });
-            bannedCountdown(this)
+            bannedCountdown(this);
         }
     );
 }
 
 function bannedCountdown(thisComponent) {
-    if(thisComponent.bannedInterval){
-        clearInterval(thisComponent.bannedInterval)
+    if (thisComponent.bannedInterval) {
+        clearInterval(thisComponent.bannedInterval);
     }
-    thisComponent.bannedInterval = setInterval(function(){
-        let actualValue = parseInt(thisComponent.state.bannedSeconds)
-        let newValue = 0
-        
-        if(actualValue>0)
-            newValue = actualValue - 1
+    thisComponent.bannedInterval = setInterval(function () {
+        let actualValue = parseInt(thisComponent.state.bannedSeconds);
+        let newValue = 0;
 
-        thisComponent.setState({bannedSeconds: newValue.toString()})
-        
-        if(newValue === 0) {
-            clearInterval(thisComponent.bannedInterval)
+        if (actualValue > 0) newValue = actualValue - 1;
+
+        thisComponent.setState({bannedSeconds: newValue.toString()});
+
+        if (newValue === 0) {
+            clearInterval(thisComponent.bannedInterval);
             return;
         }
-    }, 1000) 
+    }, 1000);
 }
 
 export {handleLogin, handleButtonLoginGoogle, showPass};

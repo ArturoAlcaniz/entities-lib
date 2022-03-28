@@ -46,4 +46,4 @@ function showCPass(event: any) {
     this.setState({showCPassword: !this.state.showCPassword});
 }
 
-export { handleRegister, showCPass, showPass }
+export {handleRegister, showCPass, showPass};

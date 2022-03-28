@@ -3,6 +3,7 @@ import CustomBasicPage from '@components/CustomBasicPage';
 import Header from '@components/Commons/Header';
 import { handleLogin, handleButtonLoginGoogle, showPass } from '@components/Login/LoginLogic';
 import CustomErrorMessage from '@utils/CustomErrorMessage';
+import Image from 'next/image'
 
 export default class LoginPage extends CustomBasicPage{
     bannedInterval: any;
@@ -79,9 +80,9 @@ export default class LoginPage extends CustomBasicPage{
                                 </div>
                                 <div className="google-btn" onClick={handleButtonLoginGoogle.bind(this)}>
                                     <div className="google-icon-wrapper">
-                                        <img className="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
+                                        <img className="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt='Google Login Button' />
                                     </div>
-                                    <p className="btn-text"><b>{obtainTextTranslated["buttons"]["login_google"]}</b></p>
+                                    <p className="btn-text"><b>Login with Google</b></p>
                                 </div>
                             </div>
                         </div>

@@ -1,4 +1,4 @@
-import { Component, createRef, RefObject } from "react";
+import { Component } from "react";
 import logo from "@assets/Logo-TISHOP.png"
 import * as langEnglish from '@utils/languages/english.json';
 import * as langSpanish from '@utils/languages/spanish.json';
@@ -51,7 +51,7 @@ export default class Header extends Component<any,any> {
         let languageSelected = this.state.languageSelected
         let obtainTextTranslated = this.translations[languageSelected]
         return (
-        <a className="button is-primary" onClick={() => {this.handleGoRegister()}}>
+        <a className="button is-primary buttonRegister" onClick={() => {this.handleGoRegister()}}>
             <strong>{obtainTextTranslated["buttons"]["registro"]}</strong>
         </a>)
     }

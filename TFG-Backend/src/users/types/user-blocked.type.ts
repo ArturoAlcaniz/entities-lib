@@ -1,5 +1,5 @@
 export type UserBlocked = {
-    firstAttempt: number,
+    firstAttempt: number;
     until: number;
     attempts: number;
-}
+};

@@ -4,7 +4,7 @@ import {CustomHashing} from "../../hashing/hashing.service";
 import {BaseService} from "../../commons/service.commons";
 import {FindOneOptions, Repository} from "typeorm";
 import {Injectable} from "@nestjs/common";
-import { UserBlocked } from "../types/user-blocked.type";
+import {UserBlocked} from "../types/user-blocked.type";
 
 @Injectable()
 export class UsersService extends BaseService<User> {
