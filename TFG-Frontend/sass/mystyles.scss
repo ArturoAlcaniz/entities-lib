@@ -73,6 +73,9 @@ a.navbar-custom {
 
 .navbar-menu {
     margin: 5px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-right: 0px;
 }
 
 .navbar-index {
@@ -80,8 +83,7 @@ a.navbar-custom {
 }
 
 .user-info {
-    margin-left: 10px;
-    margin-right: 5px;
+    margin-left: 20px;
     font-weight: bold;
 }
 
@@ -138,12 +140,23 @@ a.navbar-custom {
     background: #e4e3e3;
 }
 
+.profile {
+    cursor: pointer;
+    width: 80px;
+}
+
+.profile-active {
+    background: #eaf5fa;
+}
+
 .profile-picture {
+    margin: auto;
     border-radius: 50%;
     overflow: hidden;
     background: #ffffff0f;
-    width: 60px;
-    height: 60px;
+    width: 55px;
+    height: 55px;
+    margin-top: 2px;
     filter: drop-shadow(0px 0px 0px black);
 }
 
@@ -151,10 +164,22 @@ a.navbar-custom {
     width: 450px;
     height: 550px;
     position: fixed;
-    right: 230px;
-    background: #fffefe;
+    right: 100px;
+    background: #f6fcff;
     z-index: 2;
-    top: 65px;
+    top: 60px;
+    padding: 0;
+}
+
+.customBoxProfile {
+    width: 200px;
+    height: 200px;
+    position: fixed;
+    right: 0px;
+    background: #eaf5fa;
+    z-index: 2;
+    right: -5px;
+    top: 60px;
     padding: 0;
 }
 
@@ -164,6 +189,24 @@ a.navbar-custom {
 }
 
 .notificationTitle {
+    display: flex;
+    margin-left: 20px;
+    font-weight: bold;
+    font-size: large;
+    font-family: sans-serif;
+    align-items: center;
+    height: 100%;
+}
+
+.profileTitleContainer {
+    height: 40px;
+    margin-top: 5px;
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-bottom: 5px;
+}
+
+.profileTitle {
     display: flex;
     margin-left: 20px;
     font-weight: bold;
@@ -235,3 +278,8 @@ a.navbar-custom {
 }
   
   @import url(https://fonts.googleapis.com/css?family=Roboto:500);
+
+  .navbar-start {
+      margin-top: 5px;
+      margin-bottom: 5px;
+  }

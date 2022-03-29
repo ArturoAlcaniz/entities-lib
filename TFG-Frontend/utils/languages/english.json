@@ -2,7 +2,8 @@
     "titles": {
         "iniciar_sesion": "Log in",
         "inicio": "Home",
-        "notificaciones": "Notifications"
+        "notificaciones": "Notifications",
+        "perfil": "My profile"
     },
     "labels": {
         "correo": "Email",
@@ -18,7 +19,8 @@
         "login": "Login",
         "registro": "Sign up",
         "logout": "Logout",
-        "login_google": "Login with Google"
+        "login_google": "Login with Google",
+        "account_config": "Account settings"
     },
     "requestErrors": {
         "invalid_credentials": "Invalid Credentials",

@@ -1,4 +1,4 @@
-export default function NotificationsView(thisComponent, notificationsViewRef) {
+export default function NotificationsView(thisComponent) {
     let languageSelected = thisComponent.state.languageSelected
     let obtainTextTranslated = thisComponent.translations[languageSelected]
 

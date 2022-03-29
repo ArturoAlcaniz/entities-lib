@@ -7,13 +7,14 @@ import Image from 'next/image'
 import Router from 'next/router';
 import axios from "axios";
 import NotificationsView from "./NotificationsView";
+import ProfileNavbarView from "@components/Commons/ProfileNavbarView";
 import LanguageSelect from "./LanguageSelect";
 import { getAuth, signOut } from "firebase/auth";
-import { firebaseApp } from "@root/firebase-config";
 
 export default class Header extends Component<any,any> {
     translations: { english: any; spanish: any; };
     notificationViewRef: RefObject<HTMLDivElement>;
+    profileNavbarViewRef: RefObject<HTMLDivElement>;
     constructor(props: any) {
         super(props);
 
@@ -24,9 +25,11 @@ export default class Header extends Component<any,any> {
             styleNavbarBurger: "navbar-burger",
             styleNavbarMenu: "navbar-menu",
             showNotifications: false,
+            showProfileNavbar: false,
         }
 
         this.notificationViewRef = createRef();
+        this.profileNavbarViewRef = createRef();
 
         this.translations =
         { "english": langEnglish
@@ -81,6 +84,10 @@ export default class Header extends Component<any,any> {
         this.setState({ showNotifications: !this.state.showNotifications })
     }
 
+    showProfileNavbarView() {
+        this.setState({ showProfileNavbar: !this.state.showProfileNavbar })
+    }
+
     blurNotificationView(event) {
         if (!event?.relatedTarget || !this.notificationViewRef.current?.contains(event?.relatedTarget)) {
             this.setState({ showNotifications: false })
@@ -89,8 +96,16 @@ export default class Header extends Component<any,any> {
         }
     }
 
+    blurProfileNavbarView(event) {
+        if (!event?.relatedTarget || !this.profileNavbarViewRef.current?.contains(event?.relatedTarget)) {
+            this.setState({ showProfileNavbar: false})
+        }else{
+            event?.currentTarget.focus()
+        }
+    }
+
     render() {
-        const { showNotifications, styleNavbarBurger, styleNavbarMenu, notificationsViewRef } = this.state
+        const { showProfileNavbar, showNotifications, styleNavbarBurger, styleNavbarMenu, notificationsViewRef } = this.state
         let languageSelected = this.state.languageSelected
         let obtainTextTranslated = this.translations[languageSelected]
 
@@ -123,23 +138,21 @@ export default class Header extends Component<any,any> {
                                 </span>
                             </div>
                             <div className="navbar-brand">
-                                <div className="profile-picture">
-                                    <Image src={userProfile} width={60} height={60} alt="User Profile"/>
-                                </div>
-                                <div className="user-info">
-                                    {this.obtainUserInfo()}
-                                    <div className="user-logout">
-                                        <a onClick={() => {this.handleLogout()}}>
-                                            {obtainTextTranslated["buttons"]["logout"]}
-                                        </a>
+                                <div className={`profile ${showProfileNavbar ? 'profile-active' : ''}`}>
+                                    <div className="profile-picture" tabIndex={-1} onBlur={this.blurProfileNavbarView.bind(this)} onClick={() => {this.showProfileNavbarView()}}>
+                                        <Image src={userProfile} width={60} height={60} alt="User Profile"/>
                                     </div>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
                 </nav>
                 {
-                    showNotifications ? NotificationsView(this, notificationsViewRef) : (<div></div>) 
+                    showNotifications ? NotificationsView(this) : (<div></div>)
+                }
+                {
+                    showProfileNavbar ? ProfileNavbarView(this) : (<div></div>) 
                 }
             </div>
         )

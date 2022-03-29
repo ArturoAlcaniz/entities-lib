@@ -2,7 +2,8 @@
     "titles": {
         "iniciar_sesion": "Iniciar sesion",
         "inicio": "Inicio",
-        "notificaciones": "Notificaciones"
+        "notificaciones": "Notificaciones",
+        "perfil": "Mi perfil"
     },
     "labels": {
         "correo": "Correo",
@@ -18,7 +19,8 @@
         "login": "Iniciar sesión",
         "registro": "Registrarse",
         "logout": "Cerrar sesión",
-        "login_google": "Iniciar sesión con Google"
+        "login_google": "Iniciar sesión con Google",
+        "account_config": "Configuración de la cuenta"
     },
     "requestErrors": {
         "invalid_credentials": "Credenciales no válidas",
