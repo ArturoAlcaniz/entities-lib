@@ -5,10 +5,13 @@ import {BaseService} from "../../commons/service.commons";
 import {FindOneOptions, Repository} from "typeorm";
 import {Injectable} from "@nestjs/common";
 import {UserBlocked} from "../types/user-blocked.type";
+import { ModifyUserDto } from "../dtos/modifyUser.dto";
 
 @Injectable()
 export class UsersService extends BaseService<User> {
     usersLoggedIn: Map<string, string> = new Map<string, string>();
+    usersLoggedInUnconfirmed: Map<string, string> = new Map<string, string>();
+    codesSent: Map<string, string> = new Map<string, string>();
     usersBlocked: Map<string, UserBlocked> = new Map<string, UserBlocked>();
     GOOGLE_CLIENT_ID: string =
         "388959240870-o8ngd13pcgpdp7g8fneg5un7mkgahj73.apps.googleusercontent.com";
@@ -26,6 +29,15 @@ export class UsersService extends BaseService<User> {
 
     findOne(options: FindOneOptions<User>): Promise<User> {
         return this.getRepository().findOne(options);
+    }
+
+    updateUser(user: User, data: ModifyUserDto): User {
+        user.EMAIL = data.email;
+        user.USERNAME = data.username;
+        if (data.newPass != null) {
+            user.PASSWORD = this.hashService.stringToHash(data.newPass);
+        }
+        return user;
     }
 
     createUser(email: string, name: string, pass: string = null): User {

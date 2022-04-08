@@ -4,5 +4,7 @@ TFG-Frontend/stylesheets
 TFG-Frontend/node_modules
 TFG-Backend/node_modules
 TFG-Backend/log
+TFG-Backend/.env
 TFG-Frontend/.next
 TFG-Test/node_modules
+.env

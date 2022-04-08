@@ -17,6 +17,7 @@ import {HttpModule} from "@nestjs/axios";
 import {ThrottlerModule} from "@nestjs/throttler";
 import {WinstonModule} from "nest-winston";
 import * as winston from "winston";
+import { MailerModule } from "./mailer/mailer.module";
 
 const resolvePath = (file: string) => path.resolve(`./dist/ui_v1/${file}`);
 
@@ -49,6 +50,7 @@ function getRoute(route: string) {
             autoLoadEntities: true,
         }),
         HashingModule,
+        MailerModule,
         UsersModule,
         HttpModule,
         ThrottlerModule.forRoot({

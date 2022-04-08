@@ -8,6 +8,11 @@ export default function ProfileNavbarView(thisComponent) {
                 {thisComponent.obtainUserInfo()}
             </div>
             <div className="user-info">                    
+                <div className="user-modify">
+                    <a onClick={() => {thisComponent.handleAccountConfig()}}>
+                        {obtainTextTranslated["buttons"]["account_config"]}
+                    </a>
+                </div>
                 <div className="user-logout">
                     <a onClick={() => {thisComponent.handleLogout()}}>
                         {obtainTextTranslated["buttons"]["logout"]}

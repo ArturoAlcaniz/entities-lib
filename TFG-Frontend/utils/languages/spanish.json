@@ -8,8 +8,12 @@
     "labels": {
         "correo": "Correo",
         "pass": "Contraseña",
+        "newPass": "Nueva contraseña",
+        "confirm_newPass": "Confirmación nueva contraseña",
         "confirm_pass": "Confirmación",
-        "usuario": "Nombre de usuario"
+        "actualPass": "Contraseña actual",
+        "usuario": "Nombre de usuario",
+        "email_code": "Codigo enviado al correo"
     },
     "explanations": {
         "hello": "Bienvenido",
@@ -20,7 +24,9 @@
         "registro": "Registrarse",
         "logout": "Cerrar sesión",
         "login_google": "Iniciar sesión con Google",
-        "account_config": "Configuración de la cuenta"
+        "account_config": "Configuración de la cuenta",
+        "save": "Guardar",
+        "send_code": "Enviar código"
     },
     "requestErrors": {
         "invalid_credentials": "Credenciales no válidas",
@@ -30,6 +36,7 @@
         "pass_empty": "La contraseña no puede estar vacía",
         "already_logged_in": "Usuario ya logeado",
         "confirm_password_not_equals": "Contraseña y confirmación no coinciden",
+        "confirm_newPassowrd_not_equals": "Nueva contraseña y confirmación no coinciden",
         "username_already_exist": "El usuario introducido ya existe",
         "email_already_exist": "El correo introducido ya existe",
         "token_empty": "Error al iniciar sesión con google",
@@ -37,6 +44,7 @@
     },
     "requestOK": {
         "successfully_logged_in": "Usuario logeado correctamente",
-        "successfully_registered": "Usuario registrado correctamente"
+        "successfully_registered": "Usuario registrado correctamente",
+        "successfully_updated": "Usuario modificado correctamente"
     }
 }

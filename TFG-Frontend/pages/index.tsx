@@ -1,7 +1,7 @@
 import React from 'react'
 import CustomBasicPage from '@components/CustomBasicPage';
 import Header from '@components/Commons/Header';
-import { handleLogin, handleButtonLoginGoogle, showPass } from '@components/Login/LoginLogic';
+import { handleLogin, handleButtonLoginGoogle, showPass, handleLogin2 } from '@components/Login/LoginLogic';
 import CustomErrorMessage from '@utils/CustomErrorMessage';
 import Image from 'next/image'
 
@@ -17,6 +17,8 @@ export default class LoginPage extends CustomBasicPage{
             showPassword: false,
             formError: "",
             bannedSeconds: "",
+            code: "",
+            step: "1",
         }
 
         this.bannedInterval = null
@@ -27,7 +29,7 @@ export default class LoginPage extends CustomBasicPage{
         let languageSelected = this.state.languageSelected
         let obtainTextTranslated = this.translations[languageSelected]
 
-        const { email, password, showPassword, formError, bannedSeconds } = this.state
+        const { email, password, showPassword, formError, bannedSeconds, code, step } = this.state
         let msgError = obtainTextTranslated["requestErrors"][this.state.requestErrors.get('loginError')]
 
         return (
@@ -40,7 +42,7 @@ export default class LoginPage extends CustomBasicPage{
                     <form onSubmit={handleLogin.bind(this)} >
                         <div className="card loginForm">
                             <div className="card-content">
-                                <div className="field">
+                                <div className={`field ${step=='2' ? 'hidden' : ''}`}>
                                     <label className="label">
                                         {obtainTextTranslated["labels"]["correo"]}
                                     </label>
@@ -52,7 +54,7 @@ export default class LoginPage extends CustomBasicPage{
                                     </div>
                                     { formError=='email' && CustomErrorMessage(msgError) }
                                 </div>
-                                <div className="field">
+                                <div className={`field ${step=='2' ? 'hidden' : ''}`}>
                                     <label className="label">
                                         {obtainTextTranslated["labels"]["pass"]}
                                     </label>
@@ -66,14 +68,29 @@ export default class LoginPage extends CustomBasicPage{
                                         </span>
                                     </div>
                                     { formError=='password' && CustomErrorMessage(msgError) }
+                                </div>
+                                <div className={`field ${step=='1' ? 'hidden' : ''}`}>
+                                    <label className="label">
+                                        {obtainTextTranslated["labels"]["email_code"]}
+                                    </label>
+                                    <div className="control">
+                                        <input v-model={code} className="input"></input>
+                                    </div>
                                     { formError=='too_many_attempts' && CustomErrorMessage(msgError+' '+bannedSeconds+' '+obtainTextTranslated["explanations"]["seconds"]) }
                                 </div>
                                 <p className="help form-feedback-ok">
                                     {obtainTextTranslated["requestOK"][this.state.requestOK.get('loginOk')]}
                                 </p>
-                                <div className="field">
+                                <div className={`field ${step=='2' ? 'hidden' : ''}`}>
                                     <p className="control">
                                         <button className="button">
+                                            {obtainTextTranslated["buttons"]["login"]}
+                                        </button>
+                                    </p>
+                                </div>
+                                <div className={`field ${step=='1' ? 'hidden' : ''}`}>
+                                    <p className="control">
+                                        <button className="button" onClick={handleLogin2.bind(this)}>
                                             {obtainTextTranslated["buttons"]["login"]}
                                         </button>
                                     </p>

@@ -8,7 +8,8 @@ export default class CustomBasicPage extends Component<any, any>{
         return {
             pathname: ctx.pathname,
             initialLanguageSelected: cookies(ctx).languageSelected || 'english',
-            username: cookies(ctx).username
+            username: cookies(ctx).username,
+            email: cookies(ctx).email
         }
     }
     translations: { english: any; spanish: any; };

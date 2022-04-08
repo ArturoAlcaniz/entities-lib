@@ -1,5 +1,16 @@
 import axios, {AxiosPromise} from "axios";
 
+function sendCodeRequest(thisComponent: any): AxiosPromise<any> {
+    return axios({
+        method: "post",
+        url: "/api/users/login2",
+        data: {
+            email: thisComponent.state.email,
+            code: thisComponent.state.code,
+        },
+    })
+}
+
 function loginGoogleRequest(idToken: string): AxiosPromise<any> {
     return axios({
         method: "post",
@@ -21,4 +32,4 @@ function loginRequest(thisComponent: any): AxiosPromise<any> {
     });
 }
 
-export {loginGoogleRequest, loginRequest};
+export {loginGoogleRequest, loginRequest, sendCodeRequest};

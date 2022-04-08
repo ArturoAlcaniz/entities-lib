@@ -1,5 +1,5 @@
 import Router from "next/router";
-import {loginGoogleRequest, loginRequest} from "./LoginRequest";
+import {loginGoogleRequest, loginRequest, sendCodeRequest} from "./LoginRequest";
 import loginValidation from "./LoginValidation";
 import {getAuth, signInWithPopup, GoogleAuthProvider} from "firebase/auth";
 import {firebaseApp} from "@root/firebase-config";
@@ -30,6 +30,7 @@ function handleLoginToBack(thisComponent, idToken: string) {
                     requestErrors: new Map<string, string>(),
                 });
                 document.cookie = `username=${response.data.USERNAME};`;
+                document.cookie = `email=${response.data.EMAIL};`;
                 setTimeout(() => {
                     Router.push("home");
                 }, 1000);
@@ -54,6 +55,48 @@ function showPass(event: any) {
     this.setState({showPassword: !this.state.showPassword});
 }
 
+function handleLogin2(event: any) {
+    event.preventDefault();
+
+    sendCodeRequest(this).then(
+        (response) => {
+            if (response.status == 200) {
+                let lista: Map<string, string> = new Map<string, string>().set(
+                    "loginOk",
+                    response.data.message[0]
+                );
+                this.setState({
+                    formError: "",
+                    requestOK: lista,
+                    requestErrors: new Map<string, string>(),
+                });
+                document.cookie = `username=${response.data.USERNAME};`;
+                document.cookie = `email=${response.data.EMAIL};`;
+                setTimeout(() => {
+                    Router.push("home");
+                }, 1000);
+            }
+        },
+        (error) => {
+            let lista: Map<string, string> = new Map<string, string>().set(
+                "loginError",
+                error.response.data.message[0]
+            );
+            let secondsBanned = "";
+            if (error.response.data.bannedDuring) {
+                secondsBanned = error.response.data.bannedDuring;
+            }
+            this.setState({
+                formError: error.response.data.formError,
+                requestErrors: lista,
+                bannedSeconds: secondsBanned,
+                requestOK: new Map<string, string>(),
+            });
+            bannedCountdown(this);
+        }
+    );
+}
+
 function handleLogin(event: any) {
     event.preventDefault();
 
@@ -69,14 +112,12 @@ function handleLogin(event: any) {
                     response.data.message[0]
                 );
                 this.setState({
+                    step: "2",
                     formError: "",
                     requestOK: lista,
                     requestErrors: new Map<string, string>(),
                 });
-                document.cookie = `username=${response.data.USERNAME};`;
-                setTimeout(() => {
-                    Router.push("home");
-                }, 1000);
+
             }
         },
         (error) => {
@@ -118,4 +159,4 @@ function bannedCountdown(thisComponent) {
     }, 1000);
 }
 
-export {handleLogin, handleButtonLoginGoogle, showPass};
+export {handleLogin, handleButtonLoginGoogle, showPass, handleLogin2};
