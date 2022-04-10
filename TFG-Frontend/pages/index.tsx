@@ -39,7 +39,7 @@ export default class LoginPage extends CustomBasicPage{
                         initialLanguageSelected={languageSelected} 
                         pathname={this.props.pathname} />
                 <div className="pageCentered">
-                    <form onSubmit={handleLogin.bind(this)} >
+                    <form onSubmit={step == "1" ? handleLogin.bind(this) : handleLogin2.bind(this)} >
                         <div className="card loginForm">
                             <div className="card-content">
                                 <div className={`field ${step=='2' ? 'hidden' : ''}`}>
@@ -81,16 +81,9 @@ export default class LoginPage extends CustomBasicPage{
                                 <p className="help form-feedback-ok">
                                     {obtainTextTranslated["requestOK"][this.state.requestOK.get('loginOk')]}
                                 </p>
-                                <div className={`field ${step=='2' ? 'hidden' : ''}`}>
+                                <div className="field">
                                     <p className="control">
                                         <button className="button">
-                                            {obtainTextTranslated["buttons"]["login"]}
-                                        </button>
-                                    </p>
-                                </div>
-                                <div className={`field ${step=='1' ? 'hidden' : ''}`}>
-                                    <p className="control">
-                                        <button className="button" onClick={handleLogin2.bind(this)}>
                                             {obtainTextTranslated["buttons"]["login"]}
                                         </button>
                                     </p>

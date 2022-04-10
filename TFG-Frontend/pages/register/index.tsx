@@ -1,7 +1,7 @@
 import React from 'react'
 import CustomBasicPage from '@components/CustomBasicPage';
 import Header from '@components/Commons/Header';
-import {handleRegister, showCPass, showPass} from '@components/Register/RegisterLogic';
+import {handleRegister, handleSendCode, showCPass, showPass} from '@components/Register/RegisterLogic';
 import CustomErrorMessage from '@utils/CustomErrorMessage';
 
 export default class RegisterPage extends CustomBasicPage{
@@ -10,6 +10,8 @@ export default class RegisterPage extends CustomBasicPage{
 
         this.state = {
             ...this.state,
+            step: "1",
+            code: "",
             username: "",
             email: "",
             password: "",
@@ -25,7 +27,7 @@ export default class RegisterPage extends CustomBasicPage{
         let languageSelected = this.state.languageSelected
         let obtainTextTranslated = this.translations[languageSelected]
 
-        const { username, email, password, confirmPassword, showPassword, showCPassword, formError } = this.state
+        const { username, email, password, confirmPassword, showPassword, showCPassword, formError, step, code } = this.state
         let msgError = obtainTextTranslated["requestErrors"][this.state.requestErrors.get('registerError')]
 
         return (
@@ -35,10 +37,10 @@ export default class RegisterPage extends CustomBasicPage{
                         initialLanguageSelected={languageSelected} 
                         pathname={this.props.pathname} />
                 <div className="pageCentered">
-                    <form onSubmit={handleRegister.bind(this)} >
+                    <form onSubmit={step == "1" ?  handleSendCode.bind(this) : handleRegister.bind(this)} >
                         <div className="card registerForm">
                             <div className="card-content">
-                                <div className="field">
+                                <div className={`field ${step=='2' ? 'hidden' : ''}`}>
                                     <label className="label">
                                         {obtainTextTranslated["labels"]["usuario"]}
                                     </label>
@@ -50,7 +52,7 @@ export default class RegisterPage extends CustomBasicPage{
                                     </div>
                                     { formError=='username' && CustomErrorMessage(msgError) }
                                 </div>
-                                <div className="field">
+                                <div className={`field ${step=='2' ? 'hidden' : ''}`}>
                                     <label className="label">
                                         {obtainTextTranslated["labels"]["correo"]}
                                     </label>
@@ -62,7 +64,7 @@ export default class RegisterPage extends CustomBasicPage{
                                     </div>
                                     { formError=='email' && CustomErrorMessage(msgError) }
                                 </div>
-                                <div className="field">
+                                <div className={`field ${step=='2' ? 'hidden' : ''}`}>
                                     <label className="label">
                                         {obtainTextTranslated["labels"]["pass"]}
                                     </label>
@@ -77,7 +79,7 @@ export default class RegisterPage extends CustomBasicPage{
                                     </div>
                                     { formError=='password' && CustomErrorMessage(msgError) }
                                 </div>
-                                <div className="field">
+                                <div className={`field ${step=='2' ? 'hidden' : ''}`}>
                                     <label className="label">
                                         {obtainTextTranslated["labels"]["confirm_pass"]}
                                     </label>
@@ -91,6 +93,14 @@ export default class RegisterPage extends CustomBasicPage{
                                         </span>
                                     </div>
                                     { formError=='cPassword' && CustomErrorMessage(msgError) }
+                                </div>
+                                <div className={`field ${step=='1' ? 'hidden' : ''}`}>
+                                    <label className="label">
+                                        {obtainTextTranslated["labels"]["email_code"]}
+                                    </label>
+                                    <div className="control">
+                                        <input v-model={code} className="input"></input>
+                                    </div>
                                 </div>
                                 <p className="help form-feedback-ok">
                                     {obtainTextTranslated["requestOK"][this.state.requestOK.get('registerOk')]}

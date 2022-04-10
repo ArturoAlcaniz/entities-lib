@@ -1,9 +1,11 @@
 import axios, {AxiosPromise} from "axios";
 
-export default function changeProfileRequest(thisComponent: any): AxiosPromise<any> {
+export default function changeProfileRequest(
+    thisComponent: any
+): AxiosPromise<any> {
     let newPass = null;
-    if(thisComponent.state.newPassword){
-       newPass = thisComponent.state.newPassword 
+    if (thisComponent.state.newPassword) {
+        newPass = thisComponent.state.newPassword;
     }
     return axios({
         method: "post",

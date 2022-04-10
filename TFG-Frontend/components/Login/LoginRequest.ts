@@ -8,7 +8,7 @@ function sendCodeRequest(thisComponent: any): AxiosPromise<any> {
             email: thisComponent.state.email,
             code: thisComponent.state.code,
         },
-    })
+    });
 }
 
 function loginGoogleRequest(idToken: string): AxiosPromise<any> {

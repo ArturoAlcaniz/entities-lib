@@ -1,5 +1,9 @@
 import Router from "next/router";
-import {loginGoogleRequest, loginRequest, sendCodeRequest} from "./LoginRequest";
+import {
+    loginGoogleRequest,
+    loginRequest,
+    sendCodeRequest,
+} from "./LoginRequest";
 import loginValidation from "./LoginValidation";
 import {getAuth, signInWithPopup, GoogleAuthProvider} from "firebase/auth";
 import {firebaseApp} from "@root/firebase-config";
@@ -117,7 +121,6 @@ function handleLogin(event: any) {
                     requestOK: lista,
                     requestErrors: new Map<string, string>(),
                 });
-
             }
         },
         (error) => {

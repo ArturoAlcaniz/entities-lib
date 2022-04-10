@@ -13,4 +13,8 @@ export class CreateUserDto {
     @IsNotEmpty()
     @IsString()
     readonly pass: string;
+
+    @IsNotEmpty()
+    @IsString()
+    readonly code: string;
 }

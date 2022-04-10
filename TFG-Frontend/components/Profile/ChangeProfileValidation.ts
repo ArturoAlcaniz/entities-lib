@@ -25,7 +25,10 @@ export default function changeProfileValidation(thisComponent: any) {
         return false;
     }
 
-    if (thisComponent.state.newPassword != thisComponent.state.newConfirmPassword) {
+    if (
+        thisComponent.state.newPassword !=
+        thisComponent.state.newConfirmPassword
+    ) {
         let lista: Map<string, string> = new Map<string, string>().set(
             "changeProfileError",
             "confirm_newPassowrd_not_equals"
@@ -33,7 +36,7 @@ export default function changeProfileValidation(thisComponent: any) {
         thisComponent.setState({
             requestErrors: lista,
             requestOk: new Map<string, string>(),
-            formError: "newPassword"
+            formError: "newPassword",
         });
         return false;
     }

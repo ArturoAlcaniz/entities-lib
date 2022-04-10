@@ -8,7 +8,7 @@ import {Global, Module} from "@nestjs/common";
 import {HttpModule} from "@nestjs/axios";
 import {WinstonModule} from "nest-winston";
 import {ThrottlerModule} from "@nestjs/throttler";
-import { MailerModule } from "../mailer/mailer.module";
+import {MailerModule} from "../mailer/mailer.module";
 
 @Global()
 @Module({

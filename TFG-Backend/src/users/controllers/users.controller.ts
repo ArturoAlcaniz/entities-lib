@@ -14,10 +14,11 @@ import {ApiOkResponse, ApiTags} from "@nestjs/swagger";
 import {Logger} from "winston";
 import {UserBlocked} from "../types/user-blocked.type";
 import {Throttle, ThrottlerGuard} from "@nestjs/throttler";
-import { ModifyUserDto } from "../dtos/modifyUser.dto";
-import { SendCodeDto } from "../dtos/sendcode.dto";
-import { MailerService } from "../../mailer/mailer.service";
-import { v4 as uuidv4 } from 'uuid';
+import {ModifyUserDto} from "../dtos/modifyUser.dto";
+import {SendCodeDto} from "../dtos/sendcode.dto";
+import {MailerService} from "../../mailer/mailer.service";
+import {v4 as uuidv4} from "uuid";
+import {SendCodeLoginDto} from "../dtos/sendCodeLogin.dto";
 
 @ApiTags("User Controller")
 @Controller("users")
@@ -35,6 +36,43 @@ export class UsersController {
     @Throttle(10, 3000)
     @ApiOkResponse()
     @Post("register")
+    async createUserSendCode(
+        @Body() payload: SendCodeDto,
+        @Res({passthrough: true}) response: Response,
+        @Req() request: Request
+    ) {
+        let user: User = await this.usersService.findOne({
+            where: {EMAIL: payload.email},
+        });
+
+        if (user) {
+            response
+                .status(400)
+                .json({message: ["email_already_exist"], formError: "email"});
+            return;
+        }
+
+        let code: string = uuidv4();
+
+        await this.mailerService.sendCode(payload.email, code);
+
+        this.usersService.codesSent.set(payload.email, code);
+
+        response.status(200).json({
+            message: ["sent_code"],
+        });
+
+        this.logger.info(
+            "Code sent to {EMAIL} {IP}"
+                .replace("{IP}", request.headers["x-forwarded-for"].toString())
+                .replace("{EMAIL}", payload.email)
+        );
+    }
+
+    @UseGuards(ThrottlerGuard)
+    @Throttle(10, 3000)
+    @ApiOkResponse()
+    @Post("register2")
     async createUser(
         @Body() payload: CreateUserDto,
         @Res({passthrough: true}) response: Response
@@ -59,6 +97,15 @@ export class UsersController {
             });
             return;
         }
+
+        if (
+            !payload.code ||
+            payload.code != this.usersService.codesSent.get(payload.email)
+        ) {
+            response.status(400).json({message: ["code_invalid"]});
+            return;
+        }
+
         this.usersService.save(user);
         response.status(200).json({message: ["successfully_registered"]});
     }
@@ -68,27 +115,37 @@ export class UsersController {
     @ApiOkResponse()
     @Post("login2")
     async login2(
-        @Body() payload: SendCodeDto,
+        @Body() payload: SendCodeLoginDto,
         @Res({passthrough: true}) response: Response,
         @Req() request: Request
     ) {
         const user = this.jwtService.decode(request.cookies["jwt"])["userId"];
-        if (request.cookies["jwt"] != this.usersService.usersLoggedInUnconfirmed.get(user)) {
-            response.status(400).json({message: ["login_invalid"]});
-            return;
-        }
-
-        if(payload.code != this.usersService.codesSent.get(user)){
-            response.status(400).json({message: ["code_invalid"]});
-            return;
-        }
-
-        this.usersService.usersLoggedIn.set(user, this.usersService.usersLoggedInUnconfirmed.get(user))
-        this.usersService.usersLoggedInUnconfirmed.delete(user)
 
         let u: User = await this.usersService.findOne({
             where: {ID: user},
         });
+
+        if (
+            request.cookies["jwt"] !=
+            this.usersService.usersLoggedInUnconfirmed.get(user)
+        ) {
+            response.status(400).json({message: ["login_invalid"]});
+            return;
+        }
+
+        if (
+            !payload.code ||
+            payload.code != this.usersService.codesSent.get(u.EMAIL)
+        ) {
+            response.status(400).json({message: ["code_invalid"]});
+            return;
+        }
+
+        this.usersService.usersLoggedIn.set(
+            user,
+            this.usersService.usersLoggedInUnconfirmed.get(user)
+        );
+        this.usersService.usersLoggedInUnconfirmed.delete(user);
 
         response.status(200).json({
             message: ["successfully_logged_in"],
@@ -101,8 +158,7 @@ export class UsersController {
                 request.headers["x-forwarded-for"].toString()
             )
         );
-
-    }   
+    }
 
     @UseGuards(ThrottlerGuard)
     @Throttle(10, 60)
@@ -147,13 +203,13 @@ export class UsersController {
             return;
         }
 
-        let code: string = uuidv4()
+        let code: string = uuidv4();
 
-        await this.mailerService.sendCode(payload.email,code)
+        await this.mailerService.sendCode(payload.email, code);
 
         const jwt = this.jwtService.sign({userId: user.ID});
         this.usersService.usersLoggedInUnconfirmed.set(user.ID, jwt);
-        this.usersService.codesSent.set(user.ID, code);
+        this.usersService.codesSent.set(user.EMAIL, code);
 
         response.cookie("jwt", jwt, {
             httpOnly: true,
@@ -161,19 +217,14 @@ export class UsersController {
             secure: true,
         });
         response.status(200).json({
-            message: ["sent_code"]
+            message: ["sent_code"],
         });
-        
-        this.logger.info(
-            "Code sent to {EMAIL} {IP}".replace(
-                "{IP}",
-                request.headers["x-forwarded-for"].toString()
-            ).replace(
-                "{EMAIL}",
-                payload.email
-            )
-        );
 
+        this.logger.info(
+            "Code sent to {EMAIL} {IP}"
+                .replace("{IP}", request.headers["x-forwarded-for"].toString())
+                .replace("{EMAIL}", payload.email)
+        );
     }
 
     @UseGuards(ThrottlerGuard)
@@ -241,14 +292,20 @@ export class UsersController {
         @Res({passthrough: true}) response: Response,
         @Req() request: Request
     ) {
-
         let user: User = await this.usersService.findOne({
-            where: {ID: this.jwtService.decode(request.cookies["jwt"])["userId"]},
+            where: {
+                ID: this.jwtService.decode(request.cookies["jwt"])["userId"],
+            },
         });
-        
-        let userModified: User = this.usersService.updateUser(user, payload)
 
-        if (user == null || (user.PASSWORD == null && payload.pass != "") || (user.PASSWORD != null && !this.usersService.verifyPass(user, payload.pass))) {
+        let userModified: User = this.usersService.updateUser(user, payload);
+
+        if (
+            user == null ||
+            (user.PASSWORD == null && payload.pass != "") ||
+            (user.PASSWORD != null &&
+                !this.usersService.verifyPass(user, payload.pass))
+        ) {
             response.status(400).json({
                 message: ["invalid_credentials"],
                 formError: "password",
@@ -262,10 +319,16 @@ export class UsersController {
             return;
         }
 
-        if (payload.username != user.USERNAME && !(await this.usersService.validateUniqueUsername(userModified))) {
+        if (
+            payload.username != user.USERNAME &&
+            !(await this.usersService.validateUniqueUsername(userModified))
+        ) {
             response
                 .status(400)
-                .json({message: ["username_already_exist"], formError: "username"});
+                .json({
+                    message: ["username_already_exist"],
+                    formError: "username",
+                });
             this.logger.info(
                 "Fail Update User (username_already_exist) {IP}".replace(
                     "{IP}",
@@ -275,7 +338,10 @@ export class UsersController {
             return;
         }
 
-        if (payload.email != user.EMAIL && !(await this.usersService.validateUniqueEmail(userModified))) {
+        if (
+            payload.email != user.EMAIL &&
+            !(await this.usersService.validateUniqueEmail(userModified))
+        ) {
             response
                 .status(400)
                 .json({message: ["email_already_exist"], formError: "email"});
@@ -297,7 +363,6 @@ export class UsersController {
             )
         );
     }
-
 
     @UseGuards(ThrottlerGuard)
     @Throttle(10, 60)

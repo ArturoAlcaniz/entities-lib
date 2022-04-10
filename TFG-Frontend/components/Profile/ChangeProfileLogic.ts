@@ -4,7 +4,7 @@ import changeProfileValidation from "./ChangeProfileValidation";
 export function handleChangeProfile(event: any) {
     event.preventDefault();
 
-    if(!changeProfileValidation(this)){
+    if (!changeProfileValidation(this)) {
         return;
     }
 
