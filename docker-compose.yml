@@ -16,6 +16,7 @@ services:
     command: bash -c "cd /app/TFG-Backend && bash install.sh"
     volumes:
         - ./TFG-Backend:/app/TFG-Backend
+        - ./certs:/app/certs
         - ./error/:/root/.npm/_logs/
     depends_on:
       - mariadb
@@ -36,6 +37,7 @@ services:
       - "${FRONTEND_CONTAINER_PORT}:3000"
     volumes:
       - ./TFG-Frontend:/app/TFG-Frontend
+      - ./certs:/app/certs
     environment: 
     # Timezone. Variable from .env file
       - TZ

@@ -6,12 +6,13 @@ import {FindOneOptions, Repository} from "typeorm";
 import {Injectable} from "@nestjs/common";
 import {UserBlocked} from "../types/user-blocked.type";
 import {ModifyUserDto} from "../dtos/modifyUser.dto";
+import { CodeEmail } from "../types/code-email.type";
 
 @Injectable()
 export class UsersService extends BaseService<User> {
     usersLoggedIn: Map<string, string> = new Map<string, string>();
     usersLoggedInUnconfirmed: Map<string, string> = new Map<string, string>();
-    codesSent: Map<string, string> = new Map<string, string>();
+    codesSent: Map<string, CodeEmail> = new Map<string, CodeEmail>();
     usersBlocked: Map<string, UserBlocked> = new Map<string, UserBlocked>();
     GOOGLE_CLIENT_ID: string =
         "388959240870-o8ngd13pcgpdp7g8fneg5un7mkgahj73.apps.googleusercontent.com";
@@ -63,7 +64,7 @@ export class UsersService extends BaseService<User> {
         ) {
             return false;
         }
-        if (!(data.email_verified == "true")) {
+        if (data.email_verified != "true") {
             return false;
         }
         if (new Date(data.exp * 1000) < new Date()) {
@@ -80,7 +81,7 @@ export class UsersService extends BaseService<User> {
     }
 
     async checkExistGoogleEmail(data: any) {
-        return await this.findOne({where: {EMAIL: data.email}});
+        return this.findOne({where: {EMAIL: data.email}});
     }
 
     async validateUniqueEmail(user: User) {

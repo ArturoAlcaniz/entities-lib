@@ -3,8 +3,10 @@ import {ApplicationModule} from "./app.module";
 import {SwaggerModule, DocumentBuilder} from "@nestjs/swagger";
 import {ValidationPipe} from "@nestjs/common";
 import cookieParser from "cookie-parser";
+import fs from 'fs'
 
 async function bootstrap() {
+
     const app = await NestFactory.create(ApplicationModule);
 
     const config = new DocumentBuilder()

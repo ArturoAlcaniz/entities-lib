@@ -22,16 +22,9 @@ import {MailerModule} from "./mailer/mailer.module";
 const resolvePath = (file: string) => path.resolve(`./dist/ui_v1/${file}`);
 
 class FrontendMiddleware implements NestMiddleware {
-    use(req: Request, res: Response, next: Function) {
+    use(res: Response) {
         res.sendFile(resolvePath("index.html"));
     }
-}
-
-function getRoute(route: string) {
-    return {
-        path: route,
-        method: RequestMethod.ALL,
-    };
 }
 
 @Module({
@@ -42,9 +35,9 @@ function getRoute(route: string) {
             type: "mariadb",
             host: "mariadb",
             port: 3306,
-            username: "root",
-            password: "123456",
-            database: "tfg",
+            username: process.env.DB_USER,
+            password: process.env.DB_PASS,
+            database: process.env.DB_NAME,
             entities: [User],
             synchronize: true,
             autoLoadEntities: true,

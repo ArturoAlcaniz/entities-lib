@@ -1,6 +1,5 @@
 import {CanActivate, ExecutionContext, Injectable} from "@nestjs/common";
 import {JwtService} from "@nestjs/jwt";
-import {Observable} from "rxjs";
 import {User} from "../entities/user.entity";
 import {UsersService} from "../services/users.service";
 

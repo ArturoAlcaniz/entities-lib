@@ -2,7 +2,9 @@ import {Injectable} from "@nestjs/common";
 
 @Injectable()
 export class CustomHashing {
-    constructor() {}
+    constructor() {
+        // do nothing
+    }
 
     private SHA256(s) {
         var chrsz = 8;
@@ -141,7 +143,7 @@ export class CustomHashing {
 
             m[(((l + 64) >> 9) << 4) + 15] = l;
 
-            for (var i = 0; i < m.length; i += 16) {
+            for (i = 0; i < m.length; i += 16) {
                 a = HASH[0];
 
                 b = HASH[1];
@@ -158,7 +160,7 @@ export class CustomHashing {
 
                 h = HASH[7];
 
-                for (var j = 0; j < 64; j++) {
+                for (j = 0; j < 64; j++) {
                     if (j < 16) W[j] = m[j + i];
                     else
                         W[j] = safe_add(

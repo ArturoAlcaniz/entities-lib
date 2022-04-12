@@ -1,6 +1,6 @@
 import React from 'react'
 import CustomBasicPage from '@components/CustomBasicPage';
-import Header from '@components/Commons/HeaderLogged';
+import HeaderLogged from '@components/Commons/HeaderLogged';
 
 export default class HomePage extends CustomBasicPage{
     constructor(props: any) {
@@ -19,7 +19,7 @@ export default class HomePage extends CustomBasicPage{
         return (
             <div>
                 {super.render()}
-                <Header username={this.props.username}
+                <HeaderLogged username={this.props.username}
                         email={this.props.email}
                         pathname={this.props.pathname} 
                         setLanguageSelected={this.setLanguageSelected} 

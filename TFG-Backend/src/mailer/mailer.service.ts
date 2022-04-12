@@ -3,17 +3,10 @@ import nodemailer from "nodemailer";
 
 @Injectable()
 export class MailerService {
-    private account: nodemailer.TestAccount;
     private user = "tishoptfg@gmail.com";
     private pass = process.env.EMAIL_PASS;
 
-    constructor() {
-        this.loadAccount();
-    }
-
-    private loadAccount = async () => {
-        this.account = await nodemailer.createTestAccount();
-    };
+    constructor() {}
 
     public async sendCode(email: string, code: string) {
         let transporter = nodemailer.createTransport({
@@ -31,7 +24,7 @@ export class MailerService {
             text: `Code to TI-SHOP: ${code}`,
         };
 
-        await transporter.sendMail(mailOptions, function(error, info) {
+        transporter.sendMail(mailOptions, function(error) {
             if (error) {
                 console.log(error);
             }

@@ -67,9 +67,6 @@ export default class Header extends Component<any,any> {
 
     render() {
         const { styleNavbarBurger, styleNavbarMenu } = this.state
-        let languageSelected = this.state.languageSelected
-        let obtainTextTranslated = this.translations[languageSelected]
-
 
         return (
             <nav className="navbar" role="navigation" aria-label="main navigation">

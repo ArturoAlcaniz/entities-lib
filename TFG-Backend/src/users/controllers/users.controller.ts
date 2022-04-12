@@ -1,6 +1,5 @@
 import {LoginDto} from "./../dtos/login.dto";
-import {Body, Inject, Post, Req, Res, UseGuards} from "@nestjs/common";
-import {Controller, Get} from "@nestjs/common";
+import {Body, Inject, Post, Req, Res, UseGuards, Controller, Get} from "@nestjs/common";
 import {Response, Request} from "express";
 import {CreateUserDto} from "../dtos/createUser.dto";
 import {User} from "../entities/user.entity";
@@ -19,6 +18,7 @@ import {SendCodeDto} from "../dtos/sendcode.dto";
 import {MailerService} from "../../mailer/mailer.service";
 import {v4 as uuidv4} from "uuid";
 import {SendCodeLoginDto} from "../dtos/sendCodeLogin.dto";
+import { CodeEmail } from "../types/code-email.type";
 
 @ApiTags("User Controller")
 @Controller("users")
@@ -52,11 +52,11 @@ export class UsersController {
             return;
         }
 
-        let code: string = uuidv4();
+        let codeEmail: CodeEmail = this.createCodeEmail();
 
-        await this.mailerService.sendCode(payload.email, code);
+        await this.mailerService.sendCode(payload.email, codeEmail.code);
 
-        this.usersService.codesSent.set(payload.email, code);
+        this.usersService.codesSent.set(payload.email, codeEmail);
 
         response.status(200).json({
             message: ["sent_code"],
@@ -100,9 +100,14 @@ export class UsersController {
 
         if (
             !payload.code ||
-            payload.code != this.usersService.codesSent.get(payload.email)
+            payload.code != this.usersService.codesSent.get(payload.email).code
         ) {
             response.status(400).json({message: ["code_invalid"]});
+            return;
+        }
+
+        if(!this.checkCodeEmail(this.usersService.codesSent.get(payload.email))){
+            response.status(400).json({message: ["code_expired"]});
             return;
         }
 
@@ -135,9 +140,14 @@ export class UsersController {
 
         if (
             !payload.code ||
-            payload.code != this.usersService.codesSent.get(u.EMAIL)
+            payload.code != this.usersService.codesSent.get(u.EMAIL).code
         ) {
             response.status(400).json({message: ["code_invalid"]});
+            return;
+        }
+
+        if(!this.checkCodeEmail(this.usersService.codesSent.get(u.EMAIL))){
+            response.status(400).json({message: ["code_expired"]});
             return;
         }
 
@@ -203,13 +213,13 @@ export class UsersController {
             return;
         }
 
-        let code: string = uuidv4();
+        let codeEmail: CodeEmail = this.createCodeEmail();
 
-        await this.mailerService.sendCode(payload.email, code);
+        await this.mailerService.sendCode(payload.email, codeEmail.code);
 
         const jwt = this.jwtService.sign({userId: user.ID});
         this.usersService.usersLoggedInUnconfirmed.set(user.ID, jwt);
-        this.usersService.codesSent.set(user.EMAIL, code);
+        this.usersService.codesSent.set(user.EMAIL, codeEmail);
 
         response.cookie("jwt", jwt, {
             httpOnly: true,
@@ -400,7 +410,7 @@ export class UsersController {
             let newUserBlocked: UserBlocked = {
                 firstAttempt: userBlocked.firstAttempt,
                 until: 0,
-                attempts: 2,
+                attempts: newAttempts,
             };
             this.usersService.usersBlocked.set(userToCount, newUserBlocked);
             return;
@@ -416,7 +426,6 @@ export class UsersController {
                 attempts: 0,
             };
             this.usersService.usersBlocked.set(userToCount, newUserBlocked);
-            return;
         }
     }
 
@@ -451,5 +460,18 @@ export class UsersController {
     obtainIpWithEmail(ip: string, email: string): string {
         let value = "{IP}[{EMAIL}]";
         return value.replace("{IP}", ip).replace("{EMAIL}", email);
+    }
+
+    createCodeEmail() {
+        let code: CodeEmail = {
+            code: uuidv4(),
+            expiration: new Date().getTime()+3600000 //1h expiration
+        }
+
+        return code;
+    }
+
+    checkCodeEmail(code: CodeEmail) {
+        return new Date().getTime()<=code.expiration 
     }
 }

@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "next",
         "build": "next build",
-        "start": "next start",
+        "start": "NODE_ENV=production node server.js",
         "css-build": "node-sass --omit-source-map-url sass/mystyles.scss stylesheets/main.css",
         "prettier": "prettier --write {,*/**/}*.{ts,js,jsx,json}",
         "lint": "next lint"

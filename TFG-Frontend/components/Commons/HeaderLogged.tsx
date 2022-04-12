@@ -11,7 +11,7 @@ import ProfileNavbarView from "@components/Commons/ProfileNavbarView";
 import LanguageSelect from "./LanguageSelect";
 import { getAuth, signOut } from "firebase/auth";
 
-export default class Header extends Component<any,any> {
+export default class HeaderLogged extends Component<any,any> {
     translations: { english: any; spanish: any; };
     notificationViewRef: RefObject<HTMLDivElement>;
     profileNavbarViewRef: RefObject<HTMLDivElement>;
