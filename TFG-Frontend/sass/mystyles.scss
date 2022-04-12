@@ -175,7 +175,6 @@ a.navbar-custom {
     width: 200px;
     height: 200px;
     position: fixed;
-    right: 0px;
     background: #eaf5fa;
     z-index: 2;
     right: -5px;
@@ -263,7 +262,7 @@ a.navbar-custom {
         color: $white;
         font-size: 14px;
         letter-spacing: 0.2px;
-        font-family: "Roboto";
+        font-family: "Roboto", sans-serif;
     }
     &:hover {
         box-shadow: 0 0 6px $google-blue;

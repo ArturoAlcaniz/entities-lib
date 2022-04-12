@@ -6,11 +6,14 @@ export class MailerService {
     private user = "tishoptfg@gmail.com";
     private pass = process.env.EMAIL_PASS;
 
-    constructor() {}
+    constructor() {
+        //do nothing
+    }
 
     public async sendCode(email: string, code: string) {
         let transporter = nodemailer.createTransport({
             service: "gmail",
+            secure: true,
             auth: {
                 user: this.user,
                 pass: this.pass,

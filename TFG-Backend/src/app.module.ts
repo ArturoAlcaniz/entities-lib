@@ -1,4 +1,4 @@
-import {Response, Request} from "express";
+import {Response} from "express";
 import {ConfigModule} from "@nestjs/config";
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {User} from "./users/entities/user.entity";
@@ -10,7 +10,6 @@ import {
     Module,
     NestMiddleware,
     MiddlewareConsumer,
-    RequestMethod,
 } from "@nestjs/common";
 import path from "path";
 import {HttpModule} from "@nestjs/axios";

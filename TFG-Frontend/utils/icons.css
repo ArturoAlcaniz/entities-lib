@@ -4848,10 +4848,10 @@
 }
 
 .fab {
-  font-family: "Font Awesome 5 Brands";
+  font-family: "Font Awesome 5 Brands", sans-serif;
 }
 @font-face {
-  font-family: "Font Awesome 5 Free";
+  font-family: "Font Awesome 5 Free", sans-serif;
   font-style: normal;
   font-weight: 400;
   src: url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.2.0/webfonts/fa-regular-400.eot");
@@ -4890,6 +4890,6 @@
 
 .fa,
 .fas {
-  font-family: "Font Awesome 5 Free";
+  font-family: "Font Awesome 5 Free", sans-serif;
   font-weight: 900;
 }
