@@ -151,7 +151,6 @@ function bannedCountdown(thisComponent) {
 
         if (newValue === 0) {
             clearInterval(thisComponent.bannedInterval);
-            return;
         }
     }, 1000);
 }

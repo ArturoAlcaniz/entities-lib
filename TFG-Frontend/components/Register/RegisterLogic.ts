@@ -1,6 +1,19 @@
 import {registerRequest, sendCodeRequest} from "./RegisterRequest";
 import registerValidation from "./RegisterValidation";
 
+
+function errorRegister(error, thisComponent) {
+    let lista: Map<string, string> = new Map<string, string>().set(
+        "registerError",
+        error.response.data.message[0]
+    );
+    thisComponent.setState({
+        formError: error.response.data.formError,
+        requestErrors: lista,
+        requestOK: new Map<string, string>(),
+    });
+}
+
 function handleSendCode(event: any) {
     event.preventDefault();
 
@@ -24,15 +37,7 @@ function handleSendCode(event: any) {
             }
         },
         (error) => {
-            let lista: Map<string, string> = new Map<string, string>().set(
-                "registerError",
-                error.response.data.message[0]
-            );
-            this.setState({
-                formError: error.response.data.formError,
-                requestErrors: lista,
-                requestOK: new Map<string, string>(),
-            });
+            errorRegister(error, this)
         }
     );
 }
@@ -60,15 +65,7 @@ function handleRegister(event: any) {
             }
         },
         (error) => {
-            let lista: Map<string, string> = new Map<string, string>().set(
-                "registerError",
-                error.response.data.message[0]
-            );
-            this.setState({
-                formError: error.response.data.formError,
-                requestErrors: lista,
-                requestOK: new Map<string, string>(),
-            });
+            errorRegister(error, this)
         }
     );
 }

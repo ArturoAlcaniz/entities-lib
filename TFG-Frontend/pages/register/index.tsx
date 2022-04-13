@@ -24,6 +24,18 @@ export default class RegisterPage extends CustomBasicPage{
         }
     }
 
+    obtainFieldStep1(): string {
+        return `field ${this.state.step=='1' ? 'hidden' : ''}`
+    }
+
+    obtainFieldStep2(): string {
+        return `field ${this.state.step=='2' ? 'hidden' : ''}`
+    }
+
+    obtainUsernameClass(): string {
+        return `input ${this.state.formError=='username' ? 'is-danger' : ''}`
+    }
+
     render() {
 
         let languageSelected = this.state.languageSelected
@@ -42,19 +54,19 @@ export default class RegisterPage extends CustomBasicPage{
                     <form onSubmit={step == "1" ?  handleSendCode.bind(this) : handleRegister.bind(this)} >
                         <div className="card registerForm">
                             <div className="card-content">
-                                <div className={`field ${step=='2' ? 'hidden' : ''}`}>
+                                <div className={this.obtainFieldStep2()}>
                                     <label className="label">
                                         {obtainTextTranslated["labels"]["usuario"]}
                                     </label>
                                     <div className="control has-icons-left">
-                                        <input v-model={username} className={`input ${formError=='username' ? 'is-danger' : ''}`} type="text" autoComplete="off"></input>
+                                        <input v-model={username} className={this.obtainUsernameClass()} type="text" autoComplete="off"></input>
                                         <span className="icon is-small is-left">
                                             <i className="fas fa-user"></i>
                                         </span>
                                     </div>
                                     { formError=='username' && CustomErrorMessage(msgError) }
                                 </div>
-                                <div className={`field ${step=='2' ? 'hidden' : ''}`}>
+                                <div className={this.obtainFieldStep2()}>
                                     <label className="label">
                                         {obtainTextTranslated["labels"]["correo"]}
                                     </label>
@@ -66,7 +78,7 @@ export default class RegisterPage extends CustomBasicPage{
                                     </div>
                                     { formError=='email' && CustomErrorMessage(msgError) }
                                 </div>
-                                <div className={`field ${step=='2' ? 'hidden' : ''}`}>
+                                <div className={this.obtainFieldStep2()}>
                                     <label className="label">
                                         {obtainTextTranslated["labels"]["pass"]}
                                     </label>
@@ -81,7 +93,7 @@ export default class RegisterPage extends CustomBasicPage{
                                     </div>
                                     { formError=='password' && CustomErrorMessage(msgError) }
                                 </div>
-                                <div className={`field ${step=='2' ? 'hidden' : ''}`}>
+                                <div className={this.obtainFieldStep2()}>
                                     <label className="label">
                                         {obtainTextTranslated["labels"]["confirm_pass"]}
                                     </label>
@@ -96,7 +108,7 @@ export default class RegisterPage extends CustomBasicPage{
                                     </div>
                                     { formError=='cPassword' && CustomErrorMessage(msgError) }
                                 </div>
-                                <div className={`field ${step=='1' ? 'hidden' : ''}`}>
+                                <div className={this.obtainFieldStep1()}>
                                     <label className="label">
                                         {obtainTextTranslated["labels"]["email_code"]}
                                     </label>
