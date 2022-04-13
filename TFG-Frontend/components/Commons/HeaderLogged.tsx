@@ -28,6 +28,7 @@ export default class HeaderLogged extends Component<any,any> {
             styleNavbarMenu: "navbar-menu",
             showNotifications: false,
             showProfileNavbar: false,
+            showLanguageOptions: false,
         }
 
         this.notificationViewRef = createRef();
@@ -124,9 +125,6 @@ export default class HeaderLogged extends Component<any,any> {
                 <nav className="navbar navbar-index" role="navigation" aria-label="main navigation">
                     <div className="navbar-brand">
                         <Image width={200} height={60} src={logo} alt="Logo"/>
-                        <div className="navbar-item">
-                            {LanguageSelect(this)}
-                        </div>
                         <a role="button" className={styleNavbarBurger} aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" onClick={()=>{this.handleNavbarBurger()}}>
                             <span aria-hidden="true"></span>
                             <span aria-hidden="true"></span>
@@ -143,7 +141,7 @@ export default class HeaderLogged extends Component<any,any> {
                             </Link>
                         </div>
                         <div className="navbar-end">
-
+                            {LanguageSelect(this)}
                             <div className="navbar-item">
                                 <span tabIndex={-1} onBlur={this.blurNotificationView.bind(this)} onClick={() => {this.showNotificationView()}} className="customIcon">
                                     <i className={`${showNotifications ? 'fas' : 'far'} fa-bell`}></i>

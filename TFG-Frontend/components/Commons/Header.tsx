@@ -17,6 +17,7 @@ export default class Header extends Component<any,any> {
             languageSelected: props.initialLanguageSelected || "english",
             styleNavbarBurger: "navbar-burger",
             styleNavbarMenu: "navbar-menu",
+            showLanguageOptions: false,
         }
 
         this.translations =
@@ -72,9 +73,6 @@ export default class Header extends Component<any,any> {
             <nav className="navbar" role="navigation" aria-label="main navigation">
                 <div className="navbar-brand">
                     <Image width={200} height={60} src={logo} alt="Logo"/>
-                    <div className="navbar-item">
-                        {LanguageSelect(this)}
-                    </div>
                     <a role="button" className={styleNavbarBurger} aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" onClick={()=>{this.handleNavbarBurger()}}>
                         <span aria-hidden="true"></span>
                         <span aria-hidden="true"></span>
@@ -86,6 +84,7 @@ export default class Header extends Component<any,any> {
                     <div className="navbar-start">
                     </div>
                     <div className="navbar-end">
+                        {LanguageSelect(this)}
                         <div className="navbar-item">
                             { this.obtainButtonLogin() }
                         </div>
@@ -94,6 +93,7 @@ export default class Header extends Component<any,any> {
                         </div>
                     </div>
                 </div>
+                
             </nav>
         )
     }
