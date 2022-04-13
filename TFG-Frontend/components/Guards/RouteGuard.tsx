@@ -11,7 +11,7 @@ function RouteGuard({ children }) {
     useEffect((router: NextRouter = routing) => {
         const path: string = router.asPath.split('?')[0]
 
-        function authCheck(router: NextRouter) {
+        function authCheck() {
     
             axios({
                 method: 'get',
@@ -43,10 +43,10 @@ function RouteGuard({ children }) {
         }
 
         // on initial load - run auth check 
-        authCheck(routing);
+        authCheck();
 
         // Hide content if the page is not public
-        const hideContent = () => setAuthorized(publicPaths().includes(path));
+        const hideContent = () => setAuthorized(false);
 
         router.events.on('routeChangeStart', hideContent);
 

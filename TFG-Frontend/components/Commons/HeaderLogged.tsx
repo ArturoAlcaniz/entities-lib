@@ -10,6 +10,7 @@ import NotificationsView from "./NotificationsView";
 import ProfileNavbarView from "@components/Commons/ProfileNavbarView";
 import LanguageSelect from "./LanguageSelect";
 import { getAuth, signOut } from "firebase/auth";
+import Link from "next/link";
 
 export default class HeaderLogged extends Component<any,any> {
     translations: { english: any; spanish: any; };
@@ -81,8 +82,6 @@ export default class HeaderLogged extends Component<any,any> {
     }
 
     obtainUserAvatar(): string{
-        let email = this.state.email.trim()
-        email = email.toLowerCase();
         return userProfile
     }
 
@@ -118,7 +117,7 @@ export default class HeaderLogged extends Component<any,any> {
     }
 
     render() {
-        const { showProfileNavbar, showNotifications, styleNavbarBurger, styleNavbarMenu, notificationsViewRef } = this.state
+        const { showProfileNavbar, showNotifications, styleNavbarBurger, styleNavbarMenu } = this.state
 
         return (
             <div>
@@ -137,9 +136,11 @@ export default class HeaderLogged extends Component<any,any> {
 
                     <div id="navbarBasicExample" className={styleNavbarMenu}>
                         <div className="navbar-start">
-                            <a className={this.checkIfIsActive("/home") ? "navbar-custom is-active" : "navbar-custom"}>
-                                Home
-                            </a>
+                            <Link href="/home">
+                                <a className={this.checkIfIsActive("/home") ? "navbar-custom is-active" : "navbar-custom"}>
+                                    Home
+                                </a>
+                            </Link>
                         </div>
                         <div className="navbar-end">
 
@@ -151,7 +152,7 @@ export default class HeaderLogged extends Component<any,any> {
                             <div className="navbar-brand">
                                 <div className={`profile ${showProfileNavbar ? 'profile-active' : ''}`} tabIndex={-1} onBlur={this.blurProfileNavbarView.bind(this)} onClick={() => {this.showProfileNavbarView()}}>
                                     <div className="profile-picture">
-                                        <img src={this.obtainUserAvatar()} width={60} height={60} alt="User Profile"/>
+                                        <Image src={this.obtainUserAvatar()} width={60} height={60} alt="User Profile"/>
                                     </div>
                                 </div>
                                 

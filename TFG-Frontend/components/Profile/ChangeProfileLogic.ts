@@ -1,3 +1,4 @@
+import Router from "next/router";
 import ChangeProfileRequest from "./ChangeProfileRequest";
 import changeProfileValidation from "./ChangeProfileValidation";
 
@@ -22,6 +23,9 @@ export function handleChangeProfile(event: any) {
                 });
                 document.cookie = `username=${this.state.username};`;
                 document.cookie = `email=${this.state.email};`;
+                setTimeout(() => {
+                    Router.push("profile");
+                }, 1000);
             }
         },
         (error) => {

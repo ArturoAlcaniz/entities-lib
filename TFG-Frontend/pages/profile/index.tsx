@@ -18,8 +18,29 @@ export default class ProfilePage extends CustomBasicPage{
             showActualPassword: false,
             showNewPassword: false,
             showNewConfirmPassword: false,
+            componentName: "Profile | TI-Shop",
             formError: ""
         }
+    }
+
+    obtainUsernameClass(): string {
+        return `input ${this.state.formError=='username' ? 'is-danger' : ''}`
+    }
+
+    obtainEmailClass(): string {
+        return `input ${this.state.formError=='email' ? 'is-danger' : ''}`
+    }
+
+    obtainNewpasswordClass(): string {
+        return `input inputpass fas ${this.state.formError=='newPassword' ? 'is-danger' : ''}`
+    }
+
+    obtainNewpasswordconfirmClass(): string {
+        return `input inputpass fas ${this.state.formError=='newConfirmPassword' ? 'is-danger' : ''}`
+    }
+
+    obtainActualpasswordClass(): string {
+        return `input inputpass fas ${this.state.formError=='actualPassword' ? 'is-danger' : ''}`
     }
 
     render() {
@@ -46,7 +67,7 @@ export default class ProfilePage extends CustomBasicPage{
                                         {obtainTextTranslated["labels"]["usuario"]}
                                     </label>
                                     <div className="control has-icons-left">
-                                        <input v-model={username} className={`input ${formError=='username' ? 'is-danger' : ''}`} type="text" autoComplete="off"></input>
+                                        <input v-model={username} className={this.obtainUsernameClass()} type="text" autoComplete="off"></input>
                                         <span className="icon is-small is-left">
                                             <i className="fas fa-user"></i>
                                         </span>
@@ -58,7 +79,7 @@ export default class ProfilePage extends CustomBasicPage{
                                         {obtainTextTranslated["labels"]["correo"]}
                                     </label>
                                     <div className="control has-icons-left">
-                                        <input v-model={email} className={`input ${formError=='email' ? 'is-danger' : ''}`} type="email" autoComplete="off"></input>
+                                        <input v-model={email} className={this.obtainEmailClass()} type="email" autoComplete="off"></input>
                                         <span className="icon is-small is-left">
                                             <i className="fas fa-envelope"></i>    
                                         </span>
@@ -70,7 +91,7 @@ export default class ProfilePage extends CustomBasicPage{
                                         {obtainTextTranslated["labels"]["newPass"]}
                                     </label>
                                     <div className="control has-icons-left has-icons-right">
-                                        <input v-model={newPassword} className={`input inputpass fas ${formError=='newPassword' ? 'is-danger' : ''}`} type={showNewPassword ? "text" : "password"} autoComplete="off"></input>
+                                        <input v-model={newPassword} className={this.obtainNewpasswordClass()} type={showNewPassword ? "text" : "password"} autoComplete="off"></input>
                                         <span className="icon is-small is-left">
                                             <i className="fas fa-lock"></i>
                                         </span>
@@ -85,7 +106,7 @@ export default class ProfilePage extends CustomBasicPage{
                                         {obtainTextTranslated["labels"]["confirm_newPass"]}
                                     </label>
                                     <div className="control has-icons-left has-icons-right">
-                                        <input v-model={newConfirmPassword} className={`input inputpass fas ${formError=='newConfirmPassword' ? 'is-danger' : ''}`} type={showNewConfirmPassword ? "text" : "password"} autoComplete="off"></input>
+                                        <input v-model={newConfirmPassword} className={this.obtainNewpasswordconfirmClass()} type={showNewConfirmPassword ? "text" : "password"} autoComplete="off"></input>
                                         <span className="icon is-small is-left">
                                             <i className="fas fa-lock"></i>
                                         </span>
@@ -101,7 +122,7 @@ export default class ProfilePage extends CustomBasicPage{
                                         {obtainTextTranslated["labels"]["actualPass"]}
                                     </label>
                                     <div className="control has-icons-left has-icons-right">
-                                        <input v-model={actualPassword} className={`input inputpass fas ${formError=='actualPassword' ? 'is-danger' : ''}`} type={showActualPassword ? "text" : "password"} autoComplete="off"></input>
+                                        <input v-model={actualPassword} className={this.obtainActualpasswordClass()} type={showActualPassword ? "text" : "password"} autoComplete="off"></input>
                                         <span className="icon is-small is-left">
                                             <i className="fas fa-lock"></i>
                                         </span>

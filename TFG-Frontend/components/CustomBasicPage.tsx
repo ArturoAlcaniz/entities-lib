@@ -2,6 +2,7 @@ import { Component } from 'react'
 import cookies from "next-cookies";
 import * as langEnglish from '@utils/languages/english.json';
 import * as langSpanish from '@utils/languages/spanish.json';
+import Head from 'next/head';
 
 export default class CustomBasicPage extends Component<any, any>{
     static async getInitialProps(ctx: any) {
@@ -18,6 +19,7 @@ export default class CustomBasicPage extends Component<any, any>{
 
         this.state = {
             languageSelected: props.initialLanguageSelected || "english",
+            componentName: "TI-Shop",
             requestErrors: new Map<string, string>(),
             requestOK: new Map<string, string>()
         }
@@ -29,7 +31,7 @@ export default class CustomBasicPage extends Component<any, any>{
 
         this.setLanguageSelected = this.setLanguageSelected.bind(this)
     }
-    
+
     setLanguageSelected(languageSelected: string) {
         this.setState({ languageSelected: languageSelected })
         document.cookie = `languageSelected=${languageSelected};`;
@@ -38,7 +40,12 @@ export default class CustomBasicPage extends Component<any, any>{
     render(){
 
         return (
-            <div></div>
+            <div>
+                <Head>
+                    <title>{this.state.componentName}</title>
+                    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+                </Head>
+            </div>
         )
     }
 }

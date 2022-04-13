@@ -18,6 +18,7 @@ export default class RegisterPage extends CustomBasicPage{
             password: "",
             confirmPassword: "",
             formError: "",
+            componentName: "Register | TI-Shop",
             showPassword: false,
             showCPassword: false,
         }

@@ -7,14 +7,14 @@ export default class HomePage extends CustomBasicPage{
         super(props);
 
         this.state = {
-            ...this.state
+            ...this.state,
+            componentName: "Home | TI-Shop",
         }
     }
 
     render() {
 
         let languageSelected = this.state.languageSelected
-        let obtainTextTranslated = this.translations[languageSelected]
 
         return (
             <div>

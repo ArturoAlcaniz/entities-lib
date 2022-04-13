@@ -86,17 +86,11 @@ function handleLogin2(event: any) {
                 "loginError",
                 error.response.data.message[0]
             );
-            let secondsBanned = "";
-            if (error.response.data.bannedDuring) {
-                secondsBanned = error.response.data.bannedDuring;
-            }
             this.setState({
                 formError: error.response.data.formError,
                 requestErrors: lista,
-                bannedSeconds: secondsBanned,
                 requestOK: new Map<string, string>(),
             });
-            bannedCountdown(this);
         }
     );
 }
