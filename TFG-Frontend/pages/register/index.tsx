@@ -3,6 +3,7 @@ import CustomBasicPage from '@components/CustomBasicPage';
 import Header from '@components/Commons/Header';
 import {handleRegister, handleSendCode, showCPass, showPass} from '@components/Register/RegisterLogic';
 import CustomErrorMessage from '@utils/CustomErrorMessage';
+import Link from 'next/link';
 
 export default class RegisterPage extends CustomBasicPage{
     constructor(props: any) {
@@ -110,6 +111,14 @@ export default class RegisterPage extends CustomBasicPage{
                                         <button className="button">
                                             {obtainTextTranslated["buttons"]["registro"]}
                                         </button>
+                                    </p>
+                                </div>
+                                <div className="field_haveAccount">
+                                    <p className="control">
+                                        {obtainTextTranslated["explanations"]["have_account2"]}
+                                        <Link href="/">
+                                            <a>{obtainTextTranslated["explanations"]["login"]}</a>
+                                        </Link>
                                     </p>
                                 </div>
                             </div>

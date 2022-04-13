@@ -21,25 +21,21 @@ function RouteGuard({ children }) {
                 if(response.status == 200){
                     document.cookie = `username=${response.data.USERNAME};`;
                     setAuthorized(true);
-                    if(publicPaths().includes(path)) {
-                        if(router) {
-                            router.push({
-                                pathname: '/home',
-                                query: { returnUrl: router.asPath }
-                            },'/home');
-                        }
+                    if(publicPaths().includes(path) && router) {
+                        router.push({
+                            pathname: '/home',
+                            query: { returnUrl: router.asPath }
+                        },'/home');
                     }
                 }
             }, () => {
                 setAuthorized(publicPaths().includes(path))
                 
-                if(!publicPaths().includes(path)) {
-                    if(router){
-                        router.push({
-                            pathname: '/',
-                            query: { returnUrl: router.asPath }
-                        },'/');
-                    }
+                if(!publicPaths().includes(path) && router) {
+                    router.push({
+                        pathname: '/',
+                        query: { returnUrl: router.asPath }
+                    },'/');
                 }
                 
             });

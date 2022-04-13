@@ -17,7 +17,11 @@
     },
     "explanations": {
         "hello": "Welcome",
-        "seconds": "seconds"
+        "seconds": "seconds",
+        "have_account": "Don't have an account?",
+        "have_account2": "Already have an account?",
+        "create_account": "Create one",
+        "login": "Log In"
     },
     "buttons": {
         "login": "Login",
