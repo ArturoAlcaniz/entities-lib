@@ -139,6 +139,11 @@ export default class HeaderLogged extends Component<any,any> {
                                     Home
                                 </a>
                             </Link>
+                            <Link href="/market">
+                                <a className={this.checkIfIsActive("/market") ? "navbar-custom is-active" : "navbar-custom"}>
+                                    Market
+                                </a>
+                            </Link>
                         </div>
                         <div className="navbar-end">
                             {LanguageSelect(this)}

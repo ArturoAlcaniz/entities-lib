@@ -13,7 +13,11 @@
         "confirm_pass": "Confirm password",
         "actualPass": "Current password",
         "usuario": "Username",
-        "email_code": "Code sent to email"
+        "email_code": "Code sent to email",
+        "product_name": "Product name",
+        "product_category": "Category",
+        "product_description": "Description",
+        "product_price": "Price"
     },
     "explanations": {
         "hello": "Welcome",
@@ -30,7 +34,8 @@
         "login_google": "Login with Google",
         "account_config": "Account settings",
         "save": "Update",
-        "send_code": "Send code"
+        "send_code": "Send code",
+        "add_product": "Create product"
     },
     "requestErrors": {
         "invalid_credentials": "Invalid Credentials",
@@ -44,11 +49,16 @@
         "username_already_exist": "Username already exist",
         "email_already_exist": "Email already exist",
         "token_empty": "Error logging with google",
-        "too_many_attempts": "You made too many attempts, banned during "
+        "too_many_attempts": "You made too many attempts, banned during ",
+        "productname_empty": "The product name cannot be empty",
+        "productcategory_empty": "The category cannot be empty",
+        "productdescription_empty": "The description cannot be empty",
+        "productprice_empty": "The price cannot be empty"
     },
     "requestOK": {
         "successfully_logged_in": "User successfully logged in",
         "successfully_registered": "User successfully registered",
-        "successfully_updated": "User succesfully updated"
+        "successfully_updated": "User succesfully updated",
+        "successfully_product_created": "Product succesfully created"
     }
 }

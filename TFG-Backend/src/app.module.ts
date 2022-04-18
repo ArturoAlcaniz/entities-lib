@@ -6,6 +6,7 @@ import {ConfigJwtModule} from "./configJwt/configJwt.module";
 import {AppController} from "./app.controller";
 import {HashingModule} from "./hashing/hashing.module";
 import {UsersModule} from "./users/users.module";
+import {ProductsModule} from "./products/products.module";
 import {
     Module,
     NestMiddleware,
@@ -17,6 +18,7 @@ import {ThrottlerModule} from "@nestjs/throttler";
 import {WinstonModule} from "nest-winston";
 import * as winston from "winston";
 import {MailerModule} from "./mailer/mailer.module";
+import { Product } from "./products/entities/product.entity";
 
 const resolvePath = (file: string) => path.resolve(`./dist/ui_v1/${file}`);
 
@@ -37,13 +39,14 @@ class FrontendMiddleware implements NestMiddleware {
             username: process.env.DB_USER,
             password: process.env.DB_PASS,
             database: process.env.DB_NAME,
-            entities: [User],
+            entities: [User,Product],
             synchronize: true,
             autoLoadEntities: true,
         }),
         HashingModule,
         MailerModule,
         UsersModule,
+        ProductsModule,
         HttpModule,
         ThrottlerModule.forRoot({
             ttl: 60,

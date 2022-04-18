@@ -13,7 +13,11 @@
         "confirm_pass": "Confirmación",
         "actualPass": "Contraseña actual",
         "usuario": "Nombre de usuario",
-        "email_code": "Codigo enviado al correo"
+        "email_code": "Codigo enviado al correo",
+        "product_name": "Nombre del producto",
+        "product_category": "Categoría",
+        "product_description": "Descripción",
+        "product_price": "Precio"
     },
     "explanations": {
         "hello": "Bienvenido",
@@ -30,7 +34,8 @@
         "login_google": "Iniciar sesión con Google",
         "account_config": "Configuración de la cuenta",
         "save": "Guardar",
-        "send_code": "Enviar código"
+        "send_code": "Enviar código",
+        "add_product": "Crear producto"
     },
     "requestErrors": {
         "invalid_credentials": "Credenciales no válidas",
@@ -44,11 +49,16 @@
         "username_already_exist": "El usuario introducido ya existe",
         "email_already_exist": "El correo introducido ya existe",
         "token_empty": "Error al iniciar sesión con google",
-        "too_many_attempts": "Realizaste demasiados intentos, estas baneado durante "
+        "too_many_attempts": "Realizaste demasiados intentos, estas baneado durante ",
+        "productname_empty": "El nombre del producto no puede estar vacío",
+        "productcategory_empty": "La categoría no puede estar vacía",
+        "productdescription_empty": "La descripción no puede estar vacía",
+        "productprice_empty": "El precio no puede estar vacío"
     },
     "requestOK": {
         "successfully_logged_in": "Usuario logeado correctamente",
         "successfully_registered": "Usuario registrado correctamente",
-        "successfully_updated": "Usuario modificado correctamente"
+        "successfully_updated": "Usuario modificado correctamente",
+        "successfully_product_created": "Producto creado correctamente"
     }
 }

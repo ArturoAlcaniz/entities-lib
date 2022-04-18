@@ -3,9 +3,11 @@ import {
     Column,
     CreateDateColumn,
     Entity,
+    OneToMany,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from "typeorm";
+import { Product } from "../../products/entities/product.entity";
 
 @Entity()
 export class User extends BaseEntity {
@@ -23,6 +25,9 @@ export class User extends BaseEntity {
 
     @Column({type: "varchar", nullable: true, default: null, length: 100})
     PASSWORD: string;
+
+    @OneToMany(type => Product, product => product.USER)
+    PRODUCTS: Product[];
 
     @CreateDateColumn()
     CREATED_AT: "string";
