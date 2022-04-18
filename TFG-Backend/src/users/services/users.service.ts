@@ -35,8 +35,9 @@ export class UsersService extends BaseService<User> {
     updateUser(user: User, data: ModifyUserDto): User {
         user.EMAIL = data.email;
         user.USERNAME = data.username;
-        if (data.newPass != null) {
+        if (data.newPass) {
             user.PASSWORD = this.hashService.stringToHash(data.newPass);
+            console.log(data.newPass)
         }
         return user;
     }
@@ -91,8 +92,22 @@ export class UsersService extends BaseService<User> {
         return true;
     }
 
+    async validateUniqueEmailWithEmail(email: string) {
+        if ((await this.findOne({where: {EMAIL: email}})) != null) {
+            return false;
+        }
+        return true;
+    }
+
     async validateUniqueUsername(user: User) {
         if ((await this.findOne({where: {USERNAME: user.USERNAME}})) != null) {
+            return false;
+        }
+        return true;
+    }
+
+    async validateUniqueUsernameWithUsername(username: string) {
+        if ((await this.findOne({where: {USERNAME: username}})) != null) {
             return false;
         }
         return true;

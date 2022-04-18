@@ -10,11 +10,12 @@ export class ModifyUserDto {
     @IsEmail()
     readonly email: string;
 
-    @IsNotEmpty()
     @IsString()
-    @IsOptional()
     readonly newPass: string;
 
     @IsString()
     readonly pass: string;
+
+    @IsOptional()
+    readonly avatar: Express.Multer.File;
 }

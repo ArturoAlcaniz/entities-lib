@@ -2,7 +2,7 @@ import React from 'react'
 import CustomBasicPage from '@components/CustomBasicPage';
 import HeaderLogged from '@components/Commons/HeaderLogged';
 import CustomErrorMessage from '@utils/CustomErrorMessage';
-import { handleChangeProfile, showActualPass, showNewCPass, showNewPass } from '@components/Profile/ChangeProfileLogic';
+import { handleChangeProfile, showActualPass, showNewCPass, showNewPass, uploadAvatar } from '@components/Profile/ChangeProfileLogic';
 
 export default class ProfilePage extends CustomBasicPage{
     constructor(props: any) {
@@ -14,6 +14,7 @@ export default class ProfilePage extends CustomBasicPage{
             email: this.props.email || "",
             actualPassword: "",
             newPassword: "",
+            avatar: null,
             newConfirmPassword: "",
             showActualPassword: false,
             showNewPassword: false,
@@ -48,7 +49,7 @@ export default class ProfilePage extends CustomBasicPage{
         let languageSelected = this.state.languageSelected
         let obtainTextTranslated = this.translations[languageSelected]
         let msgError = obtainTextTranslated["requestErrors"][this.state.requestErrors.get('changeProfileError')]
-        const { username, email, actualPassword, newPassword, newConfirmPassword, showActualPassword, showNewPassword, showNewConfirmPassword, formError } = this.state
+        const { username, avatar, email, actualPassword, newPassword, newConfirmPassword, showActualPassword, showNewPassword, showNewConfirmPassword, formError } = this.state
 
         return (
             <div>
@@ -62,6 +63,14 @@ export default class ProfilePage extends CustomBasicPage{
                     <form onSubmit={handleChangeProfile.bind(this)} >
                         <div className="card loginForm">
                             <div className="card-content">
+                                <div className="field">
+                                    <label className="label">
+                                        {obtainTextTranslated["labels"]["avatar"]}
+                                    </label>
+                                    <div className="control">
+                                        <input type="file" name="myAvatar" onChange={uploadAvatar.bind(this)} />
+                                    </div>
+                                </div>
                                 <div className="field">
                                     <label className="label">
                                         {obtainTextTranslated["labels"]["usuario"]}

@@ -2,6 +2,14 @@ import Router from "next/router";
 import ChangeProfileRequest from "./ChangeProfileRequest";
 import changeProfileValidation from "./ChangeProfileValidation";
 
+export function uploadAvatar(event: any) {
+    if (event.target.files && event.target.files[0]) {
+        const i = event.target.files[0];
+  
+        this.setState({avatar: i});
+    }
+}
+
 export function handleChangeProfile(event: any) {
     event.preventDefault();
 

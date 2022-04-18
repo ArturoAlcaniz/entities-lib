@@ -6,6 +6,7 @@ TFG-Frontend/.env
 TFG-Backend/node_modules
 TFG-Backend/log
 TFG-Backend/.env
+TFG-Backend/files
 TFG-Frontend/.next
 TFG-Test/node_modules
 certs/localhost/sslcache

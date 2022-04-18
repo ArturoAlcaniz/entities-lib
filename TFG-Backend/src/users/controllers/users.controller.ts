@@ -1,5 +1,5 @@
 import {LoginDto} from "./../dtos/login.dto";
-import {Body, Inject, Post, Req, Res, UseGuards, Controller, Get} from "@nestjs/common";
+import {Body, Inject, Post, Req, Res, UseGuards, Controller, Get, UseInterceptors, UploadedFile, UploadedFiles} from "@nestjs/common";
 import {Response, Request} from "express";
 import {CreateUserDto} from "../dtos/createUser.dto";
 import {User} from "../entities/user.entity";
@@ -19,6 +19,9 @@ import {MailerService} from "../../mailer/mailer.service";
 import {v4 as uuidv4} from "uuid";
 import {SendCodeLoginDto} from "../dtos/sendCodeLogin.dto";
 import { CodeEmail } from "../types/code-email.type";
+import { FileFieldsInterceptor, FileInterceptor } from "@nestjs/platform-express";
+import { Express } from 'express';
+import { Multer } from 'multer';
 
 @ApiTags("User Controller")
 @Controller("users")
@@ -297,18 +300,20 @@ export class UsersController {
     @ApiOkResponse()
     @Post("modify")
     @UseGuards(AuthenticatedGuard)
+    @UseInterceptors(
+	    FileInterceptor('avatar')
+    )
     async modifyUser(
         @Body() payload: ModifyUserDto,
         @Res({passthrough: true}) response: Response,
-        @Req() request: Request
+        @Req() request: Request,
+        @UploadedFile() avatar: Express.Multer.File
     ) {
         let user: User = await this.usersService.findOne({
             where: {
                 ID: this.jwtService.decode(request.cookies["jwt"])["userId"],
             },
         });
-
-        let userModified: User = this.usersService.updateUser(user, payload);
 
         if (
             user == null ||
@@ -331,7 +336,7 @@ export class UsersController {
 
         if (
             payload.username != user.USERNAME &&
-            !(await this.usersService.validateUniqueUsername(userModified))
+            !(await this.usersService.validateUniqueUsernameWithUsername(payload.username))
         ) {
             response
                 .status(400)
@@ -350,7 +355,7 @@ export class UsersController {
 
         if (
             payload.email != user.EMAIL &&
-            !(await this.usersService.validateUniqueEmail(userModified))
+            !(await this.usersService.validateUniqueEmailWithEmail(payload.email))
         ) {
             response
                 .status(400)
@@ -364,10 +369,95 @@ export class UsersController {
             return;
         }
 
-        this.usersService.save(userModified);
+        this.usersService.updateUser(user, payload)
+        this.usersService.save(user);
         response.status(200).json({message: ["successfully_updated"]});
         this.logger.info(
-            "Update User Sucessfully {IP}".replace(
+            "Update User Sucessfully {IP} {FILE}".replace(
+                "{IP}",
+                request.headers["x-forwarded-for"].toString()
+            ).replace(
+                "{FILE}",
+                avatar.filename
+            )
+        );
+    }
+
+    @UseGuards(ThrottlerGuard)
+    @Throttle(10, 3000)
+    @ApiOkResponse()
+    @Post("modifyWithoutAvatar")
+    @UseGuards(AuthenticatedGuard)
+    async modifyUserWithoutAvatar(
+        @Body() payload: ModifyUserDto,
+        @Res({passthrough: true}) response: Response,
+        @Req() request: Request,
+    ) {
+        let user: User = await this.usersService.findOne({
+            where: {
+                ID: this.jwtService.decode(request.cookies["jwt"])["userId"],
+            },
+        });
+
+        if (
+            user == null ||
+            (user.PASSWORD == null && payload.pass != "") ||
+            (user.PASSWORD != null &&
+                !this.usersService.verifyPass(user, payload.pass))
+        ) {
+            response.status(400).json({
+                message: ["invalid_credentials"],
+                formError: "actualPassword",
+            });
+            this.logger.info(
+                "Fail Update User (invalid_credentials) {IP}".replace(
+                    "{IP}",
+                    request.headers["x-forwarded-for"].toString()
+                )
+            );
+            return;
+        }
+
+        if (
+            payload.username != user.USERNAME &&
+            !(await this.usersService.validateUniqueUsernameWithUsername(payload.username))
+        ) {
+            response
+                .status(400)
+                .json({
+                    message: ["username_already_exist"],
+                    formError: "username",
+                });
+            this.logger.info(
+                "Fail Update User (username_already_exist) {IP}".replace(
+                    "{IP}",
+                    request.headers["x-forwarded-for"].toString()
+                )
+            );
+            return;
+        }
+
+        if (
+            payload.email != user.EMAIL &&
+            !(await this.usersService.validateUniqueEmailWithEmail(payload.email))
+        ) {
+            response
+                .status(400)
+                .json({message: ["email_already_exist"], formError: "email"});
+            this.logger.info(
+                "Fail Update User (email_already_exist) {IP}".replace(
+                    "{IP}",
+                    request.headers["x-forwarded-for"].toString()
+                )
+            );
+            return;
+        }
+
+        this.usersService.updateUser(user, payload)
+        this.usersService.save(user);
+        response.status(200).json({message: ["successfully_updated"]});
+        this.logger.info(
+            "Update User Sucessfully {IP} {FILE}".replace(
                 "{IP}",
                 request.headers["x-forwarded-for"].toString()
             )

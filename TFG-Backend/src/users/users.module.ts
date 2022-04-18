@@ -9,10 +9,14 @@ import {HttpModule} from "@nestjs/axios";
 import {WinstonModule} from "nest-winston";
 import {ThrottlerModule} from "@nestjs/throttler";
 import {MailerModule} from "../mailer/mailer.module";
+import { MulterModule } from '@nestjs/platform-express';
 
 @Global()
 @Module({
     imports: [
+        MulterModule.register({
+            dest: './files',
+        }),
         TypeOrmModule.forFeature([User]),
         ConfigJwtModule,
         HashingModule,

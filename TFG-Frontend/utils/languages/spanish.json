@@ -17,7 +17,8 @@
         "product_name": "Nombre del producto",
         "product_category": "Categoría",
         "product_description": "Descripción",
-        "product_price": "Precio"
+        "product_price": "Precio",
+        "avatar": "Avatar"
     },
     "explanations": {
         "hello": "Bienvenido",
