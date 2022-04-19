@@ -2,6 +2,7 @@ import Router from "next/router";
 import {
     loginGoogleRequest,
     loginRequest,
+    obtainAvatar,
     sendCodeRequest,
 } from "./LoginRequest";
 import loginValidation from "./LoginValidation";
@@ -35,9 +36,11 @@ function handleLoginToBack(thisComponent, idToken: string) {
                 });
                 document.cookie = `username=${response.data.USERNAME};`;
                 document.cookie = `email=${response.data.EMAIL};`;
+                document.cookie = `avatar=${response.data.AVATAR};`;
                 setTimeout(() => {
                     Router.push("home");
                 }, 1000);
+                
             }
         },
         (error) => {
@@ -76,6 +79,7 @@ function handleLogin2(event: any) {
                 });
                 document.cookie = `username=${response.data.USERNAME};`;
                 document.cookie = `email=${response.data.EMAIL};`;
+                document.cookie = `avatar=${response.data.AVATAR};`;
                 setTimeout(() => {
                     Router.push("home");
                 }, 1000);

@@ -56,6 +56,7 @@ export default class ProfilePage extends CustomBasicPage{
                 {super.render()}
                 <HeaderLogged username={this.props.username}
                         email={this.props.email}
+                        avatar={this.props.avatar}
                         pathname={this.props.pathname} 
                         setLanguageSelected={this.setLanguageSelected} 
                         initialLanguageSelected={languageSelected} />

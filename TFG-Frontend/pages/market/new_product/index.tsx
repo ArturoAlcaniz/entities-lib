@@ -32,46 +32,47 @@ export default class CreateProductPage extends CustomBasicPage{
                 {super.render()}
                 <HeaderLogged username={this.props.username}
                         email={this.props.email}
+                        avatar={this.props.avatar} 
                         pathname={this.props.pathname} 
                         setLanguageSelected={this.setLanguageSelected} 
                         initialLanguageSelected={languageSelected} />
                 <div className="pageCentered">
                     <form onSubmit={handleCreateProduct.bind(this)}>
-                        <div className="card">
+                        <div className="card createProductForm">
                             <div className="card-content">
                                 <div className="field">
                                     <label className="label">
                                         {obtainTextTranslated["labels"]["product_name"]}
                                     </label>
                                     <div className="control">
-                                        <input v-model={productname} type="text" autoComplete="off"></input>
+                                        <input className="input" v-model={productname} type="text" autoComplete="off"></input>
                                     </div>
                                     { formError=='name' && CustomErrorMessage(msgError) }
                                 </div>
                                 <div className="field">
-                                    <div className="label">
+                                    <label className="label">
                                         {obtainTextTranslated["labels"]["product_category"]}
-                                    </div>
+                                    </label>
                                     <div className="control">
-                                        <input v-model={category} type="text" autoComplete="off"></input>
+                                        <input className="input" v-model={category} type="text" autoComplete="off"></input>
                                     </div>
                                     { formError=='category' && CustomErrorMessage(msgError) }
                                 </div>
                                 <div className="field">
-                                    <div className="label">
+                                    <label className="label">
                                         {obtainTextTranslated["labels"]["product_description"]}
-                                    </div>
+                                    </label>
                                     <div className="control">
-                                        <input v-model={description} type="text" autoComplete="off"></input>
+                                        <input className="input" v-model={description} type="text" autoComplete="off"></input>
                                     </div>
                                     { formError=='description' && CustomErrorMessage(msgError) }
                                 </div>
                                 <div className="field">
-                                    <div className="label">
+                                    <label className="label">
                                         {obtainTextTranslated["labels"]["product_price"]}
-                                    </div>
+                                    </label>
                                     <div className="control">
-                                        <input v-model={price} type="number" autoComplete="off"></input>
+                                        <input className="input" v-model={price} type="number" autoComplete="off"></input>
                                     </div>
                                     { formError=='price' && CustomErrorMessage(msgError) }
                                 </div>

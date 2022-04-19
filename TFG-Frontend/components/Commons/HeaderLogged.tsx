@@ -23,6 +23,7 @@ export default class HeaderLogged extends Component<any,any> {
             pathname: props.pathname,
             username: props.username || "",
             email: props.email || "",
+            avatar: props.avatar || "",
             languageSelected: props.initialLanguageSelected || "english",
             styleNavbarBurger: "navbar-burger",
             styleNavbarMenu: "navbar-menu",
@@ -83,7 +84,7 @@ export default class HeaderLogged extends Component<any,any> {
     }
 
     obtainUserAvatar(): string{
-        return userProfile
+        return this.state.avatar
     }
 
     obtainUserInfo(): string{
@@ -155,7 +156,7 @@ export default class HeaderLogged extends Component<any,any> {
                             <div className="navbar-brand">
                                 <div className={`profile ${showProfileNavbar ? 'profile-active' : ''}`} tabIndex={-1} onBlur={this.blurProfileNavbarView.bind(this)} onClick={() => {this.showProfileNavbarView()}}>
                                     <div className="profile-picture">
-                                        <Image src={this.obtainUserAvatar()} width={60} height={60} alt="User Profile"/>
+                                        <Image src={this.state.avatar ? `/api/users/avatar/${this.state.avatar}` : `/api/users/avatar`} width={60} height={60} alt="User Profile"/>
                                     </div>
                                 </div>
                                 

@@ -1,5 +1,5 @@
 import {LoginDto} from "./../dtos/login.dto";
-import {Body, Inject, Post, Req, Res, UseGuards, Controller, Get, UseInterceptors, UploadedFile, UploadedFiles} from "@nestjs/common";
+import {Body, Inject, Post, Req, Res, UseGuards, Controller, Get, UseInterceptors, UploadedFile, UploadedFiles, StreamableFile, Param} from "@nestjs/common";
 import {Response, Request} from "express";
 import {CreateUserDto} from "../dtos/createUser.dto";
 import {User} from "../entities/user.entity";
@@ -22,6 +22,10 @@ import { CodeEmail } from "../types/code-email.type";
 import { FileFieldsInterceptor, FileInterceptor } from "@nestjs/platform-express";
 import { Express } from 'express';
 import { Multer } from 'multer';
+import { createReadStream } from "fs";
+import { join } from "path";
+import fs from 'fs';
+
 
 @ApiTags("User Controller")
 @Controller("users")
@@ -164,6 +168,7 @@ export class UsersController {
             message: ["successfully_logged_in"],
             USERNAME: u.USERNAME,
             EMAIL: u.EMAIL,
+            AVATAR: u.AVATAR,
         });
         this.logger.info(
             "Login Sucessfully {IP}".replace(
@@ -292,6 +297,7 @@ export class UsersController {
             message: ["successfully_logged_in"],
             USERNAME: user.USERNAME,
             EMAIL: user.EMAIL,
+            AVATAR: user.AVATAR,
         });
     }
 
@@ -369,9 +375,10 @@ export class UsersController {
             return;
         }
 
-        this.usersService.updateUser(user, payload)
+        this.usersService.updateUser(user, payload);
+        user.AVATAR = avatar.filename;
         this.usersService.save(user);
-        response.status(200).json({message: ["successfully_updated"]});
+        response.status(200).json({message: ["successfully_updated"], AVATAR: user.AVATAR});
         this.logger.info(
             "Update User Sucessfully {IP} {FILE}".replace(
                 "{IP}",
@@ -381,6 +388,41 @@ export class UsersController {
                 avatar.filename
             )
         );
+    }
+
+    @UseGuards(ThrottlerGuard)
+    @Throttle(20, 3000)
+    @ApiOkResponse()
+    @Get("avatar/:avatar")
+    @UseGuards(AuthenticatedGuard)
+    async getAvatar(
+        @Param('avatar') avatar: string,
+        @Res({passthrough: true}) response: Response,
+        @Req() request: Request,
+    ) {
+
+        let file = "files/{FILENAME}".replace(
+            "{FILENAME}",
+            avatar
+        )
+        if (fs.existsSync(file)) {
+            const f = createReadStream(join(process.cwd(), file));
+            return new StreamableFile(f);
+        }
+    }
+
+    @UseGuards(ThrottlerGuard)
+    @Throttle(20, 3000)
+    @ApiOkResponse()
+    @Get("avatar")
+    @UseGuards(AuthenticatedGuard)
+    async getAvatarDefault(
+        @Res({passthrough: true}) response: Response,
+        @Req() request: Request,
+    ) {
+        let file = "UserProfile.png"
+        const f = createReadStream(join(process.cwd(), file));
+        return new StreamableFile(f); 
     }
 
     @UseGuards(ThrottlerGuard)
@@ -455,7 +497,7 @@ export class UsersController {
 
         this.usersService.updateUser(user, payload)
         this.usersService.save(user);
-        response.status(200).json({message: ["successfully_updated"]});
+        response.status(200).json({message: ["successfully_updated"], AVATAR: user.AVATAR});
         this.logger.info(
             "Update User Sucessfully {IP} {FILE}".replace(
                 "{IP}",

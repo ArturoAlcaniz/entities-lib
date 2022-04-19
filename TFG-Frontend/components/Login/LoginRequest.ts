@@ -1,5 +1,15 @@
 import axios, {AxiosPromise} from "axios";
 
+function obtainAvatar(): AxiosPromise<any> {
+    return axios({
+        method: 'get',
+        url: '/api/users/avatar',
+        data: {},
+        responseType: 'blob',
+    });
+}
+
+
 function sendCodeRequest(thisComponent: any): AxiosPromise<any> {
     return axios({
         method: "post",
@@ -32,4 +42,4 @@ function loginRequest(thisComponent: any): AxiosPromise<any> {
     });
 }
 
-export {loginGoogleRequest, loginRequest, sendCodeRequest};
+export {loginGoogleRequest, loginRequest, sendCodeRequest, obtainAvatar};

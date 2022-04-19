@@ -21,7 +21,8 @@ export default class HomePage extends CustomBasicPage{
                 {super.render()}
                 <HeaderLogged username={this.props.username}
                         email={this.props.email}
-                        pathname={this.props.pathname} 
+                        pathname={this.props.pathname}
+                        avatar={this.props.avatar} 
                         setLanguageSelected={this.setLanguageSelected} 
                         initialLanguageSelected={languageSelected} />
                 <div className="pageCentered">

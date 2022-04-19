@@ -31,6 +31,7 @@ export function handleChangeProfile(event: any) {
                 });
                 document.cookie = `username=${this.state.username};`;
                 document.cookie = `email=${this.state.email};`;
+                document.cookie = `avatar=${response.data.AVATAR};`;
                 setTimeout(() => {
                     Router.push("profile");
                 }, 1000);
