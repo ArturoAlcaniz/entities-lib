@@ -26,12 +26,6 @@ export default class Header extends Component<any,any> {
         }
     }
 
-    handleLanguageChange = (event: any) => {
-        const newLanguage = event.target.value
-        this.setState({ languageSelected: newLanguage })
-        this.props.setLanguageSelected(newLanguage)
-    }
-
     handleNavbarBurger() {
         if(this.state.styleNavbarBurger == "navbar-burger") {
             this.setState({ styleNavbarBurger: "navbar-burger is-active", styleNavbarMenu: "navbar-menu is-active" })

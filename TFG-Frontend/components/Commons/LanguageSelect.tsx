@@ -26,10 +26,10 @@ export default function LanguageSelect(thisComponent): JSX.Element {
                     <i className="fas fa-caret-down"></i>
                 </div>
                 <div className={`customBoxLanguage ${thisComponent.state.showLanguageOptions ? '' : 'hidden'}`}>
-                    <div className="optionLanguage" onClick={() => {thisComponent.setState({languageSelected: "english"})}}>
+                    <div className="optionLanguage" onClick={() => {thisComponent.setState({languageSelected: "english"}); thisComponent.props.setLanguageSelected("english")}}>
                         <Image width={32} height={24} src={USImage} alt="US Flag" />
                     </div>
-                    <div className="optionLanguage" onClick={() => {thisComponent.setState({languageSelected: "spanish"})}}>
+                    <div className="optionLanguage" onClick={() => {thisComponent.setState({languageSelected: "spanish"}); thisComponent.props.setLanguageSelected("spanish")}}>
                         <Image width={32} height={24} src={ESImage} alt="ES Flag" />
                     </div>
                 </div>
