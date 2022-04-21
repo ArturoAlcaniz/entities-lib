@@ -38,7 +38,7 @@ function handleLoginToBack(thisComponent, idToken: string) {
                 document.cookie = `email=${response.data.EMAIL};`;
                 document.cookie = `avatar=${response.data.AVATAR};`;
                 setTimeout(() => {
-                    Router.push("home");
+                    Router.push("buy");
                 }, 1000);
                 
             }
@@ -81,7 +81,7 @@ function handleLogin2(event: any) {
                 document.cookie = `email=${response.data.EMAIL};`;
                 document.cookie = `avatar=${response.data.AVATAR};`;
                 setTimeout(() => {
-                    Router.push("home");
+                    Router.push("buy");
                 }, 1000);
             }
         },

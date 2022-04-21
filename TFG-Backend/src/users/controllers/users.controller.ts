@@ -19,7 +19,7 @@ import {MailerService} from "../../mailer/mailer.service";
 import {v4 as uuidv4} from "uuid";
 import {SendCodeLoginDto} from "../dtos/sendCodeLogin.dto";
 import { CodeEmail } from "../types/code-email.type";
-import { FileFieldsInterceptor, FileInterceptor } from "@nestjs/platform-express";
+import { FileInterceptor } from "@nestjs/platform-express";
 import { Express } from 'express';
 import { Multer } from 'multer';
 import { createReadStream } from "fs";

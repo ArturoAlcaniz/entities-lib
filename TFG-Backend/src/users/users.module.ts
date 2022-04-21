@@ -10,6 +10,7 @@ import {WinstonModule} from "nest-winston";
 import {ThrottlerModule} from "@nestjs/throttler";
 import {MailerModule} from "../mailer/mailer.module";
 import { MulterModule } from '@nestjs/platform-express';
+import { SessionsController } from "./controllers/session.controller";
 
 @Global()
 @Module({
@@ -29,7 +30,7 @@ import { MulterModule } from '@nestjs/platform-express';
         ThrottlerModule,
     ],
     providers: [UsersService],
-    controllers: [UsersController],
+    controllers: [UsersController, SessionsController],
     exports: [UsersService],
 })
 export class UsersModule {}

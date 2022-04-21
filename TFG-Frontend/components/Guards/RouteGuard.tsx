@@ -15,7 +15,7 @@ function RouteGuard({ children }) {
     
             axios({
                 method: 'get',
-                url: '/api/user',
+                url: '/api/sessions/user',
                 data: {},
             }).then((response: any) => {
                 if(response.status == 200){
@@ -23,9 +23,9 @@ function RouteGuard({ children }) {
                     setAuthorized(true);
                     if(publicPaths().includes(path) && router) {
                         router.push({
-                            pathname: '/home',
+                            pathname: '/buy',
                             query: { returnUrl: router.asPath }
-                        },'/home');
+                        },'/buy');
                     }
                 }
             }, () => {

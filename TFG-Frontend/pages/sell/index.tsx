@@ -4,7 +4,7 @@ import HeaderLogged from '@components/Commons/HeaderLogged';
 import CustomErrorMessage from '@root/utils/CustomErrorMessage';
 import { handleCreateProduct } from '@root/components/Market/MarketLogic';
 
-export default class CreateProductPage extends CustomBasicPage{
+export default class SellPage extends CustomBasicPage{
     constructor(props: any) {
         super(props);
 

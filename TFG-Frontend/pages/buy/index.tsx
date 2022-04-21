@@ -2,13 +2,13 @@ import React from 'react'
 import CustomBasicPage from '@components/CustomBasicPage';
 import HeaderLogged from '@components/Commons/HeaderLogged';
 
-export default class HomePage extends CustomBasicPage{
+export default class BuyPage extends CustomBasicPage{
     constructor(props: any) {
         super(props);
 
         this.state = {
             ...this.state,
-            componentName: "Home | TI-Shop",
+            componentName: "Buy | TI-Shop",
         }
     }
 
