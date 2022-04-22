@@ -15,7 +15,6 @@ function sendCodeRequest(thisComponent: any): AxiosPromise<any> {
         method: "post",
         url: "/api/users/login2",
         data: {
-            email: thisComponent.state.email,
             code: thisComponent.state.code,
         },
     });

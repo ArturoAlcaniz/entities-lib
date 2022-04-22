@@ -5,8 +5,20 @@ import { handleLogin, handleButtonLoginGoogle, showPass, handleLogin2 } from '@c
 import CustomErrorMessage from '@utils/CustomErrorMessage';
 import Image from 'next/image'
 import Link from 'next/link';
+import cookies from 'next-cookies';
 
 export default class LoginPage extends CustomBasicPage{
+    static async getInitialProps(ctx: any) {
+        return {
+            pathname: ctx.pathname,
+            initialLanguageSelected: cookies(ctx).languageSelected || 'english',
+            username: cookies(ctx).username,
+            email: cookies(ctx).email,
+            avatar: cookies(ctx).avatar,
+            stepParam: ctx.query.step,
+            codeParam: ctx.query.code,
+        }
+    }
     bannedInterval: any;
     constructor(props: any) {
         super(props);
@@ -18,8 +30,8 @@ export default class LoginPage extends CustomBasicPage{
             showPassword: false,
             formError: "",
             bannedSeconds: "",
-            code: "",
-            step: "1",
+            code: props.codeParam || "",
+            step: props.stepParam || "1",
         }
 
         this.bannedInterval = null
