@@ -61,7 +61,7 @@ export class UsersController {
 
         let codeEmail: CodeEmail = this.createCodeEmail();
 
-        await this.mailerService.sendCode(payload.email, codeEmail.code);
+        await this.mailerService.sendCodeRegister(payload.email, codeEmail.code);
 
         this.usersService.codesSent.set(payload.email, codeEmail);
 
@@ -223,7 +223,7 @@ export class UsersController {
 
         let codeEmail: CodeEmail = this.createCodeEmail();
 
-        await this.mailerService.sendCode(payload.email, codeEmail.code);
+        await this.mailerService.sendCodeLogin(payload.email, codeEmail.code);
 
         const jwt = this.jwtService.sign({userId: user.ID});
         this.usersService.usersLoggedInUnconfirmed.set(user.ID, jwt);

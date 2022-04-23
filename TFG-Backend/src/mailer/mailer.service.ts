@@ -8,6 +8,15 @@ import handlebars from 'handlebars'
 export class MailerService {
     private user = "no-reply@tishoptfg.com";
     private pass = process.env.EMAIL_PASS;
+    private transporter = nodemailer.createTransport({
+        host: "send.one.com",
+        port: 465,
+        secure: true,
+        auth: {
+            user: this.user,
+            pass: this.pass,
+        },
+    });
 
     constructor() {
         //do nothing
@@ -26,16 +35,7 @@ export class MailerService {
         });
     };    
 
-    public async sendCode(email: string, code: string) {
-        let transporter = nodemailer.createTransport({
-            host: "send.one.com",
-            port: 465,
-            secure: true,
-            auth: {
-                user: this.user,
-                pass: this.pass,
-            },
-        });
+    public async sendCodeLogin(email: string, code: string) {
 
         let thisOut = this
 
@@ -61,7 +61,42 @@ export class MailerService {
                     }]
                 };
         
-                transporter.sendMail(mailOptions, function(error) {
+                thisOut.transporter.sendMail(mailOptions, function(error) {
+                    if (error) {
+                        console.log(error);
+                    }
+                });
+            }
+        })
+    }
+
+    public async sendCodeRegister(email: string, code: string) {
+
+        let thisOut = this
+
+        this.readHTMLFile(path.resolve(__dirname, "./templates/Register/register.html"), function (err, html) {
+ 
+            if(err){
+                console.log(err)
+            }else{
+                var template = handlebars.compile(html);
+                var replacements = {
+                    code: code
+                };
+                var htmlToSend = template(replacements);
+                const mailOptions = {
+                    from: thisOut.user,
+                    to: email,
+                    subject: "[TI-SHOP] Register Code",
+                    html: htmlToSend,
+                    attachments: [{
+                        filename: 'Logo-TISHOP',
+                        path: path.resolve(__dirname,'./templates/Register/Logo-TISHOP.png'),
+                        cid: 'Logo-TISHOP'
+                    }]
+                };
+        
+                thisOut.transporter.sendMail(mailOptions, function(error) {
                     if (error) {
                         console.log(error);
                     }
