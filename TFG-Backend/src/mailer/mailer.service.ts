@@ -30,7 +30,7 @@ export class MailerService {
         let transporter = nodemailer.createTransport({
             host: "send.one.com",
             port: 465,
-            secure: false,
+            secure: true,
             auth: {
                 user: this.user,
                 pass: this.pass,
