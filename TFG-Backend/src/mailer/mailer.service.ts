@@ -6,7 +6,7 @@ import handlebars from 'handlebars'
 
 @Injectable()
 export class MailerService {
-    private user = "tishoptfg@gmail.com";
+    private user = "no-reply@tishoptfg.com";
     private pass = process.env.EMAIL_PASS;
 
     constructor() {
@@ -28,7 +28,8 @@ export class MailerService {
 
     public async sendCode(email: string, code: string) {
         let transporter = nodemailer.createTransport({
-            service: "gmail",
+            host: "send.one.com",
+            port: 465,
             secure: false,
             auth: {
                 user: this.user,
