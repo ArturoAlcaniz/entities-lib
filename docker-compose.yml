@@ -5,8 +5,10 @@ volumes:
         driver: local
 
 networks:
-  external: 
-    name: ehr-network
+  external1: 
+    name: front-back-network
+  external2:
+    name: back-mariadb-network
 
 services:
 
@@ -27,7 +29,8 @@ services:
     stdin_open: true
     container_name: ${BACKEND_CONTAINER_NAME}
     networks: 
-      - external
+      - external1
+      - external2
 
   # React NextJS Frontend Container
   frontend_container:
@@ -45,7 +48,7 @@ services:
     stdin_open: true
     container_name: ${FRONTEND_CONTAINER_NAME}
     networks: 
-      - external
+      - external1
 
   # MariaDB
   mariadb:
@@ -58,7 +61,7 @@ services:
       MYSQL_PASSWORD: ${MARIADB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${MARIADB_PASSWORD}
     networks: 
-      - external
+      - external2
     volumes:
       - ./mariadb:/var/lib/mysql
     restart: on-failure
@@ -74,4 +77,4 @@ services:
     ports: 
       - 8080:8080
     networks:
-      - external
+      - external2
