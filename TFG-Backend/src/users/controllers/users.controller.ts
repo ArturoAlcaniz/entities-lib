@@ -48,42 +48,6 @@ export class UsersController {
         @Res({passthrough: true}) response: Response,
         @Req() request: Request
     ) {
-        let user: User = await this.usersService.findOne({
-            where: {EMAIL: payload.email},
-        });
-
-        if (user) {
-            response
-                .status(400)
-                .json({message: ["email_already_exist"], formError: "email"});
-            return;
-        }
-
-        let codeEmail: CodeEmail = this.createCodeEmail();
-
-        await this.mailerService.sendCodeRegister(payload.email, codeEmail.code);
-
-        this.usersService.codesSent.set(payload.email, codeEmail);
-
-        response.status(200).json({
-            message: ["sent_code"],
-        });
-
-        this.logger.info(
-            "Code sent to {EMAIL} {IP}"
-                .replace("{IP}", request.headers["x-forwarded-for"].toString())
-                .replace("{EMAIL}", payload.email)
-        );
-    }
-
-    @UseGuards(ThrottlerGuard)
-    @Throttle(10, 3000)
-    @ApiOkResponse()
-    @Post("register2")
-    async createUser(
-        @Body() payload: CreateUserDto,
-        @Res({passthrough: true}) response: Response
-    ) {
         let user: User = this.usersService.createUser(
             payload.email,
             payload.username,
@@ -105,20 +69,66 @@ export class UsersController {
             return;
         }
 
-        if (
-            !payload.code ||
-            payload.code != this.usersService.codesSent.get(payload.email).code
-        ) {
+        let codeEmail: CodeEmail = this.createCodeEmail();
+
+        await this.mailerService.sendCodeRegister(payload.email, codeEmail.code);
+
+        this.usersService.usersRegistering.set(codeEmail.code, user)
+        this.usersService.codesSent.set(payload.email, codeEmail);
+
+        response.status(200).json({
+            message: ["sent_code"],
+        });
+
+        this.logger.info(
+            "Code sent to {EMAIL} {IP}"
+                .replace("{IP}", request.headers["x-forwarded-for"].toString())
+                .replace("{EMAIL}", payload.email)
+        );
+    }
+
+    @UseGuards(ThrottlerGuard)
+    @Throttle(10, 3000)
+    @ApiOkResponse()
+    @Post("register2")
+    async createUser(
+        @Body() payload: CreateUserDto,
+        @Res({passthrough: true}) response: Response
+    ) {
+        if(!payload.code || !this.usersService.usersRegistering.get(payload.code)){
             response.status(400).json({message: ["code_invalid"]});
             return;
         }
 
-        if(!this.checkCodeEmail(this.usersService.codesSent.get(payload.email))){
+        let user: User = this.usersService.usersRegistering.get(payload.code)
+
+        if (!(await this.usersService.validateUniqueEmail(user))) {
+            response
+                .status(400)
+                .json({message: ["email_already_exist"], formError: "email"});
+            return;
+        }
+
+        if (!(await this.usersService.validateUniqueUsername(user))) {
+            response.status(400).json({
+                message: ["username_already_exist"],
+                formError: "username",
+            });
+            return;
+        }
+
+        if (payload.code != this.usersService.codesSent.get(user.EMAIL).code) {
+            response.status(400).json({message: ["code_invalid"]});
+            return;
+        }
+
+        if(!this.checkCodeEmail(this.usersService.codesSent.get(user.EMAIL))){
             response.status(400).json({message: ["code_expired"]});
             return;
         }
 
         this.usersService.save(user);
+        this.usersService.usersRegistering.delete(payload.code);
         response.status(200).json({message: ["successfully_registered"]});
     }
 

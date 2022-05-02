@@ -45,10 +45,6 @@ function handleSendCode(event: any) {
 function handleRegister(event: any) {
     event.preventDefault();
 
-    if (!registerValidation(this)) {
-        return;
-    }
-
     registerRequest(this).then(
         (response) => {
             if (response.status == 200) {

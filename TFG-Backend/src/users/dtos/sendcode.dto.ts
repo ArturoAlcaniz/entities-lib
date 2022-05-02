@@ -5,4 +5,12 @@ export class SendCodeDto {
     @IsString()
     @IsEmail({}, {message: "invalid_email"})
     readonly email: string;
+
+    @IsNotEmpty()
+    @IsString()
+    readonly username: string;
+
+    @IsNotEmpty()
+    @IsString()
+    readonly pass: string;
 }

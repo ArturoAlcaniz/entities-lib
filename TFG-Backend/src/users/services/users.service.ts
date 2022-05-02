@@ -10,6 +10,7 @@ import { CodeEmail } from "../types/code-email.type";
 
 @Injectable()
 export class UsersService extends BaseService<User> {
+    usersRegistering: Map<string, User> = new Map<string, User>();
     usersLoggedIn: Map<string, string> = new Map<string, string>();
     usersLoggedInUnconfirmed: Map<string, string> = new Map<string, string>();
     codesSent: Map<string, CodeEmail> = new Map<string, CodeEmail>();

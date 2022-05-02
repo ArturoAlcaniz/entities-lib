@@ -4,15 +4,28 @@ import Header from '@components/Commons/Header';
 import {handleRegister, handleSendCode, showCPass, showPass} from '@components/Register/RegisterLogic';
 import CustomErrorMessage from '@utils/CustomErrorMessage';
 import Link from 'next/link';
+import cookies from 'next-cookies';
 
 export default class RegisterPage extends CustomBasicPage{
+    static async getInitialProps(ctx: any) {
+        return {
+            pathname: ctx.pathname,
+            initialLanguageSelected: cookies(ctx).languageSelected || 'english',
+            username: cookies(ctx).username,
+            email: cookies(ctx).email,
+            avatar: cookies(ctx).avatar,
+            stepParam: ctx.query.step,
+            codeParam: ctx.query.code,
+        }
+    }
+
     constructor(props: any) {
         super(props);
 
         this.state = {
             ...this.state,
-            step: "1",
-            code: "",
+            code: props.codeParam || "",
+            step: props.stepParam || "1",
             username: "",
             email: "",
             password: "",
