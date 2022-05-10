@@ -18,7 +18,8 @@
         "product_category": "Category",
         "product_description": "Description",
         "product_price": "Price",
-        "avatar": "Avatar"
+        "avatar": "Avatar",
+        "productimage": "Images"
     },
     "explanations": {
         "hello": "Welcome",

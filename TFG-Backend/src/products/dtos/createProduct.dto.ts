@@ -1,4 +1,4 @@
-import {IsDecimal, IsNotEmpty, IsString} from "class-validator";
+import {IsDecimal, IsNotEmpty, IsOptional, IsString} from "class-validator";
 import { Double } from "typeorm";
 
 export class CreateProductDto {
@@ -17,4 +17,7 @@ export class CreateProductDto {
     @IsNotEmpty()
     @IsDecimal()
     readonly price: Double;
+
+    @IsOptional()
+    readonly images: Array<Express.Multer.File>;
 }

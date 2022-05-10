@@ -2,6 +2,13 @@ import Router from "next/router";
 import { createProductRequest } from "./MarketRequest";
 import createProductValidation from "./MarketValidation";
 
+export function uploadImageProduct(event: any) {
+    if (event.target.files && event.target.files.length>0) {
+
+        this.setState({images: event.target.files});
+    }
+}
+
 function handleCreateProduct(event: any) {
     event.preventDefault();
 

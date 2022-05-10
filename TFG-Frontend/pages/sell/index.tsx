@@ -2,7 +2,7 @@ import React from 'react'
 import CustomBasicPage from '@components/CustomBasicPage';
 import HeaderLogged from '@components/Commons/HeaderLogged';
 import CustomErrorMessage from '@root/utils/CustomErrorMessage';
-import { handleCreateProduct } from '@root/components/Market/MarketLogic';
+import { handleCreateProduct, uploadImageProduct } from '@root/components/Market/MarketLogic';
 
 export default class SellPage extends CustomBasicPage{
     constructor(props: any) {
@@ -16,6 +16,7 @@ export default class SellPage extends CustomBasicPage{
             category: "",
             description: "",
             price: 0.0,
+            images: [],
         }
     }
 
@@ -48,6 +49,14 @@ export default class SellPage extends CustomBasicPage{
                                         <input className="input" v-model={productname} type="text" autoComplete="off"></input>
                                     </div>
                                     { formError=='name' && CustomErrorMessage(msgError) }
+                                </div>
+                                <div className="field">
+                                    <label className="label">
+                                        {obtainTextTranslated["labels"]["productimage"]}
+                                    </label>
+                                    <div className="control">
+                                        <input type="file" multiple={true} name="images" onChange={uploadImageProduct.bind(this)} />
+                                    </div>
                                 </div>
                                 <div className="field">
                                     <label className="label">

@@ -5,10 +5,12 @@ import {
     Double,
     Entity,
     ManyToOne,
+    OneToMany,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from "typeorm";
 import { User } from "../../users/entities/user.entity";
+import { ProductImage } from "./productimage.entity";
 
 @Entity()
 export class Product extends BaseEntity {
@@ -29,6 +31,9 @@ export class Product extends BaseEntity {
 
     @ManyToOne(type => User, user => user.PRODUCTS)
     USER: User;
+
+    @OneToMany(type => ProductImage, productImage => productImage.PRODUCT)
+    IMAGES: ProductImage[];
 
     @CreateDateColumn()
     CREATED_AT: "string";

@@ -4,6 +4,7 @@ import { Double, Repository } from "typeorm";
 import { BaseService } from "../../commons/service.commons";
 import { User } from "../../users/entities/user.entity";
 import { Product } from "../entities/product.entity";
+import { ProductImage } from "../entities/productimage.entity";
 
 @Injectable()
 export class ProductsService extends BaseService<Product> {
@@ -25,5 +26,11 @@ export class ProductsService extends BaseService<Product> {
         product.PRICE = price;
         product.USER = user;
         return product;
+    }
+
+    createProductImage(name: string) {
+        let productImage = new ProductImage()
+        productImage.NAME = name
+        return productImage;
     }
 }

@@ -9,11 +9,16 @@ import { UsersModule } from "../users/users.module";
 import { ProductsService } from "./services/products.service";
 import { ProductsController } from "./controllers/products.controller";
 import { ConfigJwtModule } from "../configJwt/configJwt.module";
+import { MulterModule } from "@nestjs/platform-express";
+import { ProductImage } from "./entities/productimage.entity";
 
 @Global()
 @Module({
     imports: [
-        TypeOrmModule.forFeature([Product]),
+        MulterModule.register({
+            dest: './files',
+        }),
+        TypeOrmModule.forFeature([Product,ProductImage]),
         ConfigJwtModule,
         MailerModule,
         HttpModule.register({
