@@ -11,6 +11,7 @@ import { ProductsController } from "./controllers/products.controller";
 import { ConfigJwtModule } from "../configJwt/configJwt.module";
 import { MulterModule } from "@nestjs/platform-express";
 import { ProductImage } from "./entities/productimage.entity";
+import { ProductImagesService } from "./services/productImages.service";
 
 @Global()
 @Module({
@@ -29,8 +30,8 @@ import { ProductImage } from "./entities/productimage.entity";
         ThrottlerModule,
         UsersModule,
     ],
-    providers: [ProductsService],
+    providers: [ProductsService,ProductImagesService],
     controllers: [ProductsController],
-    exports: [ProductsService],
+    exports: [ProductsService,ProductImagesService],
 })
 export class ProductsModule {}

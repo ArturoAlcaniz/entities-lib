@@ -1,5 +1,5 @@
 import Router from "next/router";
-import { createProductRequest } from "./MarketRequest";
+import { createProductRequest, obtainMyProductsRequest } from "./MarketRequest";
 import createProductValidation from "./MarketValidation";
 
 export function uploadImageProduct(event: any) {
@@ -7,6 +7,24 @@ export function uploadImageProduct(event: any) {
 
         this.setState({images: event.target.files});
     }
+}
+
+async function handleObtainMyProducts(thisComponent) {
+
+    await obtainMyProductsRequest().then(
+        (response) => {
+            if (response.status == 200) {
+                let productsArray: Array<any> = []
+                for(let i=0; i<response.data.length; i++){
+                    productsArray.push(response.data[i])
+                }
+                thisComponent.setState({myProducts: productsArray});
+            }
+        },
+        (error) => {
+            console.log(error)
+        }
+    )
 }
 
 function handleCreateProduct(event: any) {
@@ -44,4 +62,4 @@ function handleCreateProduct(event: any) {
     )
 }
 
-export {handleCreateProduct}
+export {handleCreateProduct,handleObtainMyProducts}

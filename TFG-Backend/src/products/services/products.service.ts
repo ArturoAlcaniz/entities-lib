@@ -28,9 +28,4 @@ export class ProductsService extends BaseService<Product> {
         return product;
     }
 
-    createProductImage(name: string) {
-        let productImage = new ProductImage()
-        productImage.NAME = name
-        return productImage;
-    }
 }

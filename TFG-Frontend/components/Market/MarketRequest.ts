@@ -1,5 +1,13 @@
 import axios, {AxiosPromise} from "axios";
 
+function obtainMyProductsRequest(): AxiosPromise<any> {
+    return axios({
+        method: "get",
+        url: "/api/products/obtain",
+        data: [],
+    });
+}
+
 function createProductRequest(thisComponent: any): AxiosPromise<any> {
     let formData = new FormData()
     
@@ -27,4 +35,4 @@ function createProductRequest(thisComponent: any): AxiosPromise<any> {
     }
 }
 
-export {createProductRequest}
+export {createProductRequest,obtainMyProductsRequest}

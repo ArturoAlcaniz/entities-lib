@@ -7,6 +7,8 @@ import {
     ManyToOne,
     OneToMany,
     PrimaryGeneratedColumn,
+    Tree,
+    TreeChildren,
     UpdateDateColumn,
 } from "typeorm";
 import { User } from "../../users/entities/user.entity";

@@ -14,6 +14,7 @@ import { Product } from "../entities/product.entity";
 import { ProductsService } from "../services/products.service";
 import { FilesInterceptor } from "@nestjs/platform-express";
 import { ProductImage } from "../entities/productimage.entity";
+import { ProductImagesService } from "../services/productImages.service";
 
 @ApiTags("Product Controller")
 @Controller("products")
@@ -21,6 +22,7 @@ export class ProductsController {
     constructor(
         private usersService: UsersService,
         private productsService: ProductsService,
+        private productImagesService: ProductImagesService,
         private jwtService: JwtService,
         private httpService: HttpService,
         private mailerService: MailerService,
@@ -59,14 +61,13 @@ export class ProductsController {
         let productImages: ProductImage[] = []
       
         images.forEach(value => {
-            let productImage = this.productsService.createProductImage(value.filename)
+            let productImage: ProductImage = this.productImagesService.createProductImage(value.filename,product)
             productImages.push(productImage)
         })
 
-        product.IMAGES = productImages
-
-        this.productsService.save(product);
-        response.status(200).json({message: ["successfully_product_created"]});
+        if(this.productImagesService.saveMany(productImages)){
+            response.status(200).json({message: ["successfully_product_created"]});
+        }
     }
     
     @UseGuards(ThrottlerGuard)
@@ -95,5 +96,31 @@ export class ProductsController {
 
         this.productsService.save(product);
         response.status(200).json({message: ["successfully_product_created"]});
+    }
+
+    @UseGuards(ThrottlerGuard)
+    @Throttle(10, 3000)
+    @ApiOkResponse()
+    @Get("obtain")
+    @UseGuards(AuthenticatedGuard)
+    async getProducts(
+        @Res({passthrough: true}) response: Response,
+        @Req() request: Request
+    ) {
+        let user: User = await this.usersService.findOne({
+            where: {
+                ID: this.jwtService.decode(request.cookies["jwt"])["userId"],
+            },
+        });
+
+        let products: Product[] = await this.productsService.find({
+            relations: ['IMAGES'],
+            loadRelationsId: true,
+            where: {
+                USER: user
+            },
+        })
+
+        return products;
     }
 }

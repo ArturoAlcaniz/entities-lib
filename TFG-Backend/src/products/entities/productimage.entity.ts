@@ -1,12 +1,9 @@
 import {
     BaseEntity,
     Column,
-    CreateDateColumn,
-    Double,
     Entity,
     ManyToOne,
     PrimaryGeneratedColumn,
-    UpdateDateColumn,
 } from "typeorm";
 import { Product } from "./product.entity";
 
@@ -18,6 +15,10 @@ export class ProductImage extends BaseEntity {
     @Column({type: "varchar", length: 50})
     NAME: string;
     
-    @ManyToOne(type => Product, product => product.IMAGES)
+    @ManyToOne(type => Product, product => product.IMAGES, {
+        onDelete: "RESTRICT",
+        onUpdate: "RESTRICT",
+        cascade: true,
+    })
     PRODUCT: Product;
 }

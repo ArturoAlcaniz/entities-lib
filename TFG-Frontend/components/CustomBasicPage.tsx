@@ -5,6 +5,7 @@ import * as langSpanish from '@utils/languages/spanish.json';
 import Head from 'next/head';
 
 export default class CustomBasicPage extends Component<any, any>{
+
     static async getInitialProps(ctx: any) {
         return {
             pathname: ctx.pathname,
