@@ -19,7 +19,9 @@
         "product_description": "Description",
         "product_price": "Price",
         "avatar": "Avatar",
-        "productimage": "Images"
+        "productimage": "Images",
+        "start_sell": "Sale starts in",
+        "end_sell": "Sale ends in"
     },
     "explanations": {
         "hello": "Welcome",
@@ -37,7 +39,8 @@
         "account_config": "Account settings",
         "save": "Update",
         "send_code": "Send code",
-        "add_product": "Create product"
+        "add_product": "Create product",
+        "my_products": "Manage my products"
     },
     "requestErrors": {
         "invalid_credentials": "Invalid Credentials",

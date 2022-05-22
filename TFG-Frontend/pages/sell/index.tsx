@@ -3,6 +3,7 @@ import CustomBasicPage from '@components/CustomBasicPage';
 import HeaderLogged from '@components/Commons/HeaderLogged';
 import CustomErrorMessage from '@root/utils/CustomErrorMessage';
 import { handleCreateProduct, uploadImageProduct } from '@root/components/Market/MarketLogic';
+import Link from 'next/link';
 
 export default class SellPage extends CustomBasicPage{
     constructor(props: any) {
@@ -13,6 +14,8 @@ export default class SellPage extends CustomBasicPage{
             formError: "",
             componentName: "Create Product | TI-Shop",
             productname: "",
+            startsell: "",
+            endsell: "",
             category: "",
             description: "",
             price: 0.0,
@@ -25,7 +28,7 @@ export default class SellPage extends CustomBasicPage{
         let languageSelected = this.state.languageSelected
         let obtainTextTranslated = this.translations[languageSelected]
 
-        const { formError, productname, category, description, price } = this.state
+        const { formError, productname, category, description, price, startsell, endsell } = this.state
         let msgError = obtainTextTranslated["requestErrors"][this.state.requestErrors.get('createProductError')]
 
         return (
@@ -37,7 +40,13 @@ export default class SellPage extends CustomBasicPage{
                         pathname={this.props.pathname} 
                         setLanguageSelected={this.setLanguageSelected} 
                         initialLanguageSelected={languageSelected} />
-                <div className="pageCentered">
+                <div className='buttonGoMyProducts'>
+                    <Link href="/sell/my-products">
+                        <button className="button is-primary">{obtainTextTranslated["buttons"]["my_products"]}</button>
+                    </Link>
+                </div>
+                
+                <div className="createProducts">
                     <form onSubmit={handleCreateProduct.bind(this)}>
                         <div className="card createProductForm">
                             <div className="card-content">
@@ -75,6 +84,22 @@ export default class SellPage extends CustomBasicPage{
                                         <input className="input" v-model={description} type="text" autoComplete="off"></input>
                                     </div>
                                     { formError=='description' && CustomErrorMessage(msgError) }
+                                </div>
+                                <div className="field">
+                                    <label className="label">
+                                        {obtainTextTranslated["labels"]["start_sell"]}
+                                    </label>
+                                    <div className="control">
+                                        <input className="input" v-model={startsell} type="datetime-local" autoComplete="off"></input>
+                                    </div>
+                                </div>
+                                <div className="field">
+                                    <label className="label">
+                                        {obtainTextTranslated["labels"]["end_sell"]}
+                                    </label>
+                                    <div className="control">
+                                        <input className="input" v-model={endsell} type="datetime-local" autoComplete="off"></input>
+                                    </div>
                                 </div>
                                 <div className="field">
                                     <label className="label">

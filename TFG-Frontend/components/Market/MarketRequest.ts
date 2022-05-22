@@ -14,6 +14,8 @@ function createProductRequest(thisComponent: any): AxiosPromise<any> {
     formData.append('productname', thisComponent.state.productname)
     formData.append('description', thisComponent.state.description)
     formData.append('category', thisComponent.state.category)
+    formData.append('startsell', thisComponent.state.startsell)
+    formData.append('endsell', thisComponent.state.endsell)
     formData.append('price', thisComponent.state.price)
 
     if(thisComponent.state.images != null){
@@ -29,6 +31,8 @@ function createProductRequest(thisComponent: any): AxiosPromise<any> {
                 productname: thisComponent.state.productname,
                 description: thisComponent.state.description,
                 category: thisComponent.state.category,
+                startsell: thisComponent.state.startsell,
+                endsell: thisComponent.state.endsell,
                 price: thisComponent.state.price,
             },
         });

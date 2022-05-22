@@ -14,6 +14,12 @@ export class CreateProductDto {
     @IsString()
     readonly category: string;
 
+    @IsString()
+    readonly startsell: string;
+
+    @IsString()
+    readonly endsell: string;
+
     @IsNotEmpty()
     @IsDecimal()
     readonly price: Double;

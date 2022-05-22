@@ -9,8 +9,9 @@ $white: #fff;
 $google-blue: #4285f4;
 $button-active-blue: #1669F2;
 
-body{
-    overflow: hidden;
+html, body{
+    overflow: auto;
+    height: 100%
 }
 
 .pageCentered{
@@ -18,7 +19,16 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 680px;
+}
+
+.createProducts{
+    margin-top: 20px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 .loginForm{
@@ -340,4 +350,21 @@ a.navbar-custom {
 
 .field_haveAccount a {
     margin-left: 8px;
+}
+
+.ListProducts {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.ListProducts li {
+    margin: 10px;
+}
+
+.buttonGoMyProducts {
+    margin-top: 20px;
+    justify-content: center;
+    align-self: center;
+    align-items: center;
+    display: flex;
 }

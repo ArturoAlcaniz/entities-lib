@@ -7,8 +7,6 @@ import {
     ManyToOne,
     OneToMany,
     PrimaryGeneratedColumn,
-    Tree,
-    TreeChildren,
     UpdateDateColumn,
 } from "typeorm";
 import { User } from "../../users/entities/user.entity";
@@ -27,6 +25,12 @@ export class Product extends BaseEntity {
 
     @Column({type: "varchar", nullable: false, length: 100})
     DESCRIPTION: string;
+
+    @Column({type: "datetime", nullable: true, default: null})
+    STARTS: string;
+
+    @Column({type: "datetime", nullable: true, default: null})
+    ENDS: string;
 
     @Column({type: "decimal", nullable: false, precision: 2})
     PRICE: Double;

@@ -4,6 +4,7 @@ import HeaderLogged from '@components/Commons/HeaderLogged';
 import CustomErrorMessage from '@root/utils/CustomErrorMessage';
 import { handleCreateProduct, handleObtainMyProducts, uploadImageProduct } from '@root/components/Market/MarketLogic';
 import cookies from 'next-cookies';
+import Image from 'next/image'
 
 export default class MyProductsPage extends CustomBasicPage{
     static async getInitialProps(ctx: any) {
@@ -57,71 +58,25 @@ export default class MyProductsPage extends CustomBasicPage{
                         setLanguageSelected={this.setLanguageSelected} 
                         initialLanguageSelected={languageSelected} />
                 <div className="pageCentered">
-                    <select>
+                    <ul className="ListProducts">
                         {this.state.myProducts && this.state.myProducts.length>0 && this.state.myProducts.map(product => {
-                            return (<option key={product.ID} value={product.ID}>{product.PRODUCTNAME}</option>);
+                            return (
+                                <li key={product.ID}>
+                                    <div className="box">
+                                        <div className="content">
+                                            <div>
+                                                <Image src={`/api/products/image/${product.IMAGES[0].NAME}`} width={300} height={200} alt="Product Image"/>
+                                            </div>
+                                            <p>
+                                                <strong>{product.PRODUCTNAME}</strong><br></br>
+                                                {product.DESCRIPTION}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                            );
                         })}
-                    </select>
-                    <form onSubmit={handleCreateProduct.bind(this)}>
-                        <div className="card createProductForm">
-                            <div className="card-content">
-                                <div className="field">
-                                    <label className="label">
-                                        {obtainTextTranslated["labels"]["product_name"]}
-                                    </label>
-                                    <div className="control">
-                                        <input className="input" v-model={productname} type="text" autoComplete="off"></input>
-                                    </div>
-                                    { formError=='name' && CustomErrorMessage(msgError) }
-                                </div>
-                                <div className="field">
-                                    <label className="label">
-                                        {obtainTextTranslated["labels"]["productimage"]}
-                                    </label>
-                                    <div className="control">
-                                        <input type="file" multiple={true} name="images" onChange={uploadImageProduct.bind(this)} />
-                                    </div>
-                                </div>
-                                <div className="field">
-                                    <label className="label">
-                                        {obtainTextTranslated["labels"]["product_category"]}
-                                    </label>
-                                    <div className="control">
-                                        <input className="input" v-model={category} type="text" autoComplete="off"></input>
-                                    </div>
-                                    { formError=='category' && CustomErrorMessage(msgError) }
-                                </div>
-                                <div className="field">
-                                    <label className="label">
-                                        {obtainTextTranslated["labels"]["product_description"]}
-                                    </label>
-                                    <div className="control">
-                                        <input className="input" v-model={description} type="text" autoComplete="off"></input>
-                                    </div>
-                                    { formError=='description' && CustomErrorMessage(msgError) }
-                                </div>
-                                <div className="field">
-                                    <label className="label">
-                                        {obtainTextTranslated["labels"]["product_price"]}
-                                    </label>
-                                    <div className="control">
-                                        <input className="input" v-model={price} type="number" autoComplete="off"></input>
-                                    </div>
-                                    { formError=='price' && CustomErrorMessage(msgError) }
-                                </div>
-                                <p className="help form-feedback-ok">
-                                    {obtainTextTranslated["requestOK"][this.state.requestOK.get('createProductOk')]}
-                                </p>
-                                <div className="field">
-                                    <p className="control">
-                                        <button className="button">
-                                            {obtainTextTranslated["buttons"]["add_product"]}
-                                        </button>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                    </ul>
                 </div>
             </div>
         )

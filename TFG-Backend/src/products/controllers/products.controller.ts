@@ -1,4 +1,4 @@
-import {Body, Inject, Post, Req, Res, UseGuards, Controller, Get, UseInterceptors, UploadedFiles} from "@nestjs/common";
+import {Body, Inject, Post, Req, Res, UseGuards, Controller, Get, UseInterceptors, UploadedFiles, Param, StreamableFile} from "@nestjs/common";
 import {Response, Request} from "express";
 import {User} from "../../users/entities/user.entity";
 import {UsersService} from "../../users/services/users.service";
@@ -15,6 +15,8 @@ import { ProductsService } from "../services/products.service";
 import { FilesInterceptor } from "@nestjs/platform-express";
 import { ProductImage } from "../entities/productimage.entity";
 import { ProductImagesService } from "../services/productImages.service";
+import fs, { createReadStream } from 'fs';
+import { join } from "path";
 
 @ApiTags("Product Controller")
 @Controller("products")
@@ -54,6 +56,8 @@ export class ProductsController {
             payload.productname,
             payload.description,
             payload.category,
+            payload.startsell == "" ? null : payload.startsell,
+            payload.endsell == "" ? null : payload.endsell,
             payload.price,
             user
         );
@@ -90,6 +94,8 @@ export class ProductsController {
             payload.productname,
             payload.description,
             payload.category,
+            payload.startsell == "" ? null : payload.startsell,
+            payload.endsell == "" ? null : payload.endsell,
             payload.price,
             user
         );
@@ -122,5 +128,26 @@ export class ProductsController {
         })
 
         return products;
+    }
+    
+    @UseGuards(ThrottlerGuard)
+    @Throttle(100, 3000)
+    @ApiOkResponse()
+    @Get("image/:product")
+    @UseGuards(AuthenticatedGuard)
+    async getAvatar(
+        @Param('product') product: string,
+        @Res({passthrough: true}) response: Response,
+        @Req() request: Request,
+    ) {
+
+        let file = "files/{FILENAME}".replace(
+            "{FILENAME}",
+            product
+        )
+        if (fs.existsSync(file)) {
+            const f = createReadStream(join(process.cwd(), file));
+            return new StreamableFile(f);
+        }
     }
 }
