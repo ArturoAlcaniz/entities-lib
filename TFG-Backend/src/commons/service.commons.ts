@@ -27,6 +27,10 @@ export abstract class BaseService<T> {
         await this.getRepository().delete(id);
     }
 
+    async deleteMany(ids: any[]){
+        await this.getRepository().delete(ids);
+    }
+
     count(options?: FindManyOptions<T>): Promise<number> {
         return this.getRepository().count(options);
     }

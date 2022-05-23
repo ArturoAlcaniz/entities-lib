@@ -59,12 +59,14 @@
         "productname_empty": "The product name cannot be empty",
         "productcategory_empty": "The category cannot be empty",
         "productdescription_empty": "The description cannot be empty",
-        "productprice_empty": "The price cannot be empty"
+        "productprice_empty": "The price cannot be empty",
+        "product_notexist": "The product not exist"
     },
     "requestOK": {
         "successfully_logged_in": "User successfully logged in",
         "successfully_registered": "User successfully registered",
         "successfully_updated": "User succesfully updated",
-        "successfully_product_created": "Product succesfully created"
+        "successfully_product_created": "Product successfully created",
+        "successfully_product_modified": "Product successfully modified"
     }
 }

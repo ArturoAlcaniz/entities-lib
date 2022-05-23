@@ -2,7 +2,7 @@ import React from 'react'
 import CustomBasicPage from '@components/CustomBasicPage';
 import HeaderLogged from '@components/Commons/HeaderLogged';
 import CustomErrorMessage from '@root/utils/CustomErrorMessage';
-import { handleCreateProduct, handleObtainMyProduct, uploadImageProduct } from '@root/components/Market/MarketLogic';
+import { handleCreateProduct, handleModifyProduct, handleObtainMyProduct, uploadImageProduct } from '@root/components/Market/MarketLogic';
 import Link from 'next/link';
 import cookies from 'next-cookies';
 
@@ -53,7 +53,7 @@ export default class ModifyProductPage extends CustomBasicPage{
         let obtainTextTranslated = this.translations[languageSelected]
 
         const { formError, productname, category, description, price, startsell, endsell } = this.state
-        let msgError = obtainTextTranslated["requestErrors"][this.state.requestErrors.get('createProductError')]
+        let msgError = obtainTextTranslated["requestErrors"][this.state.requestErrors.get('modifyProductError')]
 
         return (
             <div>
@@ -71,7 +71,7 @@ export default class ModifyProductPage extends CustomBasicPage{
                 </div>
                 
                 <div className={this.obtainFields()}>
-                    <form onSubmit={handleCreateProduct.bind(this)}>
+                    <form onSubmit={handleModifyProduct.bind(this)}>
                         <div className="card createProductForm">
                             <div className="card-content">
                                 <div className="field">
@@ -132,10 +132,10 @@ export default class ModifyProductPage extends CustomBasicPage{
                                     <div className="control">
                                         <input className="input" v-model={price} type="number" autoComplete="off"></input>
                                     </div>
-                                    { formError=='price' && CustomErrorMessage(msgError) }
+                                    { (formError=='price' || formError=='product') && CustomErrorMessage(msgError) }
                                 </div>
                                 <p className="help form-feedback-ok">
-                                    {obtainTextTranslated["requestOK"][this.state.requestOK.get('createProductOk')]}
+                                    {obtainTextTranslated["requestOK"][this.state.requestOK.get('modifyProductOk')]}
                                 </p>
                                 <div className="field">
                                     <p className="control">

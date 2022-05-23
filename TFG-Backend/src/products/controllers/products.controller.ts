@@ -17,6 +17,7 @@ import { ProductImage } from "../entities/productimage.entity";
 import { ProductImagesService } from "../services/productImages.service";
 import fs, { createReadStream } from 'fs';
 import { join } from "path";
+import { ModifyProductDto } from "../dtos/modifyProduct.dto";
 
 @ApiTags("Product Controller")
 @Controller("products")
@@ -102,6 +103,90 @@ export class ProductsController {
 
         this.productsService.save(product);
         response.status(200).json({message: ["successfully_product_created"]});
+    }
+
+    @UseGuards(ThrottlerGuard)
+    @Throttle(10, 3000)
+    @ApiOkResponse()
+    @Post("modify")
+    @UseGuards(AuthenticatedGuard)
+    @UseInterceptors(
+	    FilesInterceptor('images')
+    )
+    async modify(
+        @Body() payload: ModifyProductDto,
+        @Res({passthrough: true}) response: Response,
+        @Req() request: Request,
+        @UploadedFiles() images: Array<Express.Multer.File>
+    ) {
+        let user: User = await this.usersService.findOne({
+            where: {
+                ID: this.jwtService.decode(request.cookies["jwt"])["userId"],
+            },
+        });
+
+        let product: Product = await this.productsService.findOne({
+            where: {
+                ID: payload.id,
+            },
+        });
+
+        this.productImagesService.deleteMany(await this.productImagesService.find({
+            where: {
+                PRODUCT: product
+            }
+        }))
+        
+        product.PRODUCTNAME = payload.productname;
+        product.DESCRIPTION = payload.description;
+        product.CATEGORY = payload.category;
+        product.STARTS = payload.startsell == "" ? null : payload.startsell;
+        product.ENDS = payload.endsell == "" ? null : payload.endsell;
+        product.PRICE = payload.price;
+
+        let productImages: ProductImage[] = []
+        
+        images.forEach(value => {
+            let productImage: ProductImage = this.productImagesService.createProductImage(value.filename,product)
+            productImages.push(productImage)
+        })
+
+        if(this.productImagesService.saveMany(productImages)){
+            response.status(200).json({message: ["successfully_product_modified"]});
+        }
+    }
+
+    @UseGuards(ThrottlerGuard)
+    @Throttle(10, 3000)
+    @ApiOkResponse()
+    @Post("modifyWithoutImages")
+    @UseGuards(AuthenticatedGuard)
+    async modifyWithoutImages(
+        @Body() payload: ModifyProductDto,
+        @Res({passthrough: true}) response: Response,
+        @Req() request: Request
+    ) {
+        let user: User = await this.usersService.findOne({
+            where: {
+                ID: this.jwtService.decode(request.cookies["jwt"])["userId"],
+            },
+        });
+
+        let product: Product = await this.productsService.findOne({
+            where: {
+                ID: payload.id,
+            },
+        });
+
+        product.PRODUCTNAME = payload.productname;
+        product.DESCRIPTION = payload.description;
+        product.CATEGORY = payload.category;
+        product.STARTS = payload.startsell == "" ? null : payload.startsell;
+        product.ENDS = payload.endsell == "" ? null : payload.endsell;
+        product.PRICE = payload.price;
+
+        this.productsService.save(product);
+        response.status(200).json({message: ["successfully_product_modified"]});
     }
 
     @UseGuards(ThrottlerGuard)

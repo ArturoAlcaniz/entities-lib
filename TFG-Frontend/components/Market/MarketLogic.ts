@@ -1,6 +1,6 @@
 import Router from "next/router";
-import { createProductRequest, obtainMyProductRequest, obtainMyProductsRequest } from "./MarketRequest";
-import createProductValidation from "./MarketValidation";
+import { createProductRequest, modifyProductRequest, obtainMyProductRequest, obtainMyProductsRequest } from "./MarketRequest";
+import {createProductValidation, modifyProductValidation } from "./MarketValidation";
 
 export function uploadImageProduct(event: any) {
     if (event.target.files && event.target.files.length>0) {
@@ -51,6 +51,42 @@ async function handleObtainMyProducts(thisComponent) {
     )
 }
 
+function handleModifyProduct(event: any) {
+    event.preventDefault();
+
+    if(!modifyProductValidation(this)){
+        return;
+    }
+
+    modifyProductRequest(this).then(
+        (response) => {
+            if (response.status == 200) {
+                let lista: Map<string, string> = new Map<string, string>().set(
+                    "modifyProductOk",
+                    response.data.message[0]
+                );
+                this.setState({
+                    formError: "",
+                    requestOK: lista,
+                    requestErrors: new Map<string, string>(),
+                });
+            }
+        },
+        (error) => {
+            let lista: Map<string, string> = new Map<string, string>().set(
+                "modifyProductError",
+                error.response.data.message[0]
+            );
+            this.setState({
+                formError: error.response.data.formError,
+                requestOK: new Map<string, string>(),
+                requestErrors: lista,
+            });
+        }
+    )
+
+}
+
 function handleCreateProduct(event: any) {
     event.preventDefault();
 
@@ -86,4 +122,4 @@ function handleCreateProduct(event: any) {
     )
 }
 
-export {handleCreateProduct,handleObtainMyProducts,handleObtainMyProduct,handleGoProduct}
+export {handleCreateProduct,handleObtainMyProducts,handleObtainMyProduct,handleGoProduct,handleModifyProduct}

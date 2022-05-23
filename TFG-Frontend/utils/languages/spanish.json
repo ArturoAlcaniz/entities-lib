@@ -20,8 +20,8 @@
         "product_price": "Precio",
         "avatar": "Avatar",
         "productimage": "Imagenes",
-        "start_sell": "Sale starts in",
-        "end_sell": "Sale ends in"
+        "start_sell": "Vender apartir",
+        "end_sell": "Vender hasta"
     },
     "explanations": {
         "hello": "Bienvenido",
@@ -59,12 +59,14 @@
         "productname_empty": "El nombre del producto no puede estar vacío",
         "productcategory_empty": "La categoría no puede estar vacía",
         "productdescription_empty": "La descripción no puede estar vacía",
-        "productprice_empty": "El precio no puede estar vacío"
+        "productprice_empty": "El precio no puede estar vacío",
+        "product_notexist": "El producto no existe"
     },
     "requestOK": {
         "successfully_logged_in": "Usuario logeado correctamente",
         "successfully_registered": "Usuario registrado correctamente",
         "successfully_updated": "Usuario modificado correctamente",
-        "successfully_product_created": "Producto creado correctamente"
+        "successfully_product_created": "Producto creado correctamente",
+        "successfully_product_modified": "Producto modificado correctamente"
     }
 }
