@@ -18,6 +18,7 @@ import { ProductImagesService } from "../services/productImages.service";
 import fs, { createReadStream } from 'fs';
 import { join } from "path";
 import { ModifyProductDto } from "../dtos/modifyProduct.dto";
+import { DeleteProductDto } from "../dtos/deleteProduct.dto";
 
 @ApiTags("Product Controller")
 @Controller("products")
@@ -106,7 +107,42 @@ export class ProductsController {
     }
 
     @UseGuards(ThrottlerGuard)
-    @Throttle(10, 3000)
+    @Throttle(100, 3000)
+    @ApiOkResponse()
+    @Post("delete")
+    @UseGuards(AuthenticatedGuard)
+    async delete(
+        @Body() payload: DeleteProductDto,
+        @Res({passthrough: true}) response: Response,
+        @Req() request: Request,
+    ) {
+        let user: User = await this.usersService.findOne({
+            where: {
+                ID: this.jwtService.decode(request.cookies["jwt"])["userId"],
+            },
+        });
+
+        let product: Product = await this.productsService.findOne({
+            where: {
+                ID: payload.id,
+                USER: user,
+            },
+        });
+
+        await this.productImagesService.deleteMany(await this.productImagesService.find({
+            where: {
+                PRODUCT: product
+            }
+        }))
+
+        if (await this.productsService.remove(product)) {
+            response.status(200).json({message: ["successfully_product_deleted"]});
+        }
+    }
+
+
+    @UseGuards(ThrottlerGuard)
+    @Throttle(100, 3000)
     @ApiOkResponse()
     @Post("modify")
     @UseGuards(AuthenticatedGuard)
@@ -128,6 +164,7 @@ export class ProductsController {
         let product: Product = await this.productsService.findOne({
             where: {
                 ID: payload.id,
+                USER: user,
             },
         });
 
@@ -157,7 +194,7 @@ export class ProductsController {
     }
 
     @UseGuards(ThrottlerGuard)
-    @Throttle(10, 3000)
+    @Throttle(100, 3000)
     @ApiOkResponse()
     @Post("modifyWithoutImages")
     @UseGuards(AuthenticatedGuard)
@@ -175,6 +212,7 @@ export class ProductsController {
         let product: Product = await this.productsService.findOne({
             where: {
                 ID: payload.id,
+                USER: user,
             },
         });
 
@@ -190,7 +228,7 @@ export class ProductsController {
     }
 
     @UseGuards(ThrottlerGuard)
-    @Throttle(10, 3000)
+    @Throttle(100, 3000)
     @ApiOkResponse()
     @Get("obtain")
     @UseGuards(AuthenticatedGuard)

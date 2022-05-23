@@ -41,7 +41,8 @@
         "send_code": "Enviar código",
         "add_product": "Crear producto",
         "my_products": "Gestionar mis productos",
-        "modify_product": "Modificar producto"
+        "modify_product": "Modificar producto",
+        "delete_product": "Eliminar producto"
     },
     "requestErrors": {
         "invalid_credentials": "Credenciales no válidas",

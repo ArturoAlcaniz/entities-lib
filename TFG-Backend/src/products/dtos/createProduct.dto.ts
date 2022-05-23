@@ -22,7 +22,7 @@ export class CreateProductDto {
 
     @IsNotEmpty()
     @IsDecimal()
-    readonly price: Double;
+    readonly price: string;
 
     @IsOptional()
     readonly images: Array<Express.Multer.File>;

@@ -18,7 +18,7 @@ export class ProductsService extends BaseService<Product> {
         return this.productRepository;
     }
 
-    createProduct(name: string, description: string, category: string, start: string, end: string, price: Double, user: User): Product {
+    createProduct(name: string, description: string, category: string, start: string, end: string, price: string, user: User): Product {
         let product = new Product()
         product.PRODUCTNAME = name;
         product.DESCRIPTION = description;

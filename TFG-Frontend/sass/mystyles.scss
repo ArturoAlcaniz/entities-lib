@@ -372,3 +372,27 @@ a.navbar-custom {
 .clickable {
     cursor: pointer;
 }
+
+.productPrice {
+    font-size: 21px;
+}
+
+.productCoin {
+    font-size: 12px;
+    position: unset;
+    margin-left: 3px;
+    width: fit-content;
+}
+
+.productCoin, .productPrice {
+    display: inline-block;
+}
+
+.deleteProduct {
+    color: #485fc7;
+    cursor: pointer;
+    margin-top: 17px;
+    display: inline-block;
+    position: absolute;
+    right: 5px;
+}

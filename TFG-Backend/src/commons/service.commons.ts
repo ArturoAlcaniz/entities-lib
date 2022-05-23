@@ -1,4 +1,4 @@
-import {DeepPartial, FindManyOptions, Repository} from "typeorm";
+import {DeepPartial, DeleteResult, FindManyOptions, Repository} from "typeorm";
 
 export abstract class BaseService<T> {
     abstract getRepository(): Repository<T>;
@@ -23,12 +23,16 @@ export abstract class BaseService<T> {
         return this.getRepository().save(entities);
     }
 
-    async delete(id: any) {
-        await this.getRepository().delete(id);
+    remove(entity: any): any {
+        return this.getRepository().remove(entity);
     }
 
-    async deleteMany(ids: any[]){
-        await this.getRepository().delete(ids);
+    async delete(id: any): Promise<DeleteResult> {
+        return await this.getRepository().delete(id);
+    }
+
+    async deleteMany(ids: any[]): Promise<DeleteResult> {
+        return await this.getRepository().delete(ids);
     }
 
     count(options?: FindManyOptions<T>): Promise<number> {

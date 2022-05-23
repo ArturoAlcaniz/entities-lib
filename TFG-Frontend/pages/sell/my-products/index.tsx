@@ -44,10 +44,7 @@ export default class MyProductsPage extends CustomBasicPage{
     render() {
 
         let languageSelected = this.state.languageSelected
-        let obtainTextTranslated = this.translations[languageSelected]
-        
         const { formError, productname, category, description, price } = this.state
-        let msgError = obtainTextTranslated["requestErrors"][this.state.requestErrors.get('createProductError')]
 
         return (
             <div>
@@ -70,7 +67,12 @@ export default class MyProductsPage extends CustomBasicPage{
                                             </div>
                                             <p>
                                                 <strong>{product.PRODUCTNAME}</strong><br></br>
-                                                {product.DESCRIPTION}
+                                                <div className="productPrice">
+                                                    {product.PRICE}
+                                                </div>
+                                                <div className="productCoin">
+                                                    {' Coins'}
+                                                </div>
                                             </p>
                                         </div>
                                     </div>

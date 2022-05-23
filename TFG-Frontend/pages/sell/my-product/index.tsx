@@ -2,7 +2,7 @@ import React from 'react'
 import CustomBasicPage from '@components/CustomBasicPage';
 import HeaderLogged from '@components/Commons/HeaderLogged';
 import CustomErrorMessage from '@root/utils/CustomErrorMessage';
-import { handleCreateProduct, handleModifyProduct, handleObtainMyProduct, uploadImageProduct } from '@root/components/Market/MarketLogic';
+import { handleCreateProduct, handleDeleteProduct, handleModifyProduct, handleObtainMyProduct, uploadImageProduct } from '@root/components/Market/MarketLogic';
 import Link from 'next/link';
 import cookies from 'next-cookies';
 
@@ -142,6 +142,10 @@ export default class ModifyProductPage extends CustomBasicPage{
                                         <button className="button">
                                             {obtainTextTranslated["buttons"]["modify_product"]}
                                         </button>
+
+                                        <div className="deleteProduct" onClick={() => handleDeleteProduct(this)}>
+                                            {obtainTextTranslated["buttons"]["delete_product"]}
+                                        </div>
                                     </p>
                                 </div>
                             </div>

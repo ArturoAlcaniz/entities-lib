@@ -1,5 +1,5 @@
 import Router from "next/router";
-import { createProductRequest, modifyProductRequest, obtainMyProductRequest, obtainMyProductsRequest } from "./MarketRequest";
+import { createProductRequest, deleteProductRequest, modifyProductRequest, obtainMyProductRequest, obtainMyProductsRequest } from "./MarketRequest";
 import {createProductValidation, modifyProductValidation } from "./MarketValidation";
 
 export function uploadImageProduct(event: any) {
@@ -47,6 +47,16 @@ async function handleObtainMyProducts(thisComponent) {
         },
         (error) => {
             console.log(error)
+        }
+    )
+}
+
+function handleDeleteProduct(thisComponent: any) {
+    deleteProductRequest(thisComponent).then(
+        (response) => {
+            if (response.status == 200) {
+                Router.push("/sell/my-products");
+            }
         }
     )
 }
@@ -122,4 +132,4 @@ function handleCreateProduct(event: any) {
     )
 }
 
-export {handleCreateProduct,handleObtainMyProducts,handleObtainMyProduct,handleGoProduct,handleModifyProduct}
+export {handleCreateProduct,handleObtainMyProducts,handleObtainMyProduct,handleGoProduct,handleModifyProduct,handleDeleteProduct}

@@ -33,7 +33,7 @@ export class Product extends BaseEntity {
     ENDS: string;
 
     @Column({type: "decimal", nullable: false, precision: 2})
-    PRICE: Double;
+    PRICE: string;
 
     @ManyToOne(type => User, user => user.PRODUCTS)
     USER: User;
