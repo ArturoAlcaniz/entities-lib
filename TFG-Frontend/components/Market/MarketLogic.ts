@@ -1,5 +1,5 @@
 import Router from "next/router";
-import { createProductRequest, obtainMyProductsRequest } from "./MarketRequest";
+import { createProductRequest, obtainMyProductRequest, obtainMyProductsRequest } from "./MarketRequest";
 import createProductValidation from "./MarketValidation";
 
 export function uploadImageProduct(event: any) {
@@ -7,6 +7,30 @@ export function uploadImageProduct(event: any) {
 
         this.setState({images: event.target.files});
     }
+}
+
+async function handleGoProduct(ID) {
+    Router.push(`/sell/my-product?product=${ID}`, '/sell/my-product')
+}
+
+async function handleObtainMyProduct(thisComponent) {
+    await obtainMyProductRequest(thisComponent).then(
+        (response) => {
+            if (response.status == 200) {
+                thisComponent.setState(
+                    {
+                        product: response.data[0],
+                        productname: response.data[0].PRODUCTNAME, 
+                        description: response.data[0].DESCRIPTION,
+                        category: response.data[0].CATEGORY,
+                        startsell: response.data[0].STARTS.slice(0, response.data[0].STARTS.length-8),
+                        endsell: response.data[0].ENDS.slice(0, response.data[0].ENDS.length-8),
+                        price: response.data[0].PRICE
+                    }
+                )
+            }
+        }
+    )
 }
 
 async function handleObtainMyProducts(thisComponent) {
@@ -62,4 +86,4 @@ function handleCreateProduct(event: any) {
     )
 }
 
-export {handleCreateProduct,handleObtainMyProducts}
+export {handleCreateProduct,handleObtainMyProducts,handleObtainMyProduct,handleGoProduct}

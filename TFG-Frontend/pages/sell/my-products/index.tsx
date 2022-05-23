@@ -2,7 +2,7 @@ import React from 'react'
 import CustomBasicPage from '@components/CustomBasicPage';
 import HeaderLogged from '@components/Commons/HeaderLogged';
 import CustomErrorMessage from '@root/utils/CustomErrorMessage';
-import { handleCreateProduct, handleObtainMyProducts, uploadImageProduct } from '@root/components/Market/MarketLogic';
+import { handleCreateProduct, handleGoProduct, handleObtainMyProducts, uploadImageProduct } from '@root/components/Market/MarketLogic';
 import cookies from 'next-cookies';
 import Image from 'next/image'
 
@@ -31,13 +31,14 @@ export default class MyProductsPage extends CustomBasicPage{
             images: [],
             myProducts: []
         }
-        
+
+        try {
+            handleObtainMyProducts(this);
+          } catch(err) {}
     }
 
     async componentDidMount() {
-        try {
-            await handleObtainMyProducts(this);
-          } catch(err) {}
+
     }
 
     render() {
@@ -62,7 +63,7 @@ export default class MyProductsPage extends CustomBasicPage{
                         {this.state.myProducts && this.state.myProducts.length>0 && this.state.myProducts.map(product => {
                             return (
                                 <li key={product.ID}>
-                                    <div className="box">
+                                    <div className="box clickable" onClick={() => handleGoProduct(product.ID)}>
                                         <div className="content">
                                             <div>
                                                 <Image src={`/api/products/image/${product.IMAGES[0].NAME}`} width={300} height={200} alt="Product Image"/>

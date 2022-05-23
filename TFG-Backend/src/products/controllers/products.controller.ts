@@ -129,6 +129,34 @@ export class ProductsController {
 
         return products;
     }
+
+    @UseGuards(ThrottlerGuard)
+    @Throttle(10, 3000)
+    @ApiOkResponse()
+    @Get("obtain/:product")
+    @UseGuards(AuthenticatedGuard)
+    async getProduct(
+        @Param('product') product: string,
+        @Res({passthrough: true}) response: Response,
+        @Req() request: Request
+    ) {
+        let user: User = await this.usersService.findOne({
+            where: {
+                ID: this.jwtService.decode(request.cookies["jwt"])["userId"],
+            },
+        });
+
+        let products: Product[] = await this.productsService.find({
+            relations: ['IMAGES'],
+            loadRelationsId: true,
+            where: {
+                USER: user,
+                ID: product
+            },
+        })
+
+        return products;
+    }
     
     @UseGuards(ThrottlerGuard)
     @Throttle(100, 3000)

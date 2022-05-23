@@ -40,7 +40,8 @@
         "save": "Update",
         "send_code": "Send code",
         "add_product": "Create product",
-        "my_products": "Manage my products"
+        "my_products": "Manage my products",
+        "modify_product": "Modify product"
     },
     "requestErrors": {
         "invalid_credentials": "Invalid Credentials",
