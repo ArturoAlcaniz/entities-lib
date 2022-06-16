@@ -241,12 +241,30 @@ export class ProductsController {
                 ID: this.jwtService.decode(request.cookies["jwt"])["userId"],
             },
         });
+        
+        let products: Product[] = await this.productsService.getRepository().createQueryBuilder('product')
+        .where('USERID = :uid', { uid: user.ID })
+        .leftJoinAndSelect('product.IMAGES', 'product_image')
+        .getMany()
 
+        return products;
+    }
+
+    @UseGuards(ThrottlerGuard)
+    @Throttle(100, 3000)
+    @ApiOkResponse()
+    @Get("obtainAllAvailable")
+    @UseGuards(AuthenticatedGuard)
+    async getAllProducts(
+        @Res({passthrough: true}) response: Response,
+        @Req() request: Request
+    ) {
+        
         let products: Product[] = await this.productsService.find({
             relations: ['IMAGES'],
             loadRelationsId: true,
             where: {
-                USER: user
+                BUYER: null
             },
         })
 
@@ -269,14 +287,10 @@ export class ProductsController {
             },
         });
 
-        let products: Product[] = await this.productsService.find({
-            relations: ['IMAGES'],
-            loadRelationsId: true,
-            where: {
-                USER: user,
-                ID: product
-            },
-        })
+        let products: Product[] = await this.productsService.getRepository().createQueryBuilder('product')
+        .where('product.ID = :pid', { pid: product })
+        .leftJoinAndSelect('product.IMAGES', 'product_image')
+        .getMany()
 
         return products;
     }

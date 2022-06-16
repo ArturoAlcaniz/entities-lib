@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Double, Repository } from "typeorm";
+import { createQueryBuilder, Double, Repository } from "typeorm";
 import { BaseService } from "../../commons/service.commons";
 import { User } from "../../users/entities/user.entity";
 import { Product } from "../entities/product.entity";
@@ -27,6 +27,7 @@ export class ProductsService extends BaseService<Product> {
         product.ENDS = end;
         product.PRICE = price;
         product.USER = user;
+        product.BUYER = null;
         return product;
     }
 

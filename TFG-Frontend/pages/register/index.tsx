@@ -5,6 +5,7 @@ import {handleRegister, handleSendCode, showCPass, showPass} from '@components/R
 import CustomErrorMessage from '@utils/CustomErrorMessage';
 import Link from 'next/link';
 import cookies from 'next-cookies';
+import passwordStrengthMeter from '@root/components/Commons/PasswordStrengthMeter';
 
 export default class RegisterPage extends CustomBasicPage{
     static async getInitialProps(ctx: any) {
@@ -32,8 +33,64 @@ export default class RegisterPage extends CustomBasicPage{
             confirmPassword: "",
             formError: "",
             componentName: "Register | TI-Shop",
+            passwordStrength: "0",
+            passwordStrengthText: "",
             showPassword: false,
             showCPassword: false,
+        }
+    }
+    loadPasswordStrength(event) {
+        let points = 0
+
+        if((new RegExp("^(?=.*[a-z])").test(event.target.value))){
+            points++
+        }
+
+        if((new RegExp("^(?=.*[A-Z])").test(event.target.value))){
+            points++
+        }
+
+        if((new RegExp("^(?=.*[0-9])").test(event.target.value))){
+            points++
+        }
+
+        if((new RegExp("^(?=.*[°<>#*~!\".§$%?®©¶])").test(event.target.value))){
+            points++
+        }
+
+        if(event.target.value.length >= 8){
+            points++
+        }
+
+        let newPasswordStrengthText = ""
+
+        if(points>0 && points<3) {
+            newPasswordStrengthText = "Weak"    
+        }
+
+        if(points>=3 && points<5) {
+            newPasswordStrengthText = "Good"
+        }
+
+        if(points == 5) {
+            newPasswordStrengthText = "Strong"
+        }
+
+        if(event.target.value.length>0)
+            this.setState({passwordStrength: ""+(points*20), passwordStrengthText: newPasswordStrengthText})
+    }
+
+    obtainClassPasswordStrength(): string {
+        if(this.state.passwordStrength<60) {
+            return "passWeak"
+        }
+
+        if(this.state.passwordStrength<100) {
+            return "passGood"
+        }
+
+        if(this.state.passwordStrength==100) {
+            return "passStrong"
         }
     }
 
@@ -54,7 +111,7 @@ export default class RegisterPage extends CustomBasicPage{
         let languageSelected = this.state.languageSelected
         let obtainTextTranslated = this.translations[languageSelected]
 
-        const { username, email, password, confirmPassword, showPassword, showCPassword, formError, step, code } = this.state
+        const { username, email, password, confirmPassword, showPassword, showCPassword, formError, step, code, passwordStrength, passwordStrengthText } = this.state
         let msgError = obtainTextTranslated["requestErrors"][this.state.requestErrors.get('registerError')]
 
         return (
@@ -96,13 +153,15 @@ export default class RegisterPage extends CustomBasicPage{
                                         {obtainTextTranslated["labels"]["pass"]}
                                     </label>
                                     <div className="control has-icons-left has-icons-right">
-                                        <input v-model={password} className={`input inputpass fas ${formError=='password' ? 'is-danger' : ''}`} type={showPassword ? "text" : "password"} autoComplete="off"></input>
+                                        <input onInput={(e) => {this.loadPasswordStrength(e)}} v-model={password} className={`input inputpass fas ${formError=='password' ? 'is-danger' : ''}`} type={showPassword ? "text" : "password"} autoComplete="off"></input>
                                         <span className="icon is-small is-left">
                                             <i className="fas fa-lock"></i>
                                         </span>
                                         <span className="icon is-small is-right">
                                             <i onMouseUp={(e) => {e.preventDefault()}} onMouseDown={(e) => {e.preventDefault()}} className={`showpass fas fa-eye${showPassword ? '' : '-slash'}`} onClick={showPass.bind(this)}></i>
                                         </span>
+                                        {passwordStrengthMeter(passwordStrength)}
+                                        <div className={`passwordStrengthText ${this.obtainClassPasswordStrength()}`}>{passwordStrengthText}</div>
                                     </div>
                                     { formError=='password' && CustomErrorMessage(msgError) }
                                 </div>

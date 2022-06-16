@@ -396,3 +396,23 @@ a.navbar-custom {
     position: absolute;
     right: 5px;
 }
+
+.progressCustom {
+    margin-bottom: 0 !important;
+}
+
+.passwordStrengthText {
+    text-align: right;
+}
+
+.passWeak {
+    color: red;
+}
+
+.passGood {
+    color: yellowgreen;
+}
+
+.passStrong {
+    color: green;
+}

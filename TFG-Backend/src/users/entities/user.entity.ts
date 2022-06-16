@@ -29,6 +29,12 @@ export class User extends BaseEntity {
     @Column({type: "varchar", nullable: true, default: null, length: 100})
     PASSWORD: string;
 
+    @Column({type: "decimal", default: 0.0, nullable: false, precision: 2})
+    COINS: string;
+
+    @OneToMany(type => Product, product => product.BUYER)
+    PRODUCTSBOUGHT: Product[];
+
     @OneToMany(type => Product, product => product.USER)
     PRODUCTS: Product[];
 

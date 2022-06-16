@@ -35,6 +35,9 @@ export class Product extends BaseEntity {
     @Column({type: "decimal", nullable: false, precision: 2})
     PRICE: string;
 
+    @ManyToOne(type => User, buyer => buyer.PRODUCTSBOUGHT)
+    BUYER: User;
+
     @ManyToOne(type => User, user => user.PRODUCTS)
     USER: User;
 
