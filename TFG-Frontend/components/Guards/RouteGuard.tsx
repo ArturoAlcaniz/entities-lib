@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 function RouteGuard({ children }) {
 
     const [authorized, setAuthorized] = useState(false)
-    const publicPaths: ()  => Array<string> = useCallback(() => { return ['/', '/register']; }, [])
+    const publicPaths: ()  => Array<string> = useCallback(() => { return ['/', '/login', '/register']; }, [])
     const routing = useRouter()
 
     useEffect((router: NextRouter = routing) => {

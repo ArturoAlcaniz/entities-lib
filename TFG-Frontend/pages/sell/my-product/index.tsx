@@ -5,6 +5,7 @@ import CustomErrorMessage from '@root/utils/CustomErrorMessage';
 import { handleCreateProduct, handleDeleteProduct, handleModifyProduct, handleObtainMyProduct, uploadImageProduct } from '@root/components/Market/MarketLogic';
 import Link from 'next/link';
 import cookies from 'next-cookies';
+import Image from 'next/image'
 
 export default class ModifyProductPage extends CustomBasicPage{
 
@@ -34,6 +35,7 @@ export default class ModifyProductPage extends CustomBasicPage{
             category: "",
             description: "",
             price: 0.0,
+            imagesAlreadyAdded: [],
             images: [],
             product: null,
         }
@@ -45,6 +47,21 @@ export default class ModifyProductPage extends CustomBasicPage{
 
     obtainFields() {
         return `createProducts  ${this.state.product==null ? 'hidden' : ''}`
+    }
+
+    deleteImageAlreadyAdded(image){
+        let images: [] = this.state.imagesAlreadyAdded
+        
+        function equalToImage(element) {
+            return element === image
+        }
+
+        let index: number = images.findIndex(equalToImage)
+
+        if(index != -1) {
+            images.splice(index, 1)
+        }
+        this.setState({imagesAlreadyAdded: images})
     }
 
     render() {
@@ -89,6 +106,18 @@ export default class ModifyProductPage extends CustomBasicPage{
                                     </label>
                                     <div className="control">
                                         <input type="file" multiple={true} name="images" onChange={uploadImageProduct.bind(this)} />
+                                    </div>
+                                    <div className="media-scroller snaps-inline">
+                                        { this.state.imagesAlreadyAdded && this.state.imagesAlreadyAdded.length>0 && this.state.imagesAlreadyAdded.map(image => {
+                                            return (
+                                                <div key={image.ID} className="media-element">
+                                                    <i onClick={() => {this.deleteImageAlreadyAdded(image)}} className="gg-trash"></i>
+                                                    <Image src={`/api/products/image/${image.NAME}`} width={300} height={200} alt="Product Image"/>
+                                                </div>
+                                            )
+                                        })
+
+                                        }
                                     </div>
                                 </div>
                                 <div className="field">

@@ -1,8 +1,13 @@
 # Delete database
-rm -rfv mariadb/
+rm -r mariadb/
 
 # Delete images
-rm -rfv TFG-Backend/files/
+rm -r TFG-Backend/files/
 
 # Delete Logs
-rm -rfv TFG-Backend/log/
+rm -r TFG-Backend/log/
+rm -r error/
+
+# Delete node modules
+rm -r TFG-Backend/node_modules/
+rm -r TFG-Frontend/node_modules/

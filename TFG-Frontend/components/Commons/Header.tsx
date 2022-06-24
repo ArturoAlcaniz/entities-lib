@@ -39,7 +39,7 @@ export default class Header extends Component<any,any> {
     }
 
     handleGoLogin() {
-        Router.push('/')
+        Router.push('login')
     }
 
     obtainButtonRegister(): JSX.Element {

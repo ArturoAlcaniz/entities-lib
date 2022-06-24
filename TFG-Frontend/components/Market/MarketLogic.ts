@@ -1,5 +1,5 @@
 import Router from "next/router";
-import { createProductRequest, deleteProductRequest, modifyProductRequest, obtainMyProductRequest, obtainMyProductsRequest } from "./MarketRequest";
+import { createProductRequest, deleteProductRequest, modifyProductRequest, obtainAllProductsRequest, obtainMyProductRequest, obtainMyProductsRequest } from "./MarketRequest";
 import {createProductValidation, modifyProductValidation } from "./MarketValidation";
 
 export function uploadImageProduct(event: any) {
@@ -23,6 +23,7 @@ async function handleObtainMyProduct(thisComponent) {
                         productname: response.data[0].PRODUCTNAME, 
                         description: response.data[0].DESCRIPTION,
                         category: response.data[0].CATEGORY,
+                        imagesAlreadyAdded: response.data[0].IMAGES,
                         startsell: response.data[0].STARTS.slice(0, response.data[0].STARTS.length-8),
                         endsell: response.data[0].ENDS.slice(0, response.data[0].ENDS.length-8),
                         price: response.data[0].PRICE
@@ -43,6 +44,24 @@ async function handleObtainMyProducts(thisComponent) {
                     productsArray.push(response.data[i])
                 }
                 thisComponent.setState({myProducts: productsArray});
+            }
+        },
+        (error) => {
+            console.log(error)
+        }
+    )
+}
+
+async function handleObtainAllProducts(thisComponent) {
+
+    await obtainAllProductsRequest().then(
+        (response) => {
+            if (response.status == 200) {
+                let productsArray: Array<any> = []
+                for(let i=0; i<response.data.length; i++){
+                    productsArray.push(response.data[i])
+                }
+                thisComponent.setState({products: productsArray});
             }
         },
         (error) => {
@@ -132,4 +151,4 @@ function handleCreateProduct(event: any) {
     )
 }
 
-export {handleCreateProduct,handleObtainMyProducts,handleObtainMyProduct,handleGoProduct,handleModifyProduct,handleDeleteProduct}
+export {handleCreateProduct,handleObtainMyProducts,handleObtainMyProduct,handleGoProduct,handleModifyProduct,handleDeleteProduct,handleObtainAllProducts}

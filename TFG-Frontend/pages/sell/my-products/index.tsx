@@ -37,10 +37,6 @@ export default class MyProductsPage extends CustomBasicPage{
           } catch(err) {}
     }
 
-    async componentDidMount() {
-
-    }
-
     render() {
 
         let languageSelected = this.state.languageSelected

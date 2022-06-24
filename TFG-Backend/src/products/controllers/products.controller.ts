@@ -19,6 +19,7 @@ import fs, { createReadStream } from 'fs';
 import { join } from "path";
 import { ModifyProductDto } from "../dtos/modifyProduct.dto";
 import { DeleteProductDto } from "../dtos/deleteProduct.dto";
+import { In, Not } from "typeorm";
 
 @ApiTags("Product Controller")
 @Controller("products")
@@ -161,25 +162,25 @@ export class ProductsController {
             },
         });
 
-        let product: Product = await this.productsService.findOne({
-            where: {
-                ID: payload.id,
-                USER: user,
-            },
-        });
+        let product: Product = await this.productsService.getRepository().createQueryBuilder('product')
+        .where('USERID = :uid', { uid: user.ID })
+        .andWhere('ID = :pid', { pid: payload.id })
+        .getOne();
 
-        this.productImagesService.deleteMany(await this.productImagesService.find({
-            where: {
-                PRODUCT: product
-            }
-        }))
-        
         product.PRODUCTNAME = payload.productname;
         product.DESCRIPTION = payload.description;
         product.CATEGORY = payload.category;
         product.STARTS = payload.startsell == "" ? null : payload.startsell;
         product.ENDS = payload.endsell == "" ? null : payload.endsell;
         product.PRICE = payload.price;
+
+        var ids: string[] = JSON.parse(payload.imagesAlreadyAdded)
+
+        await this.productImagesService.getRepository().createQueryBuilder()
+        .delete()
+        .where('PRODUCTID = :pid', { pid: payload.id })
+        .andWhere({ID: Not(In(ids)) })
+        .execute()
 
         let productImages: ProductImage[] = []
         
@@ -254,7 +255,6 @@ export class ProductsController {
     @Throttle(100, 3000)
     @ApiOkResponse()
     @Get("obtainAllAvailable")
-    @UseGuards(AuthenticatedGuard)
     async getAllProducts(
         @Res({passthrough: true}) response: Response,
         @Req() request: Request
@@ -281,11 +281,6 @@ export class ProductsController {
         @Res({passthrough: true}) response: Response,
         @Req() request: Request
     ) {
-        let user: User = await this.usersService.findOne({
-            where: {
-                ID: this.jwtService.decode(request.cookies["jwt"])["userId"],
-            },
-        });
 
         let products: Product[] = await this.productsService.getRepository().createQueryBuilder('product')
         .where('product.ID = :pid', { pid: product })

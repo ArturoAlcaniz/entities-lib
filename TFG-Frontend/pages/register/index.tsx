@@ -143,7 +143,7 @@ export default class RegisterPage extends CustomBasicPage{
                                     <div className="control has-icons-left">
                                         <input v-model={email} className={`input ${formError=='email' ? 'is-danger' : ''}`} type="email" autoComplete="off"></input>
                                         <span className="icon is-small is-left">
-                                            <i className="fas fa-envelope"></i>    
+                                                <i className="fas fa-envelope"></i>    
                                         </span>
                                     </div>
                                     { formError=='email' && CustomErrorMessage(msgError) }

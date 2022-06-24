@@ -19,8 +19,8 @@
         "product_description": "Descripción",
         "product_price": "Precio",
         "avatar": "Avatar",
-        "productimage": "Imagenes",
-        "start_sell": "Vender apartir",
+        "productimage": "Imágenes",
+        "start_sell": "Vender a partir",
         "end_sell": "Vender hasta"
     },
     "explanations": {

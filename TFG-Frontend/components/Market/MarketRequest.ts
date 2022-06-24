@@ -16,6 +16,14 @@ function obtainMyProductsRequest(): AxiosPromise<any> {
     });
 }
 
+function obtainAllProductsRequest(): AxiosPromise<any> {
+    return axios({
+        method: "get",
+        url: "/api/products/obtainAllAvailable",
+        data: [],
+    });
+}
+
 function deleteProductRequest(thisComponent: any): AxiosPromise<any> {
     return axios({
         method: "post",
@@ -36,6 +44,13 @@ function modifyProductRequest(thisComponent: any): AxiosPromise<any> {
     formData.append('startsell', thisComponent.state.startsell)
     formData.append('endsell', thisComponent.state.endsell)
     formData.append('price', thisComponent.state.price)
+    
+    let imagesIds = []
+    thisComponent.state.imagesAlreadyAdded.map(function(item) {
+        imagesIds.push(item['ID']);
+    })
+
+    formData.append('imagesAlreadyAdded', JSON.stringify(imagesIds))
 
     if(thisComponent.state.images != null){
         for (var i = 0; i < thisComponent.state.images.length; i++) {
@@ -54,6 +69,7 @@ function modifyProductRequest(thisComponent: any): AxiosPromise<any> {
                 startsell: thisComponent.state.startsell,
                 endsell: thisComponent.state.endsell,
                 price: thisComponent.state.price,
+                imagesAlreadyAdded: thisComponent.state.imagesAlreadyAdded,
             },
         });
     }
@@ -90,4 +106,4 @@ function createProductRequest(thisComponent: any): AxiosPromise<any> {
     }
 }
 
-export {createProductRequest,obtainMyProductsRequest,obtainMyProductRequest,modifyProductRequest,deleteProductRequest}
+export {createProductRequest,obtainMyProductsRequest,obtainMyProductRequest,modifyProductRequest,deleteProductRequest,obtainAllProductsRequest}

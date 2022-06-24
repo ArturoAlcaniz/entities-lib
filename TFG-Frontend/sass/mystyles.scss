@@ -10,8 +10,8 @@ $google-blue: #4285f4;
 $button-active-blue: #1669F2;
 
 html, body{
+    height: 100%;
     overflow: auto;
-    height: 100%
 }
 
 .pageCentered{
@@ -40,7 +40,7 @@ html, body{
 }
 
 .createProductForm{
-    width: 400px;
+    width: 660px;
 }
 
 .languageSelect {
@@ -48,6 +48,9 @@ html, body{
 }
 
 @import "../node_modules/bulma/bulma.sass";
+@import "https://unpkg.com/open-props";
+@import "https://unpkg.com/open-props/normalize.min.css";
+
 
 a.navbar-custom {
     cursor: pointer;
@@ -415,4 +418,100 @@ a.navbar-custom {
 
 .passStrong {
     color: green;
+}
+
+.media-scroller {
+    --_spacer: var(--size-3);
+    display: grid;
+    gap: var(--_spacer);
+    grid-auto-flow: column;
+    grid-auto-columns: 21%;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    margin-top: 10px;
+}
+  
+.media-scroller--with-groups {
+    grid-auto-columns: 80%;
+}
+  
+.media-group {
+    display: grid;
+    gap: var(--_spacer);
+    grid-auto-flow: column;
+}
+  
+.media-element {
+    grid-template-rows: min-content;
+    gap: var(--_spacer);
+    border-radius: var(--radius-2);
+    box-shadow: var(--shadow-2);
+}
+  
+.media-element > img {
+    inline-size: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+  
+.snaps-inline {
+    scroll-snap-type: inline mandatory;
+    scroll-padding-inline: var(--_spacer, 1rem);
+}
+  
+.snaps-inline > * {
+    scroll-snap-align: start;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+}
+
+.input {
+    cursor: text;
+}
+
+.gg-trash {
+    box-sizing: border-box;
+    position: relative;
+    display: block;
+    transform: scale(var(--ggs,1));
+    width: 10px;
+    height: 12px;
+    border: 2px solid transparent;
+    box-shadow:
+        0 0 0 2px,
+        inset -2px 0 0,
+        inset 2px 0 0;
+    border-bottom-left-radius: 1px;
+    border-bottom-right-radius: 1px;
+    left: 90%;
+    margin-bottom: 3%;
+    margin-top: 4%;
+    cursor: pointer;
+}
+.gg-trash::after,
+.gg-trash::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute
+}
+.gg-trash::after {
+    background: currentColor;
+    border-radius: 3px;
+    width: 16px;
+    height: 2px;
+    top: -4px;
+    left: -5px
+}
+.gg-trash::before {
+    width: 10px;
+    height: 4px;
+    border: 2px solid;
+    border-bottom: transparent;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    top: -7px;
+    left: -2px
 }

@@ -6,7 +6,7 @@ import Head from 'next/head';
 
 export default class CustomBasicPage extends Component<any, any>{
 
-    static async getInitialProps(ctx: any) {
+    static async getInitialProps(ctx: any): Promise<any> {
         return {
             pathname: ctx.pathname,
             initialLanguageSelected: cookies(ctx).languageSelected || 'english',

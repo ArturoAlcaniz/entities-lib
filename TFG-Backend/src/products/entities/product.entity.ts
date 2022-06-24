@@ -32,7 +32,7 @@ export class Product extends BaseEntity {
     @Column({type: "datetime", nullable: true, default: null})
     ENDS: string;
 
-    @Column({type: "decimal", nullable: false, precision: 2})
+    @Column({type: "decimal", nullable: false, precision: 5, scale: 2})
     PRICE: string;
 
     @ManyToOne(type => User, buyer => buyer.PRODUCTSBOUGHT)

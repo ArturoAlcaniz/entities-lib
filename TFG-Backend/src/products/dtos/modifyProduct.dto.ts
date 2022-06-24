@@ -30,4 +30,7 @@ export class ModifyProductDto {
 
     @IsOptional()
     readonly images: Array<Express.Multer.File>;
+
+    @IsNotEmpty()
+    readonly imagesAlreadyAdded: string;
 }
