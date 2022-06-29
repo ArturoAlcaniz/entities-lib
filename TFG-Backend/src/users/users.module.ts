@@ -11,6 +11,8 @@ import {ThrottlerModule} from "@nestjs/throttler";
 import {MailerModule} from "../mailer/mailer.module";
 import { MulterModule } from '@nestjs/platform-express';
 import { SessionsController } from "./controllers/session.controller";
+import { Payment } from "./entities/payment.entity";
+import { PaymentsService } from "./services/payments.service";
 
 @Global()
 @Module({
@@ -18,7 +20,7 @@ import { SessionsController } from "./controllers/session.controller";
         MulterModule.register({
             dest: './files',
         }),
-        TypeOrmModule.forFeature([User]),
+        TypeOrmModule.forFeature([User,Payment]),
         ConfigJwtModule,
         HashingModule,
         MailerModule,
@@ -29,8 +31,8 @@ import { SessionsController } from "./controllers/session.controller";
         WinstonModule,
         ThrottlerModule,
     ],
-    providers: [UsersService],
+    providers: [UsersService,PaymentsService],
     controllers: [UsersController, SessionsController],
-    exports: [UsersService],
+    exports: [UsersService,PaymentsService],
 })
 export class UsersModule {}

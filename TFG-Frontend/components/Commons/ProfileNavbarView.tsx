@@ -5,9 +5,15 @@ export default function ProfileNavbarView(thisComponent) {
     return(
         <div tabIndex={0} ref={thisComponent.profileNavbarViewRef} id="ProfileNavbarView" className="box customBoxProfile">
             <div className="profileTitleContainer">
-                {thisComponent.obtainUserInfo()}
+                <p>{thisComponent.obtainUserInfo()}</p>
+                <p>{thisComponent.obtainUserCoins()}</p>
             </div>
-            <div className="user-info">                    
+            <div className="user-info">
+                <div className="user-buy-coins">
+                    <a onClick={() => {thisComponent.handleGoBuyCoins()}}>
+                        {obtainTextTranslated["buttons"]["buy_coins"]}
+                    </a>
+                </div>                    
                 <div className="user-modify">
                     <a onClick={() => {thisComponent.handleAccountConfig()}}>
                         {obtainTextTranslated["buttons"]["account_config"]}

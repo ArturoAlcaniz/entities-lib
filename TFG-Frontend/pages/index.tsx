@@ -1,8 +1,6 @@
 import React from 'react'
 import CustomBasicPage from '@components/CustomBasicPage';
-import HeaderLogged from '@components/Commons/HeaderLogged';
-import CustomErrorMessage from '@root/utils/CustomErrorMessage';
-import { handleCreateProduct, handleGoProduct, handleObtainAllProducts, handleObtainMyProducts, uploadImageProduct } from '@root/components/Market/MarketLogic';
+import { handleGoProduct, handleObtainAllProducts, handleObtainMyProducts, uploadImageProduct } from '@root/components/Market/MarketLogic';
 import cookies from 'next-cookies';
 import Image from 'next/image'
 import Header from '@root/components/Commons/Header';
@@ -50,7 +48,7 @@ export default class AllProductsPage extends CustomBasicPage{
                                     <div className="box clickable" onClick={() => handleGoProduct(product.ID)}>
                                         <div className="content">
                                             <div>
-                                                <Image src={`/api/products/image/${product.IMAGES[0].NAME}`} width={300} height={200} alt="Product Image"/>
+                                                <Image src={product.IMAGES[0] ? `/api/products/image/${product.IMAGES[0].NAME}` : `/api/products/image`} width={300} height={200} alt="Product Image"/>
                                             </div>
                                             <p>
                                                 <strong>{product.PRODUCTNAME}</strong><br></br>

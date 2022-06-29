@@ -12,6 +12,7 @@ export default class CustomBasicPage extends Component<any, any>{
             initialLanguageSelected: cookies(ctx).languageSelected || 'english',
             username: cookies(ctx).username,
             email: cookies(ctx).email,
+            coins: cookies(ctx).coins,
             avatar: cookies(ctx).avatar,
         }
     }

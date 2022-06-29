@@ -294,7 +294,6 @@ export class ProductsController {
     @Throttle(100, 3000)
     @ApiOkResponse()
     @Get("image/:product")
-    @UseGuards(AuthenticatedGuard)
     async getAvatar(
         @Param('product') product: string,
         @Res({passthrough: true}) response: Response,
@@ -309,5 +308,18 @@ export class ProductsController {
             const f = createReadStream(join(process.cwd(), file));
             return new StreamableFile(f);
         }
+    }
+
+    @UseGuards(ThrottlerGuard)
+    @Throttle(20, 3000)
+    @ApiOkResponse()
+    @Get("image")
+    async getAvatarDefault(
+        @Res({passthrough: true}) response: Response,
+        @Req() request: Request,
+    ) {
+        let file = "static-images/ProductImage.png"
+        const f = createReadStream(join(process.cwd(), file));
+        return new StreamableFile(f); 
     }
 }

@@ -36,6 +36,7 @@ export default class SellPage extends CustomBasicPage{
                 {super.render()}
                 <HeaderLogged username={this.props.username}
                         email={this.props.email}
+                        coins={this.props.coins}
                         avatar={this.props.avatar} 
                         pathname={this.props.pathname} 
                         setLanguageSelected={this.setLanguageSelected} 

@@ -197,6 +197,7 @@ a.navbar-custom {
     right: -5px;
     top: 60px;
     padding: 0;
+    cursor: default;
 }
 
 .customSelectLanguage {
@@ -262,7 +263,7 @@ a.navbar-custom {
     margin-top: 5px;
     margin-right: 20px;
     margin-left: 20px;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
 }
 
 .profileTitle {
@@ -514,4 +515,10 @@ a.navbar-custom {
     border-top-right-radius: 2px;
     top: -7px;
     left: -2px
+}
+.buyCoinsForm {
+    width: 700px;
+    position: absolute;
+    left: 20%;
+    top: 10%;
 }

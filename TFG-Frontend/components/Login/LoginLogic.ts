@@ -36,6 +36,7 @@ function handleLoginToBack(thisComponent, idToken: string) {
                 });
                 document.cookie = `username=${response.data.USERNAME};`;
                 document.cookie = `email=${response.data.EMAIL};`;
+                document.cookie = `coins=${response.data.COINS};`;
                 document.cookie = `avatar=${response.data.AVATAR};`;
                 setTimeout(() => {
                     Router.push("buy");
@@ -79,6 +80,7 @@ function handleLogin2(event: any) {
                 });
                 document.cookie = `username=${response.data.USERNAME};`;
                 document.cookie = `email=${response.data.EMAIL};`;
+                document.cookie = `coins=${response.data.COINS};`;
                 document.cookie = `avatar=${response.data.AVATAR};`;
                 setTimeout(() => {
                     Router.push("buy");

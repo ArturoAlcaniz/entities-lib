@@ -1,6 +1,6 @@
 {
     "titles": {
-        "iniciar_sesion": "Iniciar sesion",
+        "iniciar_sesion": "Iniciar sesión",
         "inicio": "Inicio",
         "notificaciones": "Notificaciones",
         "perfil": "Mi perfil"
@@ -21,11 +21,13 @@
         "avatar": "Avatar",
         "productimage": "Imágenes",
         "start_sell": "Vender a partir",
-        "end_sell": "Vender hasta"
+        "end_sell": "Vender hasta",
+        "coins": "Coins"
     },
     "explanations": {
         "hello": "Bienvenido",
         "seconds": "segundos",
+        "coins": "Coins",
         "have_account": "¿No tiene una cuenta?",
         "have_account2": "¿Ya tienes una cuenta?",
         "create_account": "Cree una",
@@ -42,7 +44,10 @@
         "add_product": "Crear producto",
         "my_products": "Gestionar mis productos",
         "modify_product": "Modificar producto",
-        "delete_product": "Eliminar producto"
+        "delete_product": "Eliminar producto",
+        "buy": "Comprar",
+        "sell": "Vender",
+        "buy_coins": "Comprar coins"
     },
     "requestErrors": {
         "invalid_credentials": "Credenciales no válidas",
@@ -68,6 +73,7 @@
         "successfully_registered": "Usuario registrado correctamente",
         "successfully_updated": "Usuario modificado correctamente",
         "successfully_product_created": "Producto creado correctamente",
-        "successfully_product_modified": "Producto modificado correctamente"
+        "successfully_product_modified": "Producto modificado correctamente",
+        "successfully_payment": "Pago realizado correctamente"
     }
 }

@@ -7,7 +7,9 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from "typeorm";
+import { ColumnNumericTransformer } from "../../commons/ColumnNumericTransformer";
 import { Product } from "../../products/entities/product.entity";
+import { Payment } from "./payment.entity";
 
 @Entity()
 export class User extends BaseEntity {
@@ -29,8 +31,8 @@ export class User extends BaseEntity {
     @Column({type: "varchar", nullable: true, default: null, length: 100})
     PASSWORD: string;
 
-    @Column({type: "decimal", default: 0.0, nullable: false, precision: 2})
-    COINS: string;
+    @Column({type: "decimal", default: 0.00, nullable: false, precision: 9, scale: 2, transformer: new ColumnNumericTransformer()})
+    COINS: number;
 
     @OneToMany(type => Product, product => product.BUYER)
     PRODUCTSBOUGHT: Product[];
@@ -43,4 +45,7 @@ export class User extends BaseEntity {
 
     @UpdateDateColumn()
     UPDATED_AT: "string";
+
+    @OneToMany(type => Payment, payment => payment.USER)
+    PAYMENTS: any;
 }

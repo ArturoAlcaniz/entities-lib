@@ -47,6 +47,7 @@ export default class MyProductsPage extends CustomBasicPage{
                 {super.render()}
                 <HeaderLogged username={this.props.username}
                         email={this.props.email}
+                        coins={this.props.coins}
                         avatar={this.props.avatar} 
                         pathname={this.props.pathname} 
                         setLanguageSelected={this.setLanguageSelected} 
@@ -59,7 +60,7 @@ export default class MyProductsPage extends CustomBasicPage{
                                     <div className="box clickable" onClick={() => handleGoProduct(product.ID)}>
                                         <div className="content">
                                             <div>
-                                                <Image src={`/api/products/image/${product.IMAGES[0].NAME}`} width={300} height={200} alt="Product Image"/>
+                                                <Image src={product.IMAGES[0] ? `/api/products/image/${product.IMAGES[0].NAME}` : `/api/products/image`} width={300} height={200} alt="Product Image"/>
                                             </div>
                                             <p>
                                                 <strong>{product.PRODUCTNAME}</strong><br></br>

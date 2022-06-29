@@ -20,6 +20,7 @@ import * as winston from "winston";
 import {MailerModule} from "./mailer/mailer.module";
 import { Product } from "./products/entities/product.entity";
 import { ProductImage } from "./products/entities/productimage.entity";
+import { Payment } from "./users/entities/payment.entity";
 
 const resolvePath = (file: string) => path.resolve(`./dist/ui_v1/${file}`);
 
@@ -40,7 +41,7 @@ class FrontendMiddleware implements NestMiddleware {
             username: process.env.DB_USER,
             password: process.env.DB_PASS,
             database: process.env.DB_NAME,
-            entities: [User,Product,ProductImage],
+            entities: [User,Payment,Product,ProductImage],
             synchronize: true,
             autoLoadEntities: true,
         }),

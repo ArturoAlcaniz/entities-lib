@@ -21,6 +21,7 @@ export default class BuyPage extends CustomBasicPage{
                 {super.render()}
                 <HeaderLogged username={this.props.username}
                         email={this.props.email}
+                        coins={this.props.coins}
                         pathname={this.props.pathname}
                         avatar={this.props.avatar} 
                         setLanguageSelected={this.setLanguageSelected} 

@@ -25,6 +25,9 @@ import { Multer } from 'multer';
 import { createReadStream } from "fs";
 import { join } from "path";
 import fs from 'fs';
+import {BuyCoinsDto} from "../dtos/buyCoins.dto";
+import { PaymentsService } from "../services/payments.service";
+import { Payment } from "../entities/payment.entity";
 
 
 @ApiTags("User Controller")
@@ -32,6 +35,7 @@ import fs from 'fs';
 export class UsersController {
     constructor(
         private usersService: UsersService,
+        private paymentsService: PaymentsService,
         private jwtService: JwtService,
         private httpService: HttpService,
         private mailerService: MailerService,
@@ -178,6 +182,7 @@ export class UsersController {
             message: ["successfully_logged_in"],
             USERNAME: u.USERNAME,
             EMAIL: u.EMAIL,
+            COINS: u.COINS,
             AVATAR: u.AVATAR,
         });
         this.logger.info(
@@ -257,6 +262,61 @@ export class UsersController {
 
     @UseGuards(ThrottlerGuard)
     @Throttle(10, 60)
+    @UseGuards(AuthenticatedGuard)
+    @ApiOkResponse()
+    @Post("buyCoins")
+    async buyCoins(
+        @Body() payload: BuyCoinsDto,
+        @Res({passthrough: true}) response: Response,
+        @Req() request: Request
+    ) {
+        let user: User = await this.usersService.findOne({
+            where: {
+                ID: this.jwtService.decode(request.cookies["jwt"])["userId"],
+            },
+        });
+
+        const headersRequest = {
+            'Content-Type': 'application/json', // afaik this one is not needed
+            'Authorization': `Basic ${Buffer.from(process.env.CLIENT_ID+":"+process.env.SECRET_ID).toString('base64')}`,
+        };
+
+        const infoPayment = await firstValueFrom(
+            this.httpService.get(
+                "https://www.sandbox.paypal.com/v2/checkout/orders/" +
+                    payload.id + "?grant_type=client_credentials&ignoreCache=true",
+                    { headers: headersRequest}
+            )
+        );
+
+        if(infoPayment.data.status != "COMPLETED") {
+            response.status(400).json({message: "Error buying coins"});
+            return;
+        }
+
+        let payment: Payment = this.paymentsService.createPayment(payload.id, infoPayment.data.purchase_units[0].amount.value, user)
+        
+        if(!this.paymentsService.validatePayment(payment)) {
+            response.status(400).json({message: "Payment already added"})
+            return;
+        }
+
+        await this.paymentsService.save(payment)
+
+        let coins = Number(payment.COINS.toString().slice(0, (payment.COINS.toString().indexOf(".")+3)))
+        user.COINS = coins
+        
+        await this.usersService.save(user)
+        
+        response.status(200).json({
+            message: ["successfully_payment"],
+            COINS: user.COINS
+        });
+
+    }
+
+    @UseGuards(ThrottlerGuard)
+    @Throttle(10, 60)
     @ApiOkResponse()
     @Post("loginGoogle")
     async loginGoogle(
@@ -307,6 +367,7 @@ export class UsersController {
             message: ["successfully_logged_in"],
             USERNAME: user.USERNAME,
             EMAIL: user.EMAIL,
+            COINS: user.COINS,
             AVATAR: user.AVATAR,
         });
     }
@@ -398,6 +459,8 @@ export class UsersController {
                 avatar.filename
             )
         );
+
+        await this.mailerService.sendDataChangedConfirm(user.EMAIL)
     }
 
     @UseGuards(ThrottlerGuard)
@@ -430,7 +493,7 @@ export class UsersController {
         @Res({passthrough: true}) response: Response,
         @Req() request: Request,
     ) {
-        let file = "UserProfile.png"
+        let file = "static-images/UserProfile.png"
         const f = createReadStream(join(process.cwd(), file));
         return new StreamableFile(f); 
     }

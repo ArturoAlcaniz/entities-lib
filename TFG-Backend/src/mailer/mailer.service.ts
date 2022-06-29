@@ -35,6 +35,40 @@ export class MailerService {
         });
     };    
 
+    public async sendDataChangedConfirm(email: string) {
+
+        let thisOut = this
+
+        this.readHTMLFile(path.resolve(__dirname, "./templates/ChangeProfile/changeProfile.html"), function (err, html) {
+ 
+            if(err){
+                console.log(err)
+            }else{
+                var template = handlebars.compile(html);
+                var replacements = {
+                };
+                var htmlToSend = template(replacements);
+                const mailOptions = {
+                    from: thisOut.user,
+                    to: email,
+                    subject: "[TI-SHOP] Profile changed",
+                    html: htmlToSend,
+                    attachments: [{
+                        filename: 'Logo-TISHOP',
+                        path: path.resolve(__dirname,'./templates/Login/Logo-TISHOP.png'),
+                        cid: 'Logo-TISHOP'
+                    }]
+                };
+        
+                thisOut.transporter.sendMail(mailOptions, function(error) {
+                    if (error) {
+                        console.log(error);
+                    }
+                });
+            }
+        })
+    }
+
     public async sendCodeLogin(email: string, code: string) {
 
         let thisOut = this

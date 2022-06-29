@@ -23,6 +23,7 @@ export default class HeaderLogged extends Component<any,any> {
             pathname: props.pathname,
             username: props.username || "",
             email: props.email || "",
+            coins: props.coins || "",
             avatar: props.avatar || "",
             languageSelected: props.initialLanguageSelected || "english",
             styleNavbarBurger: "navbar-burger",
@@ -53,6 +54,11 @@ export default class HeaderLogged extends Component<any,any> {
         return this.state.pathname === navName
     }
 
+    changeCoins(coins) {
+        this.setState({coins: coins})
+        this.forceUpdate()
+    }
+
     handleLogout(){
         const auth = getAuth()
         signOut(auth).then(() => {
@@ -77,6 +83,10 @@ export default class HeaderLogged extends Component<any,any> {
         Router.push('profile')
     }
 
+    handleGoBuyCoins(){
+        Router.push('payments')
+    }
+
     obtainUserAvatar(): string{
         return this.state.avatar
     }
@@ -86,6 +96,13 @@ export default class HeaderLogged extends Component<any,any> {
         let obtainTextTranslated = this.translations[languageSelected]
 
         return obtainTextTranslated["explanations"]["hello"] + ", " + this.state.username
+    }
+
+    obtainUserCoins(): string{
+        let languageSelected = this.state.languageSelected
+        let obtainTextTranslated = this.translations[languageSelected]
+
+        return this.state.coins + " " + obtainTextTranslated["explanations"]["coins"]
     }
 
     showNotificationView() {
