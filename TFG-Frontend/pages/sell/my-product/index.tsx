@@ -2,20 +2,17 @@ import React from 'react'
 import CustomBasicPage from '@components/CustomBasicPage';
 import HeaderLogged from '@components/Commons/HeaderLogged';
 import CustomErrorMessage from '@root/utils/CustomErrorMessage';
-import { handleCreateProduct, handleDeleteProduct, handleModifyProduct, handleObtainMyProduct, uploadImageProduct } from '@root/components/Market/MarketLogic';
+import { handleCreateProduct, handleDeleteProduct, handleModifyProduct, handleObtainCategories, handleObtainMyProduct, uploadImageProduct } from '@root/components/Market/MarketLogic';
 import Link from 'next/link';
 import cookies from 'next-cookies';
 import Image from 'next/image'
+import shortid from 'shortid';
 
 export default class ModifyProductPage extends CustomBasicPage{
 
     static async getInitialProps(ctx: any) {
         return {
-            pathname: ctx.pathname,
-            initialLanguageSelected: cookies(ctx).languageSelected || 'english',
-            username: cookies(ctx).username,
-            email: cookies(ctx).email,
-            avatar: cookies(ctx).avatar,
+            ...this.getInitialProps,
             idProduct: ctx.query.product,
         }
     }
@@ -38,9 +35,11 @@ export default class ModifyProductPage extends CustomBasicPage{
             imagesAlreadyAdded: [],
             images: [],
             product: null,
+            productCategories: [],
         }
 
         try {
+            handleObtainCategories(this);
             handleObtainMyProduct(this);
         } catch(err) {}
     }
@@ -126,7 +125,14 @@ export default class ModifyProductPage extends CustomBasicPage{
                                         {obtainTextTranslated["labels"]["product_category"]}
                                     </label>
                                     <div className="control">
-                                        <input className="input" v-model={category} type="text" autoComplete="off"></input>
+                                        <select className="select" v-model={category} autoComplete="off">
+                                        {this.state.productCategories && this.state.productCategories.length>0 && this.state.productCategories.map(category => {
+                                            return (
+                                                <option key={shortid.generate()} value={category}>{category}</option>
+                                                );
+                                            })
+                                        }
+                                        </select>
                                     </div>
                                     { formError=='category' && CustomErrorMessage(msgError) }
                                 </div>

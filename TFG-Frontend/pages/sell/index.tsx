@@ -2,8 +2,9 @@ import React from 'react'
 import CustomBasicPage from '@components/CustomBasicPage';
 import HeaderLogged from '@components/Commons/HeaderLogged';
 import CustomErrorMessage from '@root/utils/CustomErrorMessage';
-import { handleCreateProduct, uploadImageProduct } from '@root/components/Market/MarketLogic';
+import { handleCreateProduct, handleObtainCategories, uploadImageProduct } from '@root/components/Market/MarketLogic';
 import Link from 'next/link';
+import shortid from 'shortid'
 
 export default class SellPage extends CustomBasicPage{
     constructor(props: any) {
@@ -20,6 +21,13 @@ export default class SellPage extends CustomBasicPage{
             description: "",
             price: 0.0,
             images: [],
+            productCategories: [],
+        }
+
+        try {
+            handleObtainCategories(this)
+        } catch {
+
         }
     }
 
@@ -73,7 +81,14 @@ export default class SellPage extends CustomBasicPage{
                                         {obtainTextTranslated["labels"]["product_category"]}
                                     </label>
                                     <div className="control">
-                                        <input className="input" v-model={category} type="text" autoComplete="off"></input>
+                                        <select className="select" v-model={category} autoComplete="off">
+                                        {this.state.productCategories && this.state.productCategories.length>0 && this.state.productCategories.map(category => {
+                                            return (
+                                                <option key={shortid.generate()} value={category}>{category}</option>
+                                                );
+                                            })
+                                        }
+                                        </select>
                                     </div>
                                     { formError=='category' && CustomErrorMessage(msgError) }
                                 </div>

@@ -304,7 +304,7 @@ export class UsersController {
         await this.paymentsService.save(payment)
 
         let coins = Number(payment.COINS.toString().slice(0, (payment.COINS.toString().indexOf(".")+3)))
-        user.COINS = coins
+        user.COINS = user.COINS + coins
         
         await this.usersService.save(user)
         

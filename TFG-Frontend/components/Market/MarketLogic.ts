@@ -1,5 +1,5 @@
 import Router from "next/router";
-import { createProductRequest, deleteProductRequest, modifyProductRequest, obtainAllProductsRequest, obtainMyProductRequest, obtainMyProductsRequest } from "./MarketRequest";
+import { createProductRequest, deleteProductRequest, modifyProductRequest, obtainAllProductsRequest, obtainCategories, obtainMyProductRequest, obtainMyProductsRequest } from "./MarketRequest";
 import {createProductValidation, modifyProductValidation } from "./MarketValidation";
 
 export function uploadImageProduct(event: any) {
@@ -116,6 +116,20 @@ function handleModifyProduct(event: any) {
 
 }
 
+function handleObtainCategories(thisComponent) {
+    obtainCategories().then(
+        (response) => {
+            if (response.status == 200) {
+                thisComponent.setState({
+                    productCategories: response.data
+                });
+            }
+        },
+        () => {}
+    )
+
+}
+
 function handleCreateProduct(event: any) {
     event.preventDefault();
 
@@ -151,4 +165,4 @@ function handleCreateProduct(event: any) {
     )
 }
 
-export {handleCreateProduct,handleObtainMyProducts,handleObtainMyProduct,handleGoProduct,handleModifyProduct,handleDeleteProduct,handleObtainAllProducts}
+export {handleCreateProduct,handleObtainMyProducts,handleObtainMyProduct,handleGoProduct,handleModifyProduct,handleDeleteProduct,handleObtainAllProducts,handleObtainCategories}

@@ -10,7 +10,7 @@ import {Logger} from "winston";
 import {Throttle, ThrottlerGuard} from "@nestjs/throttler";
 import {MailerService} from "../../mailer/mailer.service";
 import { CreateProductDto } from "../dtos/createProduct.dto";
-import { Product } from "../entities/product.entity";
+import { Category, Product } from "../entities/product.entity";
 import { ProductsService } from "../services/products.service";
 import { FilesInterceptor } from "@nestjs/platform-express";
 import { ProductImage } from "../entities/productimage.entity";
@@ -169,7 +169,7 @@ export class ProductsController {
 
         product.PRODUCTNAME = payload.productname;
         product.DESCRIPTION = payload.description;
-        product.CATEGORY = payload.category;
+        product.CATEGORY = <Category> payload.category;
         product.STARTS = payload.startsell == "" ? null : payload.startsell;
         product.ENDS = payload.endsell == "" ? null : payload.endsell;
         product.PRICE = payload.price;
@@ -189,43 +189,9 @@ export class ProductsController {
             productImages.push(productImage)
         })
 
-        if(this.productImagesService.saveMany(productImages)){
+        if(this.productImagesService.saveMany(productImages) && this.productsService.save(product)){
             response.status(200).json({message: ["successfully_product_modified"]});
         }
-    }
-
-    @UseGuards(ThrottlerGuard)
-    @Throttle(100, 3000)
-    @ApiOkResponse()
-    @Post("modifyWithoutImages")
-    @UseGuards(AuthenticatedGuard)
-    async modifyWithoutImages(
-        @Body() payload: ModifyProductDto,
-        @Res({passthrough: true}) response: Response,
-        @Req() request: Request
-    ) {
-        let user: User = await this.usersService.findOne({
-            where: {
-                ID: this.jwtService.decode(request.cookies["jwt"])["userId"],
-            },
-        });
-
-        let product: Product = await this.productsService.findOne({
-            where: {
-                ID: payload.id,
-                USER: user,
-            },
-        });
-
-        product.PRODUCTNAME = payload.productname;
-        product.DESCRIPTION = payload.description;
-        product.CATEGORY = payload.category;
-        product.STARTS = payload.startsell == "" ? null : payload.startsell;
-        product.ENDS = payload.endsell == "" ? null : payload.endsell;
-        product.PRICE = payload.price;
-
-        this.productsService.save(product);
-        response.status(200).json({message: ["successfully_product_modified"]});
     }
 
     @UseGuards(ThrottlerGuard)
@@ -269,6 +235,14 @@ export class ProductsController {
         })
 
         return products;
+    }
+
+    @UseGuards(ThrottlerGuard)
+    @Throttle(100, 3000)
+    @ApiOkResponse()
+    @Get("obtainCategories")
+    async getCategories() {
+        return Object.values(Category)
     }
 
     @UseGuards(ThrottlerGuard)

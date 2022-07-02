@@ -7,15 +7,6 @@ import cookies from 'next-cookies';
 import Image from 'next/image'
 
 export default class MyProductsPage extends CustomBasicPage{
-    static async getInitialProps(ctx: any) {
-        return {
-            pathname: ctx.pathname,
-            initialLanguageSelected: cookies(ctx).languageSelected || 'english',
-            username: cookies(ctx).username,
-            email: cookies(ctx).email,
-            avatar: cookies(ctx).avatar
-        }
-    }
 
     constructor(props: any) {
         super(props);

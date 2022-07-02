@@ -57,22 +57,15 @@ function modifyProductRequest(thisComponent: any): AxiosPromise<any> {
             formData.append('images', thisComponent.state.images[i])
         }
         return axios.post("/api/products/modify",formData);
-    }else{
-        return axios({
-            method: "post",
-            url: "/api/products/modifyWithoutImages",
-            data: {
-                id: thisComponent.state.id,
-                productname: thisComponent.state.productname,
-                description: thisComponent.state.description,
-                category: thisComponent.state.category,
-                startsell: thisComponent.state.startsell,
-                endsell: thisComponent.state.endsell,
-                price: thisComponent.state.price,
-                imagesAlreadyAdded: thisComponent.state.imagesAlreadyAdded,
-            },
-        });
     }
+}
+
+function obtainCategories(): AxiosPromise<any> {
+    return axios({
+        method: "get",
+        url: "/api/products/obtainCategories",
+        data: [],
+    });
 }
 
 function createProductRequest(thisComponent: any): AxiosPromise<any> {
@@ -106,4 +99,4 @@ function createProductRequest(thisComponent: any): AxiosPromise<any> {
     }
 }
 
-export {createProductRequest,obtainMyProductsRequest,obtainMyProductRequest,modifyProductRequest,deleteProductRequest,obtainAllProductsRequest}
+export {createProductRequest,obtainMyProductsRequest,obtainMyProductRequest,modifyProductRequest,deleteProductRequest,obtainAllProductsRequest,obtainCategories}

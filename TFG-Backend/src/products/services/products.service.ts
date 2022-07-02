@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { createQueryBuilder, Double, Repository } from "typeorm";
 import { BaseService } from "../../commons/service.commons";
 import { User } from "../../users/entities/user.entity";
-import { Product } from "../entities/product.entity";
+import { Category, Product } from "../entities/product.entity";
 import { ProductImage } from "../entities/productimage.entity";
 
 @Injectable()
@@ -22,7 +22,7 @@ export class ProductsService extends BaseService<Product> {
         let product = new Product()
         product.PRODUCTNAME = name;
         product.DESCRIPTION = description;
-        product.CATEGORY = category;
+        product.CATEGORY = <Category> category;
         product.STARTS = start;
         product.ENDS = end;
         product.PRICE = price;

@@ -12,6 +12,16 @@ import {
 import { User } from "../../users/entities/user.entity";
 import { ProductImage } from "./productimage.entity";
 
+export enum Category {
+    WEB_APPLICATION = "Web application",
+    LICENSE = "License",
+    DESKTOP_APPLICATION = "Desktop application",
+    MODULE = "Module",
+    CMS = "CMS",
+    STYLES = "Styles",
+    NODE_PACKAGE = "Node package"
+}
+
 @Entity()
 export class Product extends BaseEntity {
     @PrimaryGeneratedColumn("uuid")
@@ -20,8 +30,8 @@ export class Product extends BaseEntity {
     @Column({type: "varchar", length: 50})
     PRODUCTNAME: string;
 
-    @Column({type: "varchar", nullable: false, length: 20})
-    CATEGORY: string;
+    @Column({type: "enum", enum: Category, nullable: false})
+    CATEGORY: Category;
 
     @Column({type: "varchar", nullable: false, length: 100})
     DESCRIPTION: string;
