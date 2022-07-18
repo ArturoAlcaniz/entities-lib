@@ -1,18 +1,18 @@
 import React from 'react'
-import CustomBasicPage from '@components/CustomBasicPage';
-import HeaderLogged from '@components/Commons/HeaderLogged';
 import CustomErrorMessage from '@root/utils/CustomErrorMessage';
-import { handleCreateProduct, handleDeleteProduct, handleModifyProduct, handleObtainCategories, handleObtainMyProduct, uploadImageProduct } from '@root/components/Market/MarketLogic';
+import { handleDeleteProduct, handleModifyProduct, handleObtainCategories, handleObtainMyProduct, uploadImageProduct } from '@root/components/Market/MarketLogic';
 import Link from 'next/link';
 import cookies from 'next-cookies';
 import Image from 'next/image'
 import shortid from 'shortid';
+import CustomBasicPageLogged from '@root/components/CustomBasicPageLogged';
 
-export default class ModifyProductPage extends CustomBasicPage{
+export default class ModifyProductPage extends CustomBasicPageLogged{
 
     static async getInitialProps(ctx: any) {
         return {
             ...this.getInitialProps,
+            coins: cookies(ctx).coins,
             idProduct: ctx.query.product,
         }
     }
@@ -74,13 +74,6 @@ export default class ModifyProductPage extends CustomBasicPage{
         return (
             <div>
                 {super.render()}
-                <HeaderLogged username={this.props.username}
-                        email={this.props.email}
-                        coins={this.props.coins}
-                        avatar={this.props.avatar} 
-                        pathname={this.props.pathname} 
-                        setLanguageSelected={this.setLanguageSelected} 
-                        initialLanguageSelected={languageSelected} />
                 <div className='buttonGoMyProducts'>
                     <Link href="/sell/my-products">
                         <button className="button is-primary">{obtainTextTranslated["buttons"]["my_products"]}</button>

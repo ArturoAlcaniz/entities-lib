@@ -1,11 +1,10 @@
 import React from 'react'
-import CustomBasicPage from '@components/CustomBasicPage';
-import HeaderLogged from '@components/Commons/HeaderLogged';
 import { handleBuyCoins } from '@components/Payments/PaymentsLogic';
 import CustomErrorMessage from '@utils/CustomErrorMessage';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import CustomBasicPageLogged from '@root/components/CustomBasicPageLogged';
 
-export default class PaymentsPage extends CustomBasicPage{
+export default class PaymentsPage extends CustomBasicPageLogged{
     headerLogged: any;
 
     constructor(props: any) {
@@ -34,14 +33,6 @@ export default class PaymentsPage extends CustomBasicPage{
         return (
             <div>
                 {super.render()}
-                <HeaderLogged ref={this.headerLogged}
-                        username={this.props.username}
-                        email={this.props.email}
-                        coins={this.props.coins}
-                        avatar={this.props.avatar}
-                        pathname={this.props.pathname} 
-                        setLanguageSelected={this.setLanguageSelected} 
-                        initialLanguageSelected={languageSelected} />
                 <div className="pageCentered">
                     <form>
                         <div className="card buyCoinsForm">

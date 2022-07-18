@@ -1,8 +1,9 @@
 import React from 'react'
 import CustomBasicPage from '@components/CustomBasicPage';
-import { handleGoProduct, handleObtainAllProducts, handleObtainMyProducts, uploadImageProduct } from '@root/components/Market/MarketLogic';
+import { handleObtainAllProducts } from '@root/components/Market/MarketLogic';
 import cookies from 'next-cookies';
 import Image from 'next/image'
+import Router from 'next/router';
 import Header from '@root/components/Commons/Header';
 
 export default class AllProductsPage extends CustomBasicPage{
@@ -45,7 +46,7 @@ export default class AllProductsPage extends CustomBasicPage{
                         {this.state.products && this.state.products.length>0 && this.state.products.map(product => {
                             return (
                                 <li key={product.ID}>
-                                    <div className="box clickable" onClick={() => handleGoProduct(product.ID)}>
+                                    <div className="box clickable" onClick={() => {Router.push('login')}}>
                                         <div className="content">
                                             <div>
                                                 <Image src={product.IMAGES[0] ? `/api/products/image/${product.IMAGES[0].NAME}` : `/api/products/image`} width={300} height={200} alt="Product Image"/>

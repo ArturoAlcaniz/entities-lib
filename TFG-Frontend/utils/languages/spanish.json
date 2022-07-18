@@ -47,7 +47,9 @@
         "delete_product": "Eliminar producto",
         "buy": "Comprar",
         "sell": "Vender",
-        "buy_coins": "Comprar coins"
+        "buy_coins": "Comprar coins",
+        "management": "Administración",
+        "codes": "Códigos"
     },
     "requestErrors": {
         "invalid_credentials": "Credenciales no válidas",

@@ -11,6 +11,11 @@ import { ColumnNumericTransformer } from "../../commons/ColumnNumericTransformer
 import { Product } from "../../products/entities/product.entity";
 import { Payment } from "./payment.entity";
 
+export enum Rol {
+    USER = "USER",
+    ADMIN = "ADMIN"
+}
+
 @Entity()
 export class User extends BaseEntity {
     @PrimaryGeneratedColumn("uuid")
@@ -25,8 +30,8 @@ export class User extends BaseEntity {
     @Column({type: "varchar", nullable: false, length: 50, unique: true})
     EMAIL: string;
 
-    @Column({type: "varchar", default: "User", nullable: false, length: 10})
-    ROL: string;
+    @Column({type: "enum", enum: Rol, default: Rol.USER, nullable: false})
+    ROL: Rol;
 
     @Column({type: "varchar", nullable: true, default: null, length: 100})
     PASSWORD: string;

@@ -34,34 +34,10 @@ export default class Header extends Component<any,any> {
         }
     }
 
-    handleGoRegister() {
-        Router.push('register')
-    }
-
-    handleGoLogin() {
-        Router.push('login')
-    }
-
-    obtainButtonRegister(): JSX.Element {
-        let languageSelected = this.state.languageSelected
-        let obtainTextTranslated = this.translations[languageSelected]
-        return (
-        <a className="button is-primary buttonRegister" onClick={() => {this.handleGoRegister()}}>
-            <strong>{obtainTextTranslated["buttons"]["registro"]}</strong>
-        </a>)
-    }
-
-    obtainButtonLogin(): JSX.Element {
-        let languageSelected = this.state.languageSelected
-        let obtainTextTranslated = this.translations[languageSelected]
-        return (
-        <div className="buttonLogin" onClick={() => {this.handleGoLogin()}}>
-            <div className="loginText">{obtainTextTranslated["buttons"]["login"]}</div>
-        </div>)
-    }
-
     render() {
         const { styleNavbarBurger, styleNavbarMenu } = this.state
+        let languageSelected = this.state.languageSelected
+        let obtainTextTranslated = this.translations[languageSelected]
 
         return (
             <nav className="navbar" role="navigation" aria-label="main navigation">
@@ -80,10 +56,14 @@ export default class Header extends Component<any,any> {
                     <div className="navbar-end">
                         {LanguageSelect(this)}
                         <div className="navbar-item">
-                            { this.obtainButtonLogin() }
+                            <div className="buttonLogin" onClick={() => {Router.push('login')}}>
+                                <div className="loginText">{obtainTextTranslated["buttons"]["login"]}</div>
+                            </div>
                         </div>
                         <div className="navbar-item">
-                            { this.obtainButtonRegister() }
+                            <a className="button is-primary buttonRegister" onClick={() => {Router.push('register')}}>
+                                <strong>{obtainTextTranslated["buttons"]["registro"]}</strong>
+                            </a>
                         </div>
                     </div>
                 </div>

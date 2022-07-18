@@ -47,7 +47,9 @@
         "delete_product": "Delete product",
         "buy": "Buy",
         "sell": "Sell",
-        "buy_coins": "Buy coins"
+        "buy_coins": "Buy coins",
+        "management": "Management",
+        "codes": "Codes"
     },
     "requestErrors": {
         "invalid_credentials": "Invalid Credentials",

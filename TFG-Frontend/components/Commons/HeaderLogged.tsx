@@ -22,6 +22,7 @@ export default class HeaderLogged extends Component<any,any> {
         this.state = {
             pathname: props.pathname,
             username: props.username || "",
+            admin: props.admin || false,
             email: props.email || "",
             coins: props.coins || "",
             avatar: props.avatar || "",
@@ -131,6 +132,8 @@ export default class HeaderLogged extends Component<any,any> {
 
     render() {
         const { showProfileNavbar, showNotifications, styleNavbarBurger, styleNavbarMenu } = this.state
+        let languageSelected = this.state.languageSelected
+        let obtainTextTranslated = this.translations[languageSelected]
 
         return (
             <div>
@@ -148,14 +151,21 @@ export default class HeaderLogged extends Component<any,any> {
                         <div className="navbar-start">
                             <Link href="/buy">
                                 <a className={this.checkIfIsActive("/buy") ? "navbar-custom is-active" : "navbar-custom"}>
-                                    Buy
+                                    {obtainTextTranslated["buttons"]["buy"]}
                                 </a>
                             </Link>
                             <Link href="/sell">
                                 <a className={this.checkIfIsActive("/sell") ? "navbar-custom is-active" : "navbar-custom"}>
-                                    Sell
+                                    {obtainTextTranslated["buttons"]["sell"]}
                                 </a>
                             </Link>
+                            { this.state.admin &&
+                                <Link href="/management">
+                                    <a className={this.checkIfIsActive("/management") ? "navbar-custom is-active" : "navbar-custom"}>
+                                        {obtainTextTranslated["buttons"]["management"]}
+                                    </a>
+                                </Link>
+                            }
                         </div>
                         <div className="navbar-end">
                             {LanguageSelect(this)}

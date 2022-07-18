@@ -1,12 +1,10 @@
 import React from 'react'
-import CustomBasicPage from '@components/CustomBasicPage';
 import HeaderLogged from '@components/Commons/HeaderLogged';
-import CustomErrorMessage from '@root/utils/CustomErrorMessage';
-import { handleCreateProduct, handleGoProduct, handleObtainMyProducts, uploadImageProduct } from '@root/components/Market/MarketLogic';
-import cookies from 'next-cookies';
+import { handleGoProduct, handleObtainMyProducts, uploadImageProduct } from '@root/components/Market/MarketLogic';
 import Image from 'next/image'
+import CustomBasicPageLogged from '@root/components/CustomBasicPageLogged';
 
-export default class MyProductsPage extends CustomBasicPage{
+export default class MyProductsPage extends CustomBasicPageLogged{
 
     constructor(props: any) {
         super(props);
@@ -36,13 +34,6 @@ export default class MyProductsPage extends CustomBasicPage{
         return (
             <div>
                 {super.render()}
-                <HeaderLogged username={this.props.username}
-                        email={this.props.email}
-                        coins={this.props.coins}
-                        avatar={this.props.avatar} 
-                        pathname={this.props.pathname} 
-                        setLanguageSelected={this.setLanguageSelected} 
-                        initialLanguageSelected={languageSelected} />
                 <div className="pageCentered">
                     <ul className="ListProducts">
                         {this.state.myProducts && this.state.myProducts.length>0 && this.state.myProducts.map(product => {
@@ -50,9 +41,9 @@ export default class MyProductsPage extends CustomBasicPage{
                                 <li key={product.ID}>
                                     <div className="box clickable" onClick={() => handleGoProduct(product.ID)}>
                                         <div className="content">
-                                            <div>
+                                            <>
                                                 <Image src={product.IMAGES[0] ? `/api/products/image/${product.IMAGES[0].NAME}` : `/api/products/image`} width={300} height={200} alt="Product Image"/>
-                                            </div>
+                                            </>
                                             <p>
                                                 <strong>{product.PRODUCTNAME}</strong><br></br>
                                                 <div className="productPrice">

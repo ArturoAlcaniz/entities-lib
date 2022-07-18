@@ -6,6 +6,7 @@ function RouteGuard({ children }) {
 
     const [authorized, setAuthorized] = useState(false)
     const publicPaths: ()  => Array<string> = useCallback(() => { return ['/', '/login', '/register']; }, [])
+    const adminPaths: ()  => Array<string> = useCallback(() => { return ['/management']; }, [])
     const routing = useRouter()
 
     useEffect((router: NextRouter = routing) => {
@@ -20,12 +21,16 @@ function RouteGuard({ children }) {
             }).then((response: any) => {
                 if(response.status == 200){
                     document.cookie = `username=${response.data.USERNAME};`;
-                    setAuthorized(true);
-                    if(publicPaths().includes(path) && router) {
+                    document.cookie = `admin=${response.data.ROL === "ADMIN"}`;
+                    
+                    if((publicPaths().includes(path) || (adminPaths().includes(path) && response.data.ROL != "ADMIN")) && router) {
+                        setAuthorized(false);
                         router.push({
                             pathname: '/buy',
                             query: { returnUrl: router.asPath }
                         },'/buy');
+                    }else{
+                        setAuthorized(true);
                     }
                 }
             }, () => {

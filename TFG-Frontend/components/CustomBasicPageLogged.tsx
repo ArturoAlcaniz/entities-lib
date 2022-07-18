@@ -3,8 +3,9 @@ import cookies from "next-cookies";
 import * as langEnglish from '@utils/languages/english.json';
 import * as langSpanish from '@utils/languages/spanish.json';
 import Head from 'next/head';
+import HeaderLogged from './Commons/HeaderLogged';
 
-export default class CustomBasicPage extends Component<any, any>{
+export default class CustomBasicPageLogged extends Component<any, any>{
 
     static async getInitialProps(ctx: any): Promise<any> {
         return {
@@ -43,12 +44,22 @@ export default class CustomBasicPage extends Component<any, any>{
 
     render(){
 
+        let languageSelected = this.state.languageSelected
+
         return (
             <div>
                 <Head>
                     <title>{this.state.componentName}</title>
                     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
                 </Head>
+                <HeaderLogged username={this.props.username}
+                        admin={this.props.admin}
+                        email={this.props.email}
+                        coins={this.props.coins}
+                        pathname={this.props.pathname}
+                        avatar={this.props.avatar} 
+                        setLanguageSelected={this.setLanguageSelected} 
+                        initialLanguageSelected={languageSelected} />
             </div>
         )
     }

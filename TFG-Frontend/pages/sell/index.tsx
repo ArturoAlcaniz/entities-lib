@@ -1,12 +1,11 @@
 import React from 'react'
-import CustomBasicPage from '@components/CustomBasicPage';
-import HeaderLogged from '@components/Commons/HeaderLogged';
 import CustomErrorMessage from '@root/utils/CustomErrorMessage';
 import { handleCreateProduct, handleObtainCategories, uploadImageProduct } from '@root/components/Market/MarketLogic';
 import Link from 'next/link';
 import shortid from 'shortid'
+import CustomBasicPageLogged from '@root/components/CustomBasicPageLogged';
 
-export default class SellPage extends CustomBasicPage{
+export default class SellPage extends CustomBasicPageLogged{
     constructor(props: any) {
         super(props);
 
@@ -42,13 +41,6 @@ export default class SellPage extends CustomBasicPage{
         return (
             <div>
                 {super.render()}
-                <HeaderLogged username={this.props.username}
-                        email={this.props.email}
-                        coins={this.props.coins}
-                        avatar={this.props.avatar} 
-                        pathname={this.props.pathname} 
-                        setLanguageSelected={this.setLanguageSelected} 
-                        initialLanguageSelected={languageSelected} />
                 <div className='buttonGoMyProducts'>
                     <Link href="/sell/my-products">
                         <button className="button is-primary">{obtainTextTranslated["buttons"]["my_products"]}</button>

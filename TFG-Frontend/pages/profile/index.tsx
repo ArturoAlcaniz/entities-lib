@@ -1,10 +1,9 @@
 import React from 'react'
-import CustomBasicPage from '@components/CustomBasicPage';
-import HeaderLogged from '@components/Commons/HeaderLogged';
 import CustomErrorMessage from '@utils/CustomErrorMessage';
 import { handleChangeProfile, showActualPass, showNewCPass, showNewPass, uploadAvatar } from '@components/Profile/ChangeProfileLogic';
+import CustomBasicPageLogged from '@root/components/CustomBasicPageLogged';
 
-export default class ProfilePage extends CustomBasicPage{
+export default class ProfilePage extends CustomBasicPageLogged{
     constructor(props: any) {
         super(props);
 
@@ -54,13 +53,6 @@ export default class ProfilePage extends CustomBasicPage{
         return (
             <div>
                 {super.render()}
-                <HeaderLogged username={this.props.username}
-                        email={this.props.email}
-                        coins={this.props.coins}
-                        avatar={this.props.avatar}
-                        pathname={this.props.pathname} 
-                        setLanguageSelected={this.setLanguageSelected} 
-                        initialLanguageSelected={languageSelected} />
                 <div className="pageCentered">
                     <form onSubmit={handleChangeProfile.bind(this)} >
                         <div className="card loginForm">
