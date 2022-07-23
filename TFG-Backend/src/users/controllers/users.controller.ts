@@ -28,6 +28,7 @@ import fs from 'fs';
 import {BuyCoinsDto} from "../dtos/buyCoins.dto";
 import { PaymentsService } from "../services/payments.service";
 import { Payment } from "../entities/payment.entity";
+import { LimitedBy } from "../entities/code.entity";
 
 
 @ApiTags("User Controller")
@@ -590,6 +591,14 @@ export class UsersController {
     ) {
         this.usersService.usersLoggedIn.delete(request.user.userId);
         response.clearCookie("jwt");
+    }
+
+    @UseGuards(ThrottlerGuard)
+    @Throttle(100, 3000)
+    @ApiOkResponse()
+    @Get("obtainLimitedBy")
+    async getCategories() {
+        return Object.values(LimitedBy)
     }
 
     countFailAttempt(request: Request, email: string) {

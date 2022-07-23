@@ -49,7 +49,8 @@
         "sell": "Vender",
         "buy_coins": "Comprar coins",
         "management": "Administración",
-        "codes": "Códigos"
+        "codes": "Códigos",
+        "create_code": "Crear código"
     },
     "requestErrors": {
         "invalid_credentials": "Credenciales no válidas",

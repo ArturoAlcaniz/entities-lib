@@ -2,7 +2,7 @@ import React from 'react'
 import CustomErrorMessage from '@root/utils/CustomErrorMessage';
 import { handleCreateProduct, handleObtainCategories, uploadImageProduct } from '@root/components/Market/MarketLogic';
 import Link from 'next/link';
-import shortid from 'shortid'
+import shortid from 'shortid';
 import CustomBasicPageLogged from '@root/components/CustomBasicPageLogged';
 
 export default class SellPage extends CustomBasicPageLogged{

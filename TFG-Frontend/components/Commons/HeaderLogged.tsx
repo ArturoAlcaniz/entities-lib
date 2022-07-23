@@ -159,13 +159,11 @@ export default class HeaderLogged extends Component<any,any> {
                                     {obtainTextTranslated["buttons"]["sell"]}
                                 </a>
                             </Link>
-                            { this.state.admin &&
-                                <Link href="/management">
-                                    <a className={this.checkIfIsActive("/management") ? "navbar-custom is-active" : "navbar-custom"}>
-                                        {obtainTextTranslated["buttons"]["management"]}
-                                    </a>
-                                </Link>
-                            }
+                            <Link href="/management">
+                                <a style={{display: this.state.admin == "true" ? 'flex' : 'none' }} className={this.checkIfIsActive("/management") ? "navbar-custom is-active" : "navbar-custom"}>
+                                    {obtainTextTranslated["buttons"]["management"]}
+                                </a>
+                            </Link>
                         </div>
                         <div className="navbar-end">
                             {LanguageSelect(this)}
@@ -180,7 +178,6 @@ export default class HeaderLogged extends Component<any,any> {
                                         <Image src={this.state.avatar ? `/api/users/avatar/${this.state.avatar}` : `/api/users/avatar`} width={60} height={60} alt="User Profile"/>
                                     </div>
                                 </div>
-                                
                             </div>
                         </div>
                     </div>
