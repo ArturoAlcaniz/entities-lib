@@ -8,7 +8,6 @@ import {Global, Module} from "@nestjs/common";
 import {HttpModule} from "@nestjs/axios";
 import {WinstonModule} from "nest-winston";
 import {ThrottlerModule} from "@nestjs/throttler";
-import {MailerModule} from "../mailer/mailer.module";
 import { MulterModule } from '@nestjs/platform-express';
 import { SessionsController } from "./controllers/session.controller";
 import { Payment } from "./entities/payment.entity";
@@ -23,7 +22,6 @@ import { PaymentsService } from "./services/payments.service";
         TypeOrmModule.forFeature([User,Payment]),
         ConfigJwtModule,
         HashingModule,
-        MailerModule,
         HttpModule.register({
             timeout: 5000,
             maxRedirects: 5,

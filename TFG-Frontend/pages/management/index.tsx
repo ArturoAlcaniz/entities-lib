@@ -2,6 +2,7 @@ import React from 'react';
 import CustomBasicPageLogged from '@root/components/CustomBasicPageLogged';
 import money from "@assets/money.png";
 import Image from 'next/image';
+import { handleGoCodesManage } from '@root/components/Management/ManagementLogic';
 
 
 export default class ManagementPage extends CustomBasicPageLogged{
@@ -14,10 +15,6 @@ export default class ManagementPage extends CustomBasicPageLogged{
         }
     }
 
-    handleGoManageCodes() {
-
-    }
-
     render() {
 
         let languageSelected = this.state.languageSelected
@@ -27,7 +24,7 @@ export default class ManagementPage extends CustomBasicPageLogged{
             <div>
                 {super.render()}
                 <div className="pageCentered">
-                    <div className="box clickable" onClick={() => this.handleGoManageCodes()}>
+                    <div className="box clickable" onClick={() => handleGoCodesManage()}>
                         <div className="content">
                             <>
                                 <Image src={money} width={300} height={200} alt="Logo"/>

@@ -8,14 +8,13 @@ import {JwtService} from "@nestjs/jwt";
 import {AuthenticatedGuard} from "../guards/authenticated.guard";
 import {LoginGoogleDto} from "../dtos/loginGoogle.dto";
 import {HttpService} from "@nestjs/axios";
-import {firstValueFrom} from "rxjs";
+import {firstValueFrom, lastValueFrom} from "rxjs";
 import {ApiOkResponse, ApiTags} from "@nestjs/swagger";
 import {Logger} from "winston";
 import {UserBlocked} from "../types/user-blocked.type";
 import {Throttle, ThrottlerGuard} from "@nestjs/throttler";
 import {ModifyUserDto} from "../dtos/modifyUser.dto";
 import {SendCodeDto} from "../dtos/sendcode.dto";
-import {MailerService} from "../../mailer/mailer.service";
 import {v4 as uuidv4} from "uuid";
 import {SendCodeLoginDto} from "../dtos/sendCodeLogin.dto";
 import { CodeEmail } from "../types/code-email.type";
@@ -39,7 +38,6 @@ export class UsersController {
         private paymentsService: PaymentsService,
         private jwtService: JwtService,
         private httpService: HttpService,
-        private mailerService: MailerService,
         @Inject("winston")
         private readonly logger: Logger
     ) {}
@@ -76,7 +74,14 @@ export class UsersController {
 
         let codeEmail: CodeEmail = this.createCodeEmail();
 
-        await this.mailerService.sendCodeRegister(payload.email, codeEmail.code);
+        await lastValueFrom(
+            this.httpService.post(`http://${process.env.MAILER_CONTAINER_NAME}:${process.env.MAILER_CONTAINER_PORT}/mailer/sendCodeRegister`,
+                JSON.stringify({email: payload.email, code: codeEmail.code}),
+                {
+                    headers: {"content-type": "application/json"}
+                }
+            )
+        )
 
         this.usersService.usersRegistering.set(codeEmail.code, user)
         this.usersService.codesSent.set(payload.email, codeEmail);
@@ -239,7 +244,14 @@ export class UsersController {
 
         let codeEmail: CodeEmail = this.createCodeEmail();
 
-        await this.mailerService.sendCodeLogin(payload.email, codeEmail.code);
+        await lastValueFrom(
+            this.httpService.post(`http://${process.env.MAILER_CONTAINER_NAME}:${process.env.MAILER_CONTAINER_PORT}/mailer/sendCodeLogin`,
+                JSON.stringify({email: payload.email, code: codeEmail.code}),
+                {
+                    headers: {"content-type": "application/json"}
+                }
+            )
+        )
 
         const jwt = this.jwtService.sign({userId: user.ID});
         this.usersService.usersLoggedInUnconfirmed.set(user.ID, jwt);
@@ -461,7 +473,15 @@ export class UsersController {
             )
         );
 
-        await this.mailerService.sendDataChangedConfirm(user.EMAIL)
+        await lastValueFrom(
+            this.httpService.post(`http://${process.env.MAILER_CONTAINER_NAME}:${process.env.MAILER_CONTAINER_PORT}/mailer/sendDataChangedConfirm`,
+                JSON.stringify({email: user.EMAIL}),
+                {
+                    headers: {"content-type": "application/json"}
+                }
+            )
+        )
+
     }
 
     @UseGuards(ThrottlerGuard)

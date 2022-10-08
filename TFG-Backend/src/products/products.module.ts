@@ -3,7 +3,6 @@ import {Global, Module} from "@nestjs/common";
 import {HttpModule} from "@nestjs/axios";
 import {WinstonModule} from "nest-winston";
 import {ThrottlerModule} from "@nestjs/throttler";
-import {MailerModule} from "../mailer/mailer.module";
 import { Product } from "./entities/product.entity";
 import { UsersModule } from "../users/users.module";
 import { ProductsService } from "./services/products.service";
@@ -21,7 +20,6 @@ import { ProductImagesService } from "./services/productImages.service";
         }),
         TypeOrmModule.forFeature([Product,ProductImage]),
         ConfigJwtModule,
-        MailerModule,
         HttpModule.register({
             timeout: 5000,
             maxRedirects: 5,

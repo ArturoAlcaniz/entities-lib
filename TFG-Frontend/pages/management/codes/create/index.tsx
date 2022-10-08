@@ -29,7 +29,7 @@ export default class CreateCodePage extends CustomBasicPageLogged{
         let msgError = obtainTextTranslated["requestErrors"][this.state.requestErrors.get('createCodeError')]
 
         return (
-            <div>
+            <>
                 {super.render()}
                 <div className="pageCentered">
                     <div className="card createProductForm">
@@ -42,22 +42,24 @@ export default class CreateCodePage extends CustomBasicPageLogged{
                                     <input className="input" v-model={coins} type="number" autoComplete="off"></input>
                                 </div>
                             </div>
-                            <div className="field"></div>
+                            <div className="field">
                                 <div className="control">
                                     <select className="select" v-model={limitedBy} autoComplete="off">
                                         { this.state.limitedByOptions && this.state.limitedByOptions.length > 0 && this.state.limitedByOptions.map(limited => {
                                             return (
                                                 <option key={shortid.generate()} value={limited}>{limited}</option>
                                             );
-                                        })
-
-                                        }
+                                        })}
                                     </select>
                                 </div>
                             </div>
+                            <div className="field">
+
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </>
         )
     }
 }

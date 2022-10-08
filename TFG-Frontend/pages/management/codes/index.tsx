@@ -1,5 +1,6 @@
 import React from 'react';
 import CustomBasicPageLogged from '@root/components/CustomBasicPageLogged';
+import { handleGoCreateCodes } from '@root/components/Management/Codes/CodesLogic';
 
 export default class CodesManagePage extends CustomBasicPageLogged{
     constructor(props: any) {
@@ -11,10 +12,6 @@ export default class CodesManagePage extends CustomBasicPageLogged{
         }
     }
 
-    handleGoManageCodes() {
-
-    }
-
     render() {
 
         let languageSelected = this.state.languageSelected
@@ -24,7 +21,7 @@ export default class CodesManagePage extends CustomBasicPageLogged{
             <div>
                 {super.render()}
                 <div className="pageCentered">
-                    <button className='button'>{obtainTextTranslated["buttons"]["create_code"]}</button>
+                    <button className='button' onClick={() => {handleGoCreateCodes()}}>{obtainTextTranslated["buttons"]["create_code"]}</button>
                 </div>
             </div>
         )

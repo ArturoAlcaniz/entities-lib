@@ -1,26 +1,16 @@
 import {Response} from "express";
 import {ConfigModule} from "@nestjs/config";
-import {TypeOrmModule} from "@nestjs/typeorm";
-import {User} from "./users/entities/user.entity";
-import {ConfigJwtModule} from "./configJwt/configJwt.module";
 import {AppController} from "./app.controller";
-import {HashingModule} from "./hashing/hashing.module";
-import {UsersModule} from "./users/users.module";
-import {ProductsModule} from "./products/products.module";
 import {
     Module,
     NestMiddleware,
     MiddlewareConsumer,
 } from "@nestjs/common";
 import path from "path";
-import {HttpModule} from "@nestjs/axios";
 import {ThrottlerModule} from "@nestjs/throttler";
 import {WinstonModule} from "nest-winston";
 import * as winston from "winston";
-import { Product } from "./products/entities/product.entity";
-import { ProductImage } from "./products/entities/productimage.entity";
-import { Payment } from "./users/entities/payment.entity";
-import { Code } from "./users/entities/code.entity";
+import {MailerModule} from "./mailer/mailer.module";
 
 const resolvePath = (file: string) => path.resolve(`./dist/ui_v1/${file}`);
 
@@ -33,22 +23,7 @@ class FrontendMiddleware implements NestMiddleware {
 @Module({
     imports: [
         ConfigModule.forRoot({isGlobal: true}),
-        ConfigJwtModule,
-        TypeOrmModule.forRoot({
-            type: "mariadb",
-            host: "mariadb",
-            port: 3306,
-            username: process.env.DB_USER,
-            password: process.env.DB_PASS,
-            database: process.env.DB_NAME,
-            entities: [User,Payment,Product,ProductImage,Code],
-            synchronize: true,
-            autoLoadEntities: true,
-        }),
-        HashingModule,
-        UsersModule,
-        ProductsModule,
-        HttpModule,
+        MailerModule,
         ThrottlerModule.forRoot({
             ttl: 60,
             limit: 10,

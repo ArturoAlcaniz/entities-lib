@@ -11,4 +11,7 @@ TFG-Backend/npm-debug.log
 TFG-Frontend/.next
 TFG-Test/node_modules
 certs/localhost/sslcache
+MailerService/node_modules
+MailerService/.env
+MailerService/log
 .env

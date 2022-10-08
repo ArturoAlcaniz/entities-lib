@@ -1,3 +1,4 @@
+import Router from "next/router";
 import { obtainLimitedBy } from "./ManagementRequest";
 
 function handleObtainLimitedBy(thisComponent) {
@@ -12,4 +13,9 @@ function handleObtainLimitedBy(thisComponent) {
     )
 }
 
-export { handleObtainLimitedBy }
+function handleGoCodesManage() {
+    Router.push("management/codes")
+}
+
+
+export { handleObtainLimitedBy, handleGoCodesManage }

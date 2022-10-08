@@ -25,9 +25,29 @@ services:
     environment: 
     # Timezone. Variable from .env file
       - TZ
+      - MAILER_CONTAINER_NAME
+      - MAILER_CONTAINER_PORT
     tty: true
     stdin_open: true
     container_name: ${BACKEND_CONTAINER_NAME}
+    networks: 
+      - external1
+      - external2
+  
+  mailer_service:
+    image: arturoalcaniz/node-image
+    command: bash -c "cd /app/MailerService && bash install.sh"
+    volumes:
+        - ./MailerService:/app/MailerService
+        - ./certs:/app/certs
+        - ./error/:/root/.npm/_logs/
+    environment: 
+    # Timezone. Variable from .env file
+      - TZ
+      - MAILER_CONTAINER_PORT
+    tty: true
+    stdin_open: true
+    container_name: ${MAILER_CONTAINER_NAME}
     networks: 
       - external1
       - external2
