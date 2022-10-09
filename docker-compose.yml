@@ -13,11 +13,13 @@ networks:
 services:
 
   # NestJS-Graphql backend
-  backend_container:
+  users_service:
     image: arturoalcaniz/node-image
-    command: bash -c "cd /app/TFG-Backend && bash install.sh"
+    command: bash -c "cd /app/UsersService && bash install.sh"
     volumes:
-        - ./TFG-Backend:/app/TFG-Backend
+        - ./UsersService:/app/UsersService
+        - ./entities-lib:/app/entities-lib
+        - ./config-lib:/app/config-lib
         - ./certs:/app/certs
         - ./error/:/root/.npm/_logs/
     depends_on:
@@ -27,9 +29,38 @@ services:
       - TZ
       - MAILER_CONTAINER_NAME
       - MAILER_CONTAINER_PORT
+      - USERS_CONTAINER_PORT
+      - JWT_KEY
     tty: true
     stdin_open: true
-    container_name: ${BACKEND_CONTAINER_NAME}
+    container_name: ${USERS_CONTAINER_NAME}
+    networks: 
+      - external1
+      - external2
+
+  products_service:
+    image: arturoalcaniz/node-image
+    command: bash -c "cd /app/ProductsService && bash install.sh"
+    volumes:
+        - ./ProductsService:/app/ProductsService
+        - ./entities-lib:/app/entities-lib
+        - ./config-lib:/app/config-lib
+        - ./certs:/app/certs
+        - ./error/:/root/.npm/_logs/
+    depends_on:
+      - mariadb
+    environment: 
+    # Timezone. Variable from .env file
+      - TZ
+      - MAILER_CONTAINER_NAME
+      - MAILER_CONTAINER_PORT
+      - USERS_CONTAINER_NAME
+      - USERS_CONTAINER_PORT
+      - PRODUCTS_CONTAINER_PORT
+      - JWT_KEY
+    tty: true
+    stdin_open: true
+    container_name: ${PRODUCTS_CONTAINER_NAME}
     networks: 
       - external1
       - external2
@@ -64,6 +95,10 @@ services:
     environment: 
     # Timezone. Variable from .env file
       - TZ
+      - USERS_CONTAINER_NAME
+      - USERS_CONTAINER_PORT
+      - PRODUCTS_CONTAINER_NAME
+      - PRODUCTS_CONTAINER_PORT
     tty: true
     stdin_open: true
     container_name: ${FRONTEND_CONTAINER_NAME}
@@ -94,7 +129,5 @@ services:
       - ADMINER_DEFAULT_SERVER=${MARIADB_CONTAINER_NAME}
       - ADMINER_DESIGN=galkaev
       - TZ
-    ports: 
-      - 8080:8080
     networks:
       - external2

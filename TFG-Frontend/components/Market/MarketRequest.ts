@@ -78,7 +78,7 @@ function createProductRequest(thisComponent: any): AxiosPromise<any> {
     formData.append('endsell', thisComponent.state.endsell)
     formData.append('price', thisComponent.state.price)
 
-    if(thisComponent.state.images != null){
+    if(Array.isArray(thisComponent.state.images) && thisComponent.state.images.length){
         for (var i = 0; i < thisComponent.state.images.length; i++) {
             formData.append('images', thisComponent.state.images[i])
         }

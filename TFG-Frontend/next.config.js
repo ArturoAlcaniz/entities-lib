@@ -32,9 +32,17 @@ module.exports = withImages({
     async rewrites() {
         return [
             {
-                source: "/api/:path*",
-                destination: "http://TFG-Backend:3020/:path*",
+                source: "/api/users/:path*",
+                destination: `http://${process.env.USERS_CONTAINER_NAME}:${process.env.USERS_CONTAINER_PORT}/users/:path*`,
             },
+            {
+                source: "/api/sessions/:path*",
+                destination: `http://${process.env.USERS_CONTAINER_NAME}:${process.env.USERS_CONTAINER_PORT}/sessions/:path*`,
+            },
+            {
+                source: "/api/products/:path*",
+                destination: `http://${process.env.PRODUCTS_CONTAINER_NAME}:${process.env.PRODUCTS_CONTAINER_PORT}/products/:path*`,
+            }
         ];
     },
     webpack: (config, {webpack}) => {
