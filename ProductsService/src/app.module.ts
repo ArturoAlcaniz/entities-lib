@@ -35,7 +35,7 @@ class FrontendMiddleware implements NestMiddleware {
         JwtModule.register(jwtConfig()),
         TypeOrmModule.forRoot({
             type: "mariadb",
-            host: "mariadb",
+            host: "database",
             port: 3306,
             username: process.env.DB_USER,
             password: process.env.DB_PASS,
