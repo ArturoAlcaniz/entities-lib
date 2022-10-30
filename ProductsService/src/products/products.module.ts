@@ -4,6 +4,8 @@ import {HttpModule} from "@nestjs/axios";
 import {WinstonModule} from "nest-winston";
 import {ThrottlerModule} from "@nestjs/throttler";
 import { Product } from "entities-lib/src/entities/product.entity";
+import { Invoice } from "entities-lib/src/entities/invoice.entity";
+import { InvoiceItem } from "entities-lib/src/entities/invoiceItem.entity";
 import { ProductsService } from "./services/products.service";
 import { ProductsController } from "./controllers/products.controller";
 import { jwtConfig } from "config-lib/src/jwt.config";
@@ -20,7 +22,7 @@ import { User } from "entities-lib/src/entities/user.entity";
         MulterModule.register({
             dest: './files',
         }),
-        TypeOrmModule.forFeature([Product,ProductImage,User]),
+        TypeOrmModule.forFeature([Product,ProductImage,User,Invoice,InvoiceItem]),
         JwtModule.register(jwtConfig()),
         HttpModule.register({
             timeout: 5000,

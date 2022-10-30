@@ -3,7 +3,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { BaseService } from "../../commons/service.commons";
 import { User } from "entities-lib/src/entities/user.entity";
-import { Category, Product } from "entities-lib/src/entities/product.entity";
+import { Category } from "entities-lib/src/entities/categoryProduct.enum";
+import { Product } from "entities-lib/src/entities/product.entity";
 
 @Injectable()
 export class ProductsService extends BaseService<Product> {
@@ -26,7 +27,6 @@ export class ProductsService extends BaseService<Product> {
         product.ENDS = end;
         product.PRICE = price;
         product.USER = user;
-        product.BUYER = null;
         return product;
     }
 

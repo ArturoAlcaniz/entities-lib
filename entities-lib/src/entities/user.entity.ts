@@ -45,10 +45,10 @@ export class User extends BaseEntity {
     PRODUCTS: Product[];
 
     @OneToMany(type => InvoiceItem, invoiceItem => invoiceItem.SELLER)
-    PRODUCTSSOLD: Product[];
+    PRODUCTSSOLD: InvoiceItem[];
 
     @OneToMany(type => Invoice, invoice => invoice.BUYER)
-    INVOICES: Product[];
+    INVOICES: Invoice[];
 
     @CreateDateColumn()
     CREATED_AT: "string";
