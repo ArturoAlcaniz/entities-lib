@@ -11,11 +11,17 @@ import {
 import { User } from "./user.entity";
 import { ProductImage } from "./productimage.entity";
 import { Category } from "./categoryProduct.enum";
+import { Invoice } from "./invoice.entity";
+
+
 
 @Entity()
-export class Product extends BaseEntity {
+export class InvoiceItem extends BaseEntity {
     @PrimaryGeneratedColumn("uuid")
     ID: string;
+
+    @ManyToOne(type => Invoice, invoice => invoice.ITEMS)
+    INVOICE: Invoice;
 
     @Column({type: "varchar", length: 50})
     PRODUCTNAME: string;
@@ -26,17 +32,11 @@ export class Product extends BaseEntity {
     @Column({type: "varchar", nullable: false, length: 100})
     DESCRIPTION: string;
 
-    @Column({type: "datetime", nullable: true, default: null})
-    STARTS: string;
-
-    @Column({type: "datetime", nullable: true, default: null})
-    ENDS: string;
-
     @Column({type: "decimal", nullable: false, precision: 5, scale: 2})
     PRICE: string;
 
-    @ManyToOne(type => User, user => user.PRODUCTS)
-    USER: User;
+    @ManyToOne(type => User, user => user.PRODUCTSSOLD)
+    SELLER: User;
 
     @OneToMany(type => ProductImage, productImage => productImage.PRODUCT)
     IMAGES: ProductImage[];
