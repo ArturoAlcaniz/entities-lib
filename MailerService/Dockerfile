@@ -1,5 +1,3 @@
 FROM arturoalcaniz/node-image:latest
-COPY . /app/MailerService
-RUN ["cd", "/app/MailerService"]
-RUN ["npm", "install"]
+COPY MailerService /app/MailerService
 EXPOSE 3021

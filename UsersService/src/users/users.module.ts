@@ -3,6 +3,10 @@ import {HashingModule} from "../hashing/hashing.module";
 import {UsersController} from "./controllers/users.controller";
 import {UsersService} from "./services/users.service";
 import {User} from "entities-lib/src/entities/user.entity";
+import {Product} from "entities-lib/src/entities/product.entity";
+import {ProductImage} from "entities-lib/src/entities/productimage.entity";
+import {Invoice} from "entities-lib/src/entities/invoice.entity";
+import {InvoiceItem} from "entities-lib/src/entities/invoiceItem.entity";
 import {Global, Module} from "@nestjs/common";
 import {HttpModule} from "@nestjs/axios";
 import {WinstonModule} from "nest-winston";
@@ -21,7 +25,7 @@ import { AuthenticatedController } from "./controllers/authenticated.controller"
         MulterModule.register({
             dest: './files',
         }),
-        TypeOrmModule.forFeature([User,Payment]),
+        TypeOrmModule.forFeature([User,Payment,Product,ProductImage,Invoice,InvoiceItem]),
         JwtModule.register(jwtConfig()),
         HashingModule,
         HttpModule.register({

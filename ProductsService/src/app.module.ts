@@ -19,6 +19,8 @@ import { Product } from "entities-lib/src/entities/product.entity";
 import { ProductImage } from "entities-lib/src/entities/productimage.entity";
 import { Payment } from "entities-lib/src/entities/payment.entity"
 import { Code } from "entities-lib/src/entities/code.entity";
+import { Invoice } from "entities-lib/src/entities/invoice.entity";
+import { InvoiceItem } from "entities-lib/src/entities/invoiceItem.entity";
 import { JwtModule } from "@nestjs/jwt";
 
 const resolvePath = (file: string) => path.resolve(`./dist/ui_v1/${file}`);
@@ -40,7 +42,7 @@ class FrontendMiddleware implements NestMiddleware {
             username: process.env.DB_USER,
             password: process.env.DB_PASS,
             database: process.env.DB_NAME,
-            entities: [User,Payment,Product,ProductImage,Code],
+            entities: [User,Payment,Product,ProductImage,Code,Invoice,InvoiceItem],
             synchronize: true,
             autoLoadEntities: true,
         }),
