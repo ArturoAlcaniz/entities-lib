@@ -13,9 +13,7 @@ export default class BuyPage extends CustomBasicPageLogged{
             products: [],
         }
 
-        try {
-            handleObtainAllProducts(this);
-        } catch(err) {}
+        handleObtainAllProducts(this).catch(e => console.log("Failed to get products", e));
     }
 
     render() {

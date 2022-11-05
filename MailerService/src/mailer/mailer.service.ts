@@ -44,10 +44,10 @@ export class MailerService {
             if(err){
                 console.log(err)
             }else{
-                var template = handlebars.compile(html);
-                var replacements = {
+                let template = handlebars.compile(html);
+                let replacements = {
                 };
-                var htmlToSend = template(replacements);
+                let htmlToSend = template(replacements);
                 const mailOptions = {
                     from: thisOut.user,
                     to: email,
@@ -78,11 +78,11 @@ export class MailerService {
             if(err){
                 console.log(err)
             }else{
-                var template = handlebars.compile(html);
-                var replacements = {
+                let template = handlebars.compile(html);
+                let replacements = {
                     code: code
                 };
-                var htmlToSend = template(replacements);
+                let htmlToSend = template(replacements);
                 const mailOptions = {
                     from: thisOut.user,
                     to: email,
@@ -113,11 +113,11 @@ export class MailerService {
             if(err){
                 console.log(err)
             }else{
-                var template = handlebars.compile(html);
-                var replacements = {
+                let template = handlebars.compile(html);
+                let replacements = {
                     code: code
                 };
-                var htmlToSend = template(replacements);
+                let htmlToSend = template(replacements);
                 const mailOptions = {
                     from: thisOut.user,
                     to: email,

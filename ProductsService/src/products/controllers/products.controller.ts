@@ -173,7 +173,7 @@ export class ProductsController {
         product.ENDS = payload.endsell == "" ? null : payload.endsell;
         product.PRICE = payload.price;
 
-        var ids: string[] = JSON.parse(payload.imagesAlreadyAdded)
+        let ids: string[] = JSON.parse(payload.imagesAlreadyAdded)
 
         await this.productImagesService.getRepository().createQueryBuilder()
         .delete()
