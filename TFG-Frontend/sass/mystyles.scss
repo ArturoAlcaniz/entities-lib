@@ -69,6 +69,8 @@ a.navbar-custom {
     min-width: 95px;
     margin-left: 1px;
     margin-right: 1px;
+    min-height: 45px;
+    margin-top: 4px;
 }
 
 .navbar-custom:hover {
@@ -211,7 +213,7 @@ a.navbar-custom {
 .customSelectaLanguageText i {
     align-content: flex-end;
     width: 5px;
-    margin-left: 10px;
+    margin-left: 25%;
 }
 
 .customSelectaLanguageText  {
