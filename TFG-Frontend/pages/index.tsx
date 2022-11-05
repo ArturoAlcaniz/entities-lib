@@ -25,9 +25,7 @@ export default class AllProductsPage extends CustomBasicPage{
             products: []
         }
 
-        try {
-            handleObtainAllProducts(this);
-          } catch(err) {}
+        handleObtainAllProducts(this).catch(e => console.log("Failed to get products", e));
     }
 
     render() {

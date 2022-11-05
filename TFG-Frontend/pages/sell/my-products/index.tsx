@@ -21,9 +21,7 @@ export default class MyProductsPage extends CustomBasicPageLogged{
             myProducts: []
         }
 
-        try {
-            handleObtainMyProducts(this);
-          } catch(err) {}
+        handleObtainMyProducts(this).catch(e => console.log("Failed to get products", e));
     }
 
     render() {
