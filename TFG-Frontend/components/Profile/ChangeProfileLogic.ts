@@ -2,7 +2,7 @@ import Router from "next/router";
 import ChangeProfileRequest from "./ChangeProfileRequest";
 import changeProfileValidation from "./ChangeProfileValidation";
 
-export function uploadAvatar(event: any) {
+function uploadAvatar(event: any) {
     if (event.target.files && event.target.files[0]) {
         const i = event.target.files[0];
   
@@ -10,7 +10,7 @@ export function uploadAvatar(event: any) {
     }
 }
 
-export function handleChangeProfile(event: any) {
+function handleChangeProfile(event: any) {
     event.preventDefault();
 
     if (!changeProfileValidation(this)) {
@@ -51,17 +51,38 @@ export function handleChangeProfile(event: any) {
     );
 }
 
-export function showNewPass(event: any) {
+function showNewPass(event: any) {
     event.preventDefault();
     this.setState({showNewPassword: !this.state.showNewPassword});
 }
 
-export function showNewCPass(event: any) {
+function showNewCPass(event: any) {
     event.preventDefault();
     this.setState({showNewConfirmPassword: !this.state.showNewConfirmPassword});
 }
 
-export function showActualPass(event: any) {
+function showActualPass(event: any) {
     event.preventDefault();
     this.setState({showActualPassword: !this.state.showActualPassword});
 }
+
+function handleChangeUsername(event: any) {
+    this.setState({username: event.target.value})
+}
+
+function handleChangeEmail(event: any) {
+    this.setState({email: event.target.value})
+}
+
+function handleChangeNewPassword(event: any) {
+    this.setState({newPassword: event.target.value})
+}
+
+function handleChangeNewConfirmPassword(event: any) {
+    this.setState({newConfirmPassword: event.target.value})
+}
+
+function handleChangeActualPassord(event: any) {
+    this.setState({actualPassword: event.target.value})
+}
+export {showActualPass, showNewCPass, showNewPass, handleChangeProfile, uploadAvatar, handleChangeUsername, handleChangeEmail, handleChangeNewPassword, handleChangeNewConfirmPassword, handleChangeActualPassord}

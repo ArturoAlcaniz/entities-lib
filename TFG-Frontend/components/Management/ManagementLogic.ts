@@ -17,5 +17,12 @@ function handleGoCodesManage() {
     Router.push("management/codes")
 }
 
+function handleChangeLimitedby(event: any) {
+    this.setState({limitedBy: event.target.value})
+}
 
-export { handleObtainLimitedBy, handleGoCodesManage }
+function handleChangeCoins(event: any) {
+    this.setState({coins: event.target.value })
+}
+
+export { handleObtainLimitedBy, handleGoCodesManage, handleChangeLimitedby, handleChangeCoins }

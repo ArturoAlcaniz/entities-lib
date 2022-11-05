@@ -165,4 +165,29 @@ function handleCreateProduct(event: any) {
     )
 }
 
-export {handleCreateProduct,handleObtainMyProducts,handleObtainMyProduct,handleGoProduct,handleModifyProduct,handleDeleteProduct,handleObtainAllProducts,handleObtainCategories}
+function handleChangeProductName(event: any) {
+    this.setState({productname: event.target.value})
+}
+
+function handleChangeCategory(event: any) {
+    this.setState({category: event.target.value})
+}
+
+function handleChangeDescription(event: any) {
+    this.setState({description: event.target.value})
+}
+
+function handleChangeStartSell(event: any) {
+    this.setState({startsell: event.target.value})
+}
+
+function handleChangeEndsell(event: any) {
+    this.setState({endsell: event.target.value})
+}
+
+function handleChangePrice(event: any) {
+    this.setState({price: event.target.value})
+}
+export {handleCreateProduct,handleObtainMyProducts,handleObtainMyProduct,handleGoProduct,handleModifyProduct,handleDeleteProduct,
+    handleObtainAllProducts,handleObtainCategories,handleChangeProductName,handleChangeCategory,handleChangeDescription,handleChangeStartSell,
+    handleChangeEndsell, handleChangePrice}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { handleBuyCoins } from '@components/Payments/PaymentsLogic';
+import { handleBuyCoins, handleChangeCoinsToBuy } from '@components/Payments/PaymentsLogic';
 import CustomErrorMessage from '@utils/CustomErrorMessage';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import CustomBasicPageLogged from '@root/components/CustomBasicPageLogged';
@@ -42,7 +42,7 @@ export default class PaymentsPage extends CustomBasicPageLogged{
                                         {obtainTextTranslated["labels"]["coins"]}
                                     </label>
                                     <div className="control has-icons-right">
-                                        <input className="input" autoComplete='off' type="text" v-model={coinsToBuy}></input>
+                                        <input className="input" autoComplete='off' type="text" value={coinsToBuy} onChange={handleChangeCoinsToBuy.bind(this)}></input>
                                         <span className="icon is-small is-right">
                                             <i className="fas fa-dollar-sign"></i>    
                                         </span>

@@ -1,6 +1,6 @@
 import React from 'react'
 import CustomErrorMessage from '@root/utils/CustomErrorMessage';
-import { handleDeleteProduct, handleModifyProduct, handleObtainCategories, handleObtainMyProduct, uploadImageProduct } from '@root/components/Market/MarketLogic';
+import { handleChangeCategory, handleChangeDescription, handleChangeEndsell, handleChangePrice, handleChangeProductName, handleChangeStartSell, handleDeleteProduct, handleModifyProduct, handleObtainCategories, handleObtainMyProduct, uploadImageProduct } from '@root/components/Market/MarketLogic';
 import Link from 'next/link';
 import cookies from 'next-cookies';
 import Image from 'next/image'
@@ -89,7 +89,7 @@ export default class ModifyProductPage extends CustomBasicPageLogged{
                                         {obtainTextTranslated["labels"]["product_name"]}
                                     </label>
                                     <div className="control">
-                                        <input className="input" v-model={productname} type="text" autoComplete="off"></input>
+                                        <input className="input" value={productname} onChange={handleChangeProductName.bind(this)} type="text" autoComplete="off"></input>
                                     </div>
                                     { formError=='name' && CustomErrorMessage(msgError) }
                                 </div>
@@ -118,7 +118,7 @@ export default class ModifyProductPage extends CustomBasicPageLogged{
                                         {obtainTextTranslated["labels"]["product_category"]}
                                     </label>
                                     <div className="control">
-                                        <select className="select" v-model={category} autoComplete="off">
+                                        <select className="select" value={category} onChange={handleChangeCategory.bind(this)} autoComplete="off">
                                         {this.state.productCategories && this.state.productCategories.length>0 && this.state.productCategories.map(category => {
                                             return (
                                                 <option key={shortid.generate()} value={category}>{category}</option>
@@ -134,7 +134,7 @@ export default class ModifyProductPage extends CustomBasicPageLogged{
                                         {obtainTextTranslated["labels"]["product_description"]}
                                     </label>
                                     <div className="control">
-                                        <input className="input" v-model={description} type="text" autoComplete="off"></input>
+                                        <input className="input" value={description} onChange={handleChangeDescription.bind(this)} type="text" autoComplete="off"></input>
                                     </div>
                                     { formError=='description' && CustomErrorMessage(msgError) }
                                 </div>
@@ -143,7 +143,7 @@ export default class ModifyProductPage extends CustomBasicPageLogged{
                                         {obtainTextTranslated["labels"]["start_sell"]}
                                     </label>
                                     <div className="control">
-                                        <input className="input" v-model={startsell} type="datetime-local" autoComplete="off"></input>
+                                        <input className="input" value={startsell} onChange={handleChangeStartSell.bind(this)} type="datetime-local" autoComplete="off"></input>
                                     </div>
                                 </div>
                                 <div className="field">
@@ -151,7 +151,7 @@ export default class ModifyProductPage extends CustomBasicPageLogged{
                                         {obtainTextTranslated["labels"]["end_sell"]}
                                     </label>
                                     <div className="control">
-                                        <input className="input" v-model={endsell} type="datetime-local" autoComplete="off"></input>
+                                        <input className="input" value={endsell} onChange={handleChangeEndsell.bind(this)} type="datetime-local" autoComplete="off"></input>
                                     </div>
                                 </div>
                                 <div className="field">
@@ -159,7 +159,7 @@ export default class ModifyProductPage extends CustomBasicPageLogged{
                                         {obtainTextTranslated["labels"]["product_price"]}
                                     </label>
                                     <div className="control">
-                                        <input className="input" v-model={price} type="number" autoComplete="off"></input>
+                                        <input className="input" value={price} onChange={handleChangePrice.bind(this)} type="number" autoComplete="off"></input>
                                     </div>
                                     { (formError=='price' || formError=='product') && CustomErrorMessage(msgError) }
                                 </div>

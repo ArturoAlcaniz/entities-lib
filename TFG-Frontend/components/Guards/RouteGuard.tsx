@@ -63,7 +63,7 @@ function RouteGuard({ children }) {
             router.events.off('routeChangeStart', hideContent);
             router.events.off('routeChangeComplete', authCheck);   
         }
-    }, [routing, publicPaths]);
+    }, [routing, adminPaths, publicPaths]);
 
     return (authorized && children);
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import CustomBasicPage from '@components/CustomBasicPage';
 import Header from '@components/Commons/Header';
-import { handleLogin, handleButtonLoginGoogle, showPass, handleLogin2 } from '@components/Login/LoginLogic';
+import { handleLogin, handleButtonLoginGoogle, showPass, handleLogin2, handleChangePassword, handleChangeEmail, handleChangeCode } from '@components/Login/LoginLogic';
 import CustomErrorMessage from '@utils/CustomErrorMessage';
 import Image from 'next/image'
 import Link from 'next/link';
@@ -61,7 +61,7 @@ export default class LoginPage extends CustomBasicPage{
                                         {obtainTextTranslated["labels"]["correo"]}
                                     </label>
                                     <div className="control has-icons-left">
-                                        <input v-model={email} className={`input ${formError=='email' ? 'is-danger' : ''}`} type="email" autoComplete="off"></input>
+                                        <input value={email} onChange={handleChangeEmail.bind(this)} className={`input ${formError=='email' ? 'is-danger' : ''}`} type="email" autoComplete="off"></input>
                                         <span className="icon is-small is-left">
                                             <i className="fas fa-envelope"></i>    
                                         </span>
@@ -73,7 +73,7 @@ export default class LoginPage extends CustomBasicPage{
                                         {obtainTextTranslated["labels"]["pass"]}
                                     </label>
                                     <div className="control has-icons-left has-icons-right">
-                                        <input v-model={password} className={`input inputpass fas ${formError=='password' ? 'is-danger' : ''}`} type={showPassword ? "text" : "password"} autoComplete="off"></input>
+                                        <input value={password} onChange={handleChangePassword.bind(this)} className={`input inputpass fas ${formError=='password' ? 'is-danger' : ''}`} type={showPassword ? "text" : "password"} autoComplete="off"></input>
                                         <span className="icon is-small is-left">
                                             <i className="fas fa-lock"></i>
                                         </span>
@@ -88,7 +88,7 @@ export default class LoginPage extends CustomBasicPage{
                                         {obtainTextTranslated["labels"]["email_code"]}
                                     </label>
                                     <div className="control">
-                                        <input v-model={code} className="input"></input>
+                                        <input value={code} onChange={handleChangeCode.bind(this)} className="input"></input>
                                     </div>
                                     { formError=='too_many_attempts' && CustomErrorMessage(msgError+' '+bannedSeconds+' '+obtainTextTranslated["explanations"]["seconds"]) }
                                 </div>

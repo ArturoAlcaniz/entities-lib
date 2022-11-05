@@ -76,4 +76,23 @@ function showCPass(event: any) {
     this.setState({showCPassword: !this.state.showCPassword});
 }
 
-export {handleRegister, handleSendCode, showCPass, showPass};
+function handleChangeUsername(event: any) {
+    this.setState({username: event.target.value})
+}
+
+function handleChangeEmail(event: any) {
+    this.setState({email: event.target.value})
+}
+
+function handleChangePassword(event: any) {
+    this.setState({password: event.target.value})
+}
+
+function handleChangeConfirmPassword(event: any) {
+    this.setState({confirmPassword: event.target.value})
+}
+
+function handleChangeCode(event: any) {
+    this.setState({code: event.target.value})
+}
+export {handleRegister, handleSendCode, showCPass, showPass, handleChangeUsername, handleChangeEmail, handleChangePassword, handleChangeConfirmPassword, handleChangeCode};

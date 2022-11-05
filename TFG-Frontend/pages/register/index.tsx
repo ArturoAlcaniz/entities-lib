@@ -1,7 +1,7 @@
 import React from 'react'
 import CustomBasicPage from '@components/CustomBasicPage';
 import Header from '@components/Commons/Header';
-import {handleRegister, handleSendCode, showCPass, showPass} from '@components/Register/RegisterLogic';
+import {handleRegister, handleSendCode, showCPass, showPass, handleChangeUsername, handleChangeEmail, handleChangePassword, handleChangeConfirmPassword, handleChangeCode} from '@components/Register/RegisterLogic';
 import CustomErrorMessage from '@utils/CustomErrorMessage';
 import Link from 'next/link';
 import cookies from 'next-cookies';
@@ -129,7 +129,7 @@ export default class RegisterPage extends CustomBasicPage{
                                         {obtainTextTranslated["labels"]["usuario"]}
                                     </label>
                                     <div className="control has-icons-left">
-                                        <input v-model={username} className={this.obtainUsernameClass()} type="text" autoComplete="off"></input>
+                                        <input value={username} onChange={handleChangeUsername.bind(this)} className={this.obtainUsernameClass()} type="text" autoComplete="off"></input>
                                         <span className="icon is-small is-left">
                                             <i className="fas fa-user"></i>
                                         </span>
@@ -141,7 +141,7 @@ export default class RegisterPage extends CustomBasicPage{
                                         {obtainTextTranslated["labels"]["correo"]}
                                     </label>
                                     <div className="control has-icons-left">
-                                        <input v-model={email} className={`input ${formError=='email' ? 'is-danger' : ''}`} type="email" autoComplete="off"></input>
+                                        <input value={email} onChange={handleChangeEmail.bind(this)} className={`input ${formError=='email' ? 'is-danger' : ''}`} type="email" autoComplete="off"></input>
                                         <span className="icon is-small is-left">
                                                 <i className="fas fa-envelope"></i>    
                                         </span>
@@ -153,7 +153,7 @@ export default class RegisterPage extends CustomBasicPage{
                                         {obtainTextTranslated["labels"]["pass"]}
                                     </label>
                                     <div className="control has-icons-left has-icons-right">
-                                        <input onInput={(e) => {this.loadPasswordStrength(e)}} v-model={password} className={`input inputpass fas ${formError=='password' ? 'is-danger' : ''}`} type={showPassword ? "text" : "password"} autoComplete="off"></input>
+                                        <input onInput={(e) => {this.loadPasswordStrength(e)}} value={password} onChange={handleChangePassword.bind(this)} className={`input inputpass fas ${formError=='password' ? 'is-danger' : ''}`} type={showPassword ? "text" : "password"} autoComplete="off"></input>
                                         <span className="icon is-small is-left">
                                             <i className="fas fa-lock"></i>
                                         </span>
@@ -170,7 +170,7 @@ export default class RegisterPage extends CustomBasicPage{
                                         {obtainTextTranslated["labels"]["confirm_pass"]}
                                     </label>
                                     <div className="control has-icons-left has-icons-right">
-                                        <input v-model={confirmPassword} className={`input inputpass fas ${formError=='cPassword' ? 'is-danger' : ''}`} type={showCPassword ? "text" : "password"} autoComplete="off"></input>
+                                        <input value={confirmPassword} onChange={handleChangeConfirmPassword.bind(this)} className={`input inputpass fas ${formError=='cPassword' ? 'is-danger' : ''}`} type={showCPassword ? "text" : "password"} autoComplete="off"></input>
                                         <span className="icon is-small is-left">
                                             <i className="fas fa-lock"></i>
                                         </span>
@@ -185,7 +185,7 @@ export default class RegisterPage extends CustomBasicPage{
                                         {obtainTextTranslated["labels"]["email_code"]}
                                     </label>
                                     <div className="control">
-                                        <input v-model={code} className="input"></input>
+                                        <input value={code} onChange={handleChangeCode.bind(this)} className="input"></input>
                                     </div>
                                 </div>
                                 <p className="help form-feedback-ok">

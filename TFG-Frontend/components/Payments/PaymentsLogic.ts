@@ -23,4 +23,8 @@ async function handleBuyCoins(id: string, thisComponent: any): Promise<string> {
 
 }
 
-export {handleBuyCoins}
+function handleChangeCoinsToBuy(event: any) {
+    this.setState({coinsToBuy: event.target.value})
+}
+
+export {handleBuyCoins, handleChangeCoinsToBuy}

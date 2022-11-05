@@ -101,6 +101,18 @@ function handleLogin2(event: any) {
     );
 }
 
+function handleChangePassword(event: any) {
+    this.setState({password: event.target.value})
+}
+
+function handleChangeEmail(event: any) {
+    this.setState({email: event.target.value})
+}
+
+function handleChangeCode(event: any) {
+    this.setState({code: event.target.value})
+}
+
 function handleLogin(event: any) {
     event.preventDefault();
 
@@ -161,4 +173,4 @@ function bannedCountdown(thisComponent) {
     }, 1000);
 }
 
-export {handleLogin, handleButtonLoginGoogle, showPass, handleLogin2};
+export {handleLogin, handleButtonLoginGoogle, showPass, handleLogin2, handleChangePassword, handleChangeEmail, handleChangeCode};
