@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mailer
+  namespace: operation
+  labels:
+    back: mailer
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      role: mailer
+  template:
+    metadata:
+      labels:
+        role: mailer
+    spec:
+      containers:
+      - name: mailerservice
+        image: arturoalcaniz/mailer-service
+        ports:
+         - containerPort: 3021
+        command: ["bash", "-c"]
+        args: ["cd /app/MailerService && bash install.sh"]
+      imagePullSecrets:
+       - name: dockercred
+
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: mailer
+  namespace: operation
+spec:
+  ports:
+  - port: 3021
+    targetPort: 3021
+  selector:
+    role: mailer
+

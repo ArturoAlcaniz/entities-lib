@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: products
+  namespace: operation
+  labels:
+    back: products
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      role: products
+  template:
+    metadata:
+      labels:
+        role: products
+    spec:
+      containers:
+      - name: products
+        env:
+        - name: JWT_KEY
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: JWT_KEY
+        image: arturoalcaniz/products-service
+        ports:
+         - containerPort: 3022
+        command: ["bash", "-c"]
+        args: ["cd /app/ProductsService && bash install.sh"]
+      imagePullSecrets:
+       - name: dockercred
+
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: products
+  namespace: operation
+spec:
+  ports:
+  - port: 3023
+    targetPort: 3023
+  selector:
+    role: products

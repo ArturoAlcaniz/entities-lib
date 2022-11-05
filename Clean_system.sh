@@ -15,4 +15,4 @@ rm -r error/
 rm -r ProductsService/node_modules/
 rm -r UsersService/node_modules/
 rm -r MailerService/node_modules/
-rm -r TFG-Frontend/node_modules/
+rm -r FrontService/node_modules/

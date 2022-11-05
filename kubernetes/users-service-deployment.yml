@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users
+  namespace: operation
+  labels:
+    back: users
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      role: users
+  template:
+    metadata:
+      labels:
+        role: users
+    spec:
+      containers:
+      - name: users
+        env:
+        - name: JWT_KEY
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: JWT_KEY
+        image: arturoalcaniz/users-service
+        ports:
+         - containerPort: 3022
+        command: ["bash", "-c"]
+        args: ["cd /app/UsersService && bash install.sh"]
+      imagePullSecrets:
+       - name: dockercred
+
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: users
+  namespace: operation
+spec:
+  ports:
+  - port: 3022
+    targetPort: 3022
+  selector:
+    role: users

@@ -86,11 +86,11 @@ services:
   # React NextJS Frontend Container
   frontend_container:
     image: arturoalcaniz/node-image
-    command: bash -c "cd /app/TFG-Frontend && bash install.sh"
+    command: bash -c "cd /app/FrontService && bash install.sh"
     ports:
       - "${FRONTEND_CONTAINER_PORT}:443"
     volumes:
-      - ./TFG-Frontend:/app/TFG-Frontend
+      - ./FrontService:/app/FrontService
       - ./certs:/app/certs
     environment: 
     # Timezone. Variable from .env file

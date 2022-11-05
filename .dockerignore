@@ -1,1 +1,7 @@
 **/node_modules
+FrontService/.next
+FrontService/stylesheets
+MailerService
+ProductsService/log
+UsersService/log
+MailerService/log
