@@ -9,3 +9,4 @@ RUN apt-get install -y nodejs
 RUN npm install -g n
 RUN npm install -g ts-node typescript
 RUN n stable
+RUN apt-get install netcat -y

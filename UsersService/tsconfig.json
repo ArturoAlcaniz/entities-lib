@@ -1,22 +1,24 @@
 {
     "compilerOptions": {
-        "lib": ["es5", "es6", "dom"],
+        "lib": ["es5", "es6", "dom", "ESNext"],
         "module": "commonjs",
         "moduleResolution": "node",
         "declaration": true,
+        "declarationMap": true,
         "removeComments": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "target": "es6",
+        "target": "es2022",
         "sourceMap": true,
         "allowJs": true,
         "outDir": "./dist",
         "resolveJsonModule": true,
         "esModuleInterop": true,
         "incremental": true,
-        "types": ["node"],
+        "types": ["node","jest"],
         "typeRoots": ["./node_module/@types", "./src/types"]
     },
-    "include": ["src/**/*"],
-    "exclude": ["node_modules", "**/*.spec.ts"]
+    "typeAcquisition": { "include": ["jest"] },
+    "include": ["src/**/*", "test/**/*", "**/*.spec.ts"],
+    "exclude": ["node_modules"]
 }

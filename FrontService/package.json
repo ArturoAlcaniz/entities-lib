@@ -7,7 +7,7 @@
     "dev": "next",
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
-    "css-build": "node-sass --omit-source-map-url sass/mystyles.scss stylesheets/main.css",
+    "css-build": "sass sass/mystyles.scss stylesheets/main.css",
     "prettier": "prettier --write {,*/**/}*.{ts,js,jsx,json}",
     "lint": "next lint"
   },
@@ -24,12 +24,12 @@
     "next": "^13.0.2",
     "next-cookies": "^2.0.3",
     "next-images": "^1.8.4",
-    "node-sass": "^7.0.3",
     "prettier": "^2.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router": "^6.4.3",
     "react-router-dom": "^6.4.3",
+    "sass": "^1.56.0",
     "sharp": "^0.30.3",
     "shortid": "^2.2.16"
   },
