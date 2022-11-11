@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins
+  namespace: operation
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      role: CICD
+  template:
+    metadata:
+      labels:
+        role: CICD
+    spec:
+      containers:
+      - name: jenkins
+        image: arturoalcaniz/jenkins-service
+        ports:
+         - containerPort: 8080
+        volumeMounts:
+        - name: volume-jenkins
+          mountPath: "/var/lib/jenkins"
+        command: ["bash", "-c"]
+        args: ["cd /app/JenkinsService && bash install.sh"]
+      imagePullSecrets:
+       - name: dockercred
+      initContainers:
+      - name: jenkins-data
+        image: busybox
+        command: ["/bin/chmod","-R","777", "/jenkins-data"]
+        volumeMounts:
+        - name: volume-jenkins
+          mountPath: /jenkins-data
+      volumes:
+        - name: volume-jenkins
+          persistentVolumeClaim:
+            claimName: volume-jenkins
