@@ -24,9 +24,79 @@ spec:
             secretKeyRef:
               name: mysecret
               key: JWT_KEY
+        - name: EMAIL_PASS
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: EMAIL_PASS
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: DB_USER
+        - name: DB_PASS
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: DB_PASS
+        - name: DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: DB_NAME
+        - name: SSL_KEY_PATH
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: SSL_KEY_PATH
+        - name: SSL_CERT_PATH
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: SSL_CERT_PATH
+        - name: CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: CLIENT_ID
+        - name: SECRET_ID
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: SECRET_ID
+        - name: MAILER_CONTAINER_NAME
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: MAILER_CONTAINER_NAME
+        - name: MAILER_CONTAINER_PORT
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: MAILER_CONTAINER_PORT
+        - name: USERS_CONTAINER_NAME
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: USERS_CONTAINER_NAME
+        - name: USERS_CONTAINER_PORT
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: USERS_CONTAINER_PORT
+        - name: PRODUCTS_CONTAINER_NAME
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: PRODUCTS_CONTAINER_NAME
+        - name: PRODUCTS_CONTAINER_PORT
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: PRODUCTS_CONTAINER_PORT
         image: arturoalcaniz/users-service
         ports:
-         - containerPort: 3022
+         - containerPort: 3021
         command: ["bash", "-c"]
         args: ["cd /app/UsersService && bash install.sh"]
       imagePullSecrets:
@@ -40,7 +110,7 @@ metadata:
   namespace: operation
 spec:
   ports:
-  - port: 3022
-    targetPort: 3022
+  - port: 3021
+    targetPort: 3021
   selector:
     role: users

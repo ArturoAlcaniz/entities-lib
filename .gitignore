@@ -2,6 +2,7 @@ error
 mariadb
 **/node_modules
 **/.env
+**/package-lock.json
 FrontService/stylesheets
 FrontService/.next
 ProductsService/log

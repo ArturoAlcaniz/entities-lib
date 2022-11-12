@@ -4,3 +4,4 @@ FrontService/stylesheets
 ProductsService/log
 UsersService/log
 MailerService/log
+**/.env

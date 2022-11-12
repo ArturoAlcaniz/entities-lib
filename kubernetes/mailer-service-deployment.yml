@@ -18,6 +18,17 @@ spec:
     spec:
       containers:
       - name: mailerservice
+        env:
+        - name: EMAIL_PASS
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: EMAIL_PASS
+        - name: MAILER_CONTAINER_PORT
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: MAILER_CONTAINER_PORT
         image: arturoalcaniz/mailer-service
         ports:
          - containerPort: 3021
