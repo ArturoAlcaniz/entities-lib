@@ -1,0 +1,17 @@
+import axios, {AxiosPromise} from "axios";
+
+export default function createCodeRequest(
+    thisComponent: any
+): AxiosPromise<any> {
+    return axios({
+        method: "post",
+        url: "/api/users/createCodeToken",
+        data: {
+            id: thisComponent.state.id,
+            coins: thisComponent.state.coins, 
+            starts: thisComponent.state.starts,
+            ends: thisComponent.state.ends,
+            amount: thisComponent.state.amount
+        },
+    });
+}

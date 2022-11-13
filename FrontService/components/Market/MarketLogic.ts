@@ -17,6 +17,17 @@ async function handleObtainMyProduct(thisComponent) {
     await obtainMyProductRequest(thisComponent).then(
         (response) => {
             if (response.status == 200) {
+                let start = ""
+                let end = ""
+
+                if(response.data[0].STARTS != null && response.data[0].STARTS.length > 0) {
+                    start = response.data[0].STARTS.slice(0, response.data[0].STARTS.length-8)
+                }
+
+                if(response.data[0].ENDS != null && response.data[0].ENDS.length > 0) {
+                    end = response.data[0].ENDS.slice(0, response.data[0].ENDS.length-8)
+                }
+
                 thisComponent.setState(
                     {
                         product: response.data[0],
@@ -24,8 +35,8 @@ async function handleObtainMyProduct(thisComponent) {
                         description: response.data[0].DESCRIPTION,
                         category: response.data[0].CATEGORY,
                         imagesAlreadyAdded: response.data[0].IMAGES,
-                        startsell: response.data[0].STARTS.slice(0, response.data[0].STARTS.length-8),
-                        endsell: response.data[0].ENDS.slice(0, response.data[0].ENDS.length-8),
+                        startsell: start,
+                        endsell: end,
                         price: response.data[0].PRICE
                     }
                 )

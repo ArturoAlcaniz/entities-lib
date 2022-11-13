@@ -9,8 +9,6 @@ import {
     UpdateDateColumn,
 } from "typeorm";
 import { User } from "./user.entity";
-import { ProductImage } from "./productimage.entity";
-import { Category } from "./categoryProduct.enum";
 import { InvoiceItem } from "./invoiceItem.entity";
 
 

@@ -16,6 +16,7 @@ spec:
       labels:
         role: users
     spec:
+      priorityClassName: medium-priority
       containers:
       - name: users
         env:
@@ -97,10 +98,24 @@ spec:
         image: arturoalcaniz/users-service
         ports:
          - containerPort: 3021
+        volumeMounts:
+        - name: volume-users
+          mountPath: "/UsersService/files"
         command: ["bash", "-c"]
         args: ["cd /app/UsersService && bash install.sh"]
       imagePullSecrets:
        - name: dockercred
+      initContainers:
+      - name: users-data
+        image: busybox
+        command: ["/bin/chmod","-R","777", "/data"]
+        volumeMounts:
+        - name: volume-users
+          mountPath: /data
+      volumes:
+      - name: volume-users
+        persistentVolumeClaim:
+          claimName: volume-users
 
 ---
 apiVersion: v1

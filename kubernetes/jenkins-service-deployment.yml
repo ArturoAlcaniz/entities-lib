@@ -13,6 +13,7 @@ spec:
       labels:
         role: CICD
     spec:
+      priorityClassName: low-priority
       containers:
       - name: jenkins
         image: arturoalcaniz/jenkins-service

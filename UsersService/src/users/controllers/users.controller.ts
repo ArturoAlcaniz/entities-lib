@@ -2,7 +2,7 @@ import {LoginDto} from "../dtos/login.dto";
 import {Body, Inject, Post, Req, Res, UseGuards, Controller, Get, UseInterceptors, UploadedFile, UploadedFiles, StreamableFile, Param} from "@nestjs/common";
 import {Response, Request} from "express";
 import {CreateUserDto} from "../dtos/createUser.dto";
-import {User} from "entities-lib/src/entities/user.entity";
+import {User} from "$/../../../entities-lib/src/entities/user.entity";
 import {UsersService} from "../services/users.service";
 import {JwtService} from "@nestjs/jwt";
 import {AuthenticatedGuard} from "../guards/authenticated.guard";
@@ -26,8 +26,11 @@ import { join } from "path";
 import fs from 'fs';
 import {BuyCoinsDto} from "../dtos/buyCoins.dto";
 import { PaymentsService } from "../services/payments.service";
-import { Payment } from "entities-lib/src/entities/payment.entity";
-import { LimitedBy } from "entities-lib/src/entities/code.entity";
+import { Payment } from "$/../../../entities-lib/src/entities/payment.entity";
+import { CreateCodeTokenDto } from "../dtos/createCodeToken.dto";
+import { Code } from "$/../../../entities-lib/src/entities/code.entity";
+import { CodesService } from "../services/codes.service";
+import { DeepPartial } from "typeorm";
 
 
 @ApiTags("User Controller")
@@ -35,6 +38,7 @@ import { LimitedBy } from "entities-lib/src/entities/code.entity";
 export class UsersController {
     constructor(
         private usersService: UsersService,
+        private codesService: CodesService,
         private paymentsService: PaymentsService,
         private jwtService: JwtService,
         private httpService: HttpService,
@@ -614,11 +618,67 @@ export class UsersController {
     }
 
     @UseGuards(ThrottlerGuard)
-    @Throttle(100, 3000)
+    @Throttle(10, 3000)
     @ApiOkResponse()
-    @Get("obtainLimitedBy")
-    async getCategories() {
-        return Object.values(LimitedBy)
+    @Post("createCodeToken")
+    @UseGuards(AuthenticatedGuard)
+    async createCodeToken(
+        @Body() payload: CreateCodeTokenDto,
+        @Res({passthrough: true}) response: Response,
+        @Req() request: Request,
+    ) {
+        let user: User = await this.usersService.findOne({
+            where: {
+                ID: this.jwtService.decode(request.cookies["jwt"])["userId"],
+            },
+        });
+
+        if (user == null ||  user.ROL != "ADMIN") {
+            response.status(400).json({
+                message: ["invalid_access"], formError: "access"
+            });
+            this.logger.info(
+                "Fail Create code (invalid_access) {IP} {USER}"
+                    .replace("{IP}", request.headers["x-forwarded-for"].toString())
+                    .replace("{USER}", user.EMAIL)
+            );
+            return;
+        }
+
+        if (payload.id == null || payload.id.length == 0) {
+            response
+                .status(400)
+                .json({message: ["invalid_code"], formError: "id"});
+            this.logger.info(
+                "Fail Create code (invalid_code) {IP}".replace(
+                    "{IP}",
+                    request.headers["x-forwarded-for"].toString()
+                )
+            );
+            return;
+        }
+        
+        if ((await this.codesService.find(payload.id)).length > 0) {
+            response
+                .status(400)
+                .json({message: ["code_already_exist"], formError: "id"});
+            this.logger.info(
+                "Fail Create Code (code_already_exist) {IP}".replace(
+                    "{IP}",
+                    request.headers["x-forwarded-for"].toString()
+                )
+            );
+            return;
+        }
+
+        let code: DeepPartial<Code> = await (this.codesService.save(this.codesService.createCode(payload)));
+        response.status(200).json({message: ["successfully_code_created"], code: code});
+        this.logger.info(
+            "Create Code Sucessfully {CODE} {IP} {USER}"
+            .replace("{IP}", request.headers["x-forwarded-for"].toString())
+            .replace("{USER}", user.EMAIL)
+            .replace("{CODE}", code.ID)
+        );
     }
 
     countFailAttempt(request: Request, email: string) {

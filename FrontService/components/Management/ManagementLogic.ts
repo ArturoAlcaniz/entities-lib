@@ -17,12 +17,24 @@ function handleGoCodesManage() {
     Router.push("management/codes")
 }
 
-function handleChangeLimitedby(event: any) {
-    this.setState({limitedBy: event.target.value})
-}
-
 function handleChangeCoins(event: any) {
     this.setState({coins: event.target.value })
 }
 
-export { handleObtainLimitedBy, handleGoCodesManage, handleChangeLimitedby, handleChangeCoins }
+function handleChangeId(event: any) {
+    this.setState({id: event.target.value})
+}
+
+function handleChangeStartCode(event: any) {
+    this.setState({starts: event.target.value})
+}
+
+function handleChangeEndCode(event: any) {
+    this.setState({ends: event.target.value})
+}
+
+function handleChangeAmount(event: any) {
+    this.setState({amount: event.target.value})
+}
+
+export { handleObtainLimitedBy, handleGoCodesManage, handleChangeCoins, handleChangeId, handleChangeStartCode, handleChangeEndCode, handleChangeAmount }

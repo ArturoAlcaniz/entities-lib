@@ -22,7 +22,11 @@
         "productimage": "Imágenes",
         "start_sell": "Vender a partir",
         "end_sell": "Vender hasta",
-        "coins": "Coins"
+        "coins": "Coins",
+        "start_code": "Comienza en",
+        "end_code": "Termina en",
+        "code_name": "Código",
+        "amount": "Cantidad"
     },
     "explanations": {
         "hello": "Bienvenido",
@@ -69,7 +73,10 @@
         "productcategory_empty": "La categoría no puede estar vacía",
         "productdescription_empty": "La descripción no puede estar vacía",
         "productprice_empty": "El precio no puede estar vacío",
-        "product_notexist": "El producto no existe"
+        "product_notexist": "El producto no existe",
+        "invalid_code": "El código no es válido",
+        "invalid_access": "No tienes permisos para realizar esta acción",
+        "code_already_exist": "Código ya existente"
     },
     "requestOK": {
         "successfully_logged_in": "Usuario logeado correctamente",

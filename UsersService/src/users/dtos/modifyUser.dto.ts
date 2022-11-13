@@ -1,3 +1,4 @@
+import { Type } from "class-transformer";
 import {IsEmail, IsNotEmpty, IsOptional, IsString} from "class-validator";
 
 export class ModifyUserDto {
@@ -17,5 +18,6 @@ export class ModifyUserDto {
     readonly pass: string;
 
     @IsOptional()
-    readonly avatar: Express.Multer.File;
+    @Type(() => require('express').Multer.File)
+    readonly avatar?: Express.Multer.File;
 }

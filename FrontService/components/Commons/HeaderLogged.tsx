@@ -149,17 +149,17 @@ export default class HeaderLogged extends Component<any,any> {
 
                     <div id="navbarBasicExample" className={styleNavbarMenu}>
                         <div className="navbar-start">
-                            <Link href="/buy">
+                            <Link href="https://tishoptfg.com/buy">
                                 <a className={this.checkIfIsActive("/buy") ? "navbar-custom is-active" : "navbar-custom"}>
                                     {obtainTextTranslated["buttons"]["buy"]}
                                 </a>
                             </Link>
-                            <Link href="/sell">
+                            <Link href="https://tishoptfg.com/sell">
                                 <a className={this.checkIfIsActive("/sell") ? "navbar-custom is-active" : "navbar-custom"}>
                                     {obtainTextTranslated["buttons"]["sell"]}
                                 </a>
                             </Link>
-                            <Link href="/management">
+                            <Link href="https://tishoptfg.com/management">
                                 <a style={{display: this.state.admin == "true" ? 'flex' : 'none' }} className={this.checkIfIsActive("/management") ? "navbar-custom is-active" : "navbar-custom"}>
                                     {obtainTextTranslated["buttons"]["management"]}
                                 </a>

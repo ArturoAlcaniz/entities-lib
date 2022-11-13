@@ -16,6 +16,7 @@ spec:
       labels:
         role: products
     spec:
+      priorityClassName: medium-priority
       containers:
       - name: products
         env:
@@ -97,10 +98,24 @@ spec:
         image: arturoalcaniz/products-service
         ports:
          - containerPort: 3021
+        volumeMounts:
+        - name: volume-products
+          mountPath: "/ProductsService/files"
         command: ["bash", "-c"]
         args: ["cd /app/ProductsService && bash install.sh"]
       imagePullSecrets:
        - name: dockercred
+      initContainers:
+      - name: products-data
+        image: busybox
+        command: ["/bin/chmod","-R","777", "/data"]
+        volumeMounts:
+        - name: volume-products
+          mountPath: /data
+      volumes:
+      - name: volume-products
+        persistentVolumeClaim:
+          claimName: volume-products
 
 ---
 apiVersion: v1

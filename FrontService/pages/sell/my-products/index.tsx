@@ -1,6 +1,5 @@
 import React from 'react'
-import HeaderLogged from '@components/Commons/HeaderLogged';
-import { handleGoProduct, handleObtainMyProducts, uploadImageProduct } from '@root/components/Market/MarketLogic';
+import { handleGoProduct, handleObtainMyProducts } from '@root/components/Market/MarketLogic';
 import Image from 'next/image'
 import CustomBasicPageLogged from '@root/components/CustomBasicPageLogged';
 
@@ -13,11 +12,6 @@ export default class MyProductsPage extends CustomBasicPageLogged{
             ...this.state,
             formError: "",
             componentName: "My Products | TI-Shop",
-            productname: "",
-            category: "",
-            description: "",
-            price: 0.0,
-            images: [],
             myProducts: []
         }
 
@@ -25,9 +19,6 @@ export default class MyProductsPage extends CustomBasicPageLogged{
     }
 
     render() {
-
-        let languageSelected = this.state.languageSelected
-        const { formError, productname, category, description, price } = this.state
 
         return (
             <div>

@@ -1,5 +1,5 @@
 import {InjectRepository} from "@nestjs/typeorm";
-import {User} from "entities-lib/src/entities/user.entity";
+import {User} from "$/../../../entities-lib/src/entities/user.entity";
 import {CustomHashing} from "../../hashing/hashing.service";
 import {BaseService} from "../../commons/service.commons";
 import {FindOneOptions, Repository} from "typeorm";

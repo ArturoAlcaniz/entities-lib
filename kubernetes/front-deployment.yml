@@ -16,6 +16,7 @@ spec:
       labels:
         role: front
     spec:
+      priorityClassName: high-priority
       containers:
       - name: front
         env:

@@ -22,7 +22,11 @@
         "productimage": "Images",
         "start_sell": "Sale starts in",
         "end_sell": "Sale ends in",
-        "coins": "Coins"
+        "coins": "Coins",
+        "start_code": "Starts in",
+        "end_code": "Ends in",
+        "code_name": "Code",
+        "amount": "Amount"
     },
     "explanations": {
         "hello": "Welcome",
@@ -69,7 +73,10 @@
         "productcategory_empty": "The category cannot be empty",
         "productdescription_empty": "The description cannot be empty",
         "productprice_empty": "The price cannot be empty",
-        "product_notexist": "The product not exist"
+        "product_notexist": "The product not exist",
+        "invalid_code": "The code is not valid",
+        "invalid_access": "You haven't permission for this action",
+        "code_already_exist": "Code already exist"
     },
     "requestOK": {
         "successfully_logged_in": "User successfully logged in",
