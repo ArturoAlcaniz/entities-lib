@@ -659,7 +659,7 @@ export class UsersController {
             return;
         }
         
-        if ((await this.codesService.find(payload.id)).length > 0) {
+        if ((await this.codesService.findOne({where: {ID: payload.id}})) != null) {
             response
                 .status(400)
                 .json({message: ["code_already_exist"], formError: "id"});

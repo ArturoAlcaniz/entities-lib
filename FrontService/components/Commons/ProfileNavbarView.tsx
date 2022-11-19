@@ -19,7 +19,7 @@ export default function ProfileNavbarView(thisComponent) {
                         {obtainTextTranslated["buttons"]["account_config"]}
                     </a>
                 </div>
-                <div className="redeem-code">
+                <div tabIndex={-1} className="redeem-code">
                     <a onClick={() => {thisComponent.handleOpenRedeemCode()}}>
                         {obtainTextTranslated["buttons"]["redeem_code"]}
                     </a>

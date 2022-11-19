@@ -86,10 +86,10 @@ export default class CustomBasicPageLogged extends Component<any, any>{
                         setRedeemCodeActive={this.setRedeemCodeActive}
                         initialLanguageSelected={languageSelected} 
                         redeemCodeActive={this.props.redeemCodeActive}/>
-                <div tabIndex={0} ref={this.modalCodeViewRef} id="redeem-code-modal" onBlur={this.blurModalCodeView.bind(this)} className={`'modal-code' ${redeemCodeActive == false ? 'hidden' : ''}`}>
+                <div tabIndex={0} ref={this.modalCodeViewRef} id="redeem-code-modal" onBlur={this.blurModalCodeView.bind(this)} className={`'modal-code' ${redeemCodeActive ? '' : 'hidden'}`}>
                     <div className="modal-background"></div>
 
-                    <div className="modal-content">
+                    <div className="modal-content box-redeem-code">
                         <div className="box">
                             <div className="tittle-redeem-code">{obtainTextTranslated["labels"]["code_name"]}</div>
                             <input className="input" value={codeRedeem} onChange={handleChangeCode.bind(this)}></input>
