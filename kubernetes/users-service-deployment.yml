@@ -100,7 +100,7 @@ spec:
          - containerPort: 3021
         volumeMounts:
         - name: volume-users
-          mountPath: "/UsersService/files"
+          mountPath: "/app/UsersService/files"
         command: ["bash", "-c"]
         args: ["cd /app/UsersService && bash install.sh"]
       imagePullSecrets:

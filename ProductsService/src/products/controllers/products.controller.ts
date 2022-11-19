@@ -122,20 +122,24 @@ export class ProductsController {
             },
         });
 
-        let product: Product = await this.productsService.findOne({
-            where: {
-                ID: payload.id,
-                USER: user,
-            },
-        });
+        let product: Product = await this.productsService.getRepository().createQueryBuilder()
+        .where('USERID = :uid', { uid: user.ID })
+        .andWhere('ID = :pid', { pid: payload.id })
+        .getOne();
 
-        await this.productImagesService.deleteMany(await this.productImagesService.find({
-            where: {
-                PRODUCT: product
-            }
-        }))
+        this.logger.info(`Deleting product ${product.ID}`)
 
-        if (await this.productsService.remove(product)) {
+        let images = await this.productImagesService.getRepository().createQueryBuilder()
+        .where('PRODUCTID = :pid', { pid: payload.id })
+        .getMany();
+
+        let imageIds = images.map(image => {return image.ID});
+
+        if (images.length > 0) {
+            await this.productImagesService.deleteMany(imageIds);
+        }
+
+        if ((await this.productsService.delete(product.ID)).affected) {
             response.status(200).json({message: ["successfully_product_deleted"]});
         }
     }

@@ -1,6 +1,6 @@
 import React from 'react';
 import CustomBasicPageLogged from '@root/components/CustomBasicPageLogged';
-import { handleObtainLimitedBy, handleChangeCoins, handleChangeId, handleChangeStartCode, handleChangeEndCode, handleChangeAmount } from '@root/components/Management/ManagementLogic';
+import { handleChangeCoins, handleChangeId, handleChangeStartCode, handleChangeEndCode, handleChangeAmount } from '@root/components/Management/ManagementLogic';
 import shortid from 'shortid';
 import { handleCreateCode } from '@root/components/Management/Codes/CodesLogic';
 import CustomErrorMessage from '@root/utils/CustomErrorMessage';
@@ -15,12 +15,11 @@ export default class CreateCodePage extends CustomBasicPageLogged{
             id: "",
             starts: "",
             ends: "",
-            amount: "",
+            amount: 0,
             coins: 0.0,
             componentName: "Create code | TI-Shop",
         }
         
-        handleObtainLimitedBy(this)
     }
 
     render() {
@@ -81,7 +80,7 @@ export default class CreateCodePage extends CustomBasicPageLogged{
                                         {obtainTextTranslated["labels"]["amount"]}
                                     </label>
                                     <div className="control">
-                                        <input className="input" value={amount} onChange={handleChangeAmount.bind(this)} type="number" autoComplete="off"></input>
+                                        <input className="input" value={amount} onChange={handleChangeAmount.bind(this)} type="number" min={0} autoComplete="off"></input>
                                     </div>
                                 </div>
                                 <p className="help form-feedback-ok">

@@ -47,7 +47,13 @@ export default class AllProductsPage extends CustomBasicPage{
                                     <div className="box clickable" onClick={() => {Router.push('login')}}>
                                         <div className="content">
                                             <div>
-                                                <Image src={product.IMAGES[0] ? `/api/products/image/${product.IMAGES[0].NAME}` : `/api/products/image`} width={300} height={200} alt="Product Image"/>
+                                                <Image 
+                                                    src={product.IMAGES[0] ? `/api/products/image/${product.IMAGES[0].NAME}` : `/api/products/image`} 
+                                                    alt="Product Image"
+                                                    width={300}
+                                                    height={200}
+                                                    style={{ width: '300px', height: '200px' }} 
+                                                />                                            
                                             </div>
                                             <p>
                                                 <strong>{product.PRODUCTNAME}</strong><br></br>

@@ -32,6 +32,7 @@ export default class HeaderLogged extends Component<any,any> {
             showNotifications: false,
             showProfileNavbar: false,
             showLanguageOptions: false,
+            redeemCodeActive: props.redeemCodeActive || false,
         }
 
         this.notificationViewRef = createRef();
@@ -57,6 +58,11 @@ export default class HeaderLogged extends Component<any,any> {
 
     changeCoins(coins) {
         this.setState({coins: coins})
+        this.forceUpdate()
+    }
+
+    handleOpenRedeemCode() {
+        this.setState({redeemCodeActive: true})
         this.forceUpdate()
     }
 

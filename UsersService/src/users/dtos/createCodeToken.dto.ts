@@ -1,4 +1,4 @@
-import { IsDecimal, IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { IsDecimal, IsNotEmpty, IsNumber, IsNumberString, isNumberString, IsString } from "class-validator";
 
 export class CreateCodeTokenDto {
     @IsNotEmpty()
@@ -14,6 +14,6 @@ export class CreateCodeTokenDto {
     @IsString()
     readonly ends: string;
 
-    @IsNumber()
+    @IsNumberString()
     readonly amount: string;
 }

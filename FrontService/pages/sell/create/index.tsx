@@ -1,66 +1,34 @@
 import React from 'react'
 import CustomErrorMessage from '@root/utils/CustomErrorMessage';
-import { handleChangeCategory, handleChangeDescription, handleChangeEndsell, handleChangePrice, handleChangeProductName, handleChangeStartSell, handleDeleteProduct, handleModifyProduct, handleObtainCategories, handleObtainMyProduct, uploadImageProduct } from '@root/components/Market/MarketLogic';
+import { handleCreateProduct, handleObtainCategories, uploadImageProduct, handleChangeProductName, handleChangeCategory, handleChangeDescription,
+    handleChangeStartSell, handleChangeEndsell, handleChangePrice } from '@root/components/Market/MarketLogic';
 import Link from 'next/link';
-import cookies from 'next-cookies';
-import Image from 'next/image'
 import shortid from 'shortid';
 import CustomBasicPageLogged from '@root/components/CustomBasicPageLogged';
 
-export default class ModifyProductPage extends CustomBasicPageLogged{
-
-    static async getInitialProps(ctx: any) {
-        return {
-            ...this.getInitialProps,
-            coins: cookies(ctx).coins,
-            idProduct: ctx.query.product,
-        }
-    }
-
-
+export default class SellPage extends CustomBasicPageLogged{
     constructor(props: any) {
         super(props);
 
         this.state = {
             ...this.state,
             formError: "",
-            componentName: "Modify Product | TI-Shop",
-            id: props.idProduct,
+            componentName: "Create Product | TI-Shop",
             productname: "",
             startsell: "",
             endsell: "",
             category: "",
             description: "",
             price: 0.0,
-            imagesAlreadyAdded: [],
             images: [],
-            product: null,
             productCategories: [],
         }
 
         try {
-            handleObtainCategories(this);
-            handleObtainMyProduct(this);
-        } catch(err) {}
-    }
+            handleObtainCategories(this)
+        } catch {
 
-    obtainFields() {
-        return `createProducts  ${this.state.product==null ? 'hidden' : ''}`
-    }
-
-    deleteImageAlreadyAdded(image){
-        let images: [] = this.state.imagesAlreadyAdded
-        
-        function equalToImage(element) {
-            return element === image
         }
-
-        let index: number = images.findIndex(equalToImage)
-
-        if(index != -1) {
-            images.splice(index, 1)
-        }
-        this.setState({imagesAlreadyAdded: images})
     }
 
     render() {
@@ -69,7 +37,7 @@ export default class ModifyProductPage extends CustomBasicPageLogged{
         let obtainTextTranslated = this.translations[languageSelected]
 
         const { formError, productname, category, description, price, startsell, endsell } = this.state
-        let msgError = obtainTextTranslated["requestErrors"][this.state.requestErrors.get('modifyProductError')]
+        let msgError = obtainTextTranslated["requestErrors"][this.state.requestErrors.get('createProductError')]
 
         return (
             <div>
@@ -80,8 +48,8 @@ export default class ModifyProductPage extends CustomBasicPageLogged{
                     </Link>
                 </div>
                 
-                <div className={this.obtainFields()}>
-                    <form onSubmit={handleModifyProduct.bind(this)}>
+                <div className="createProducts">
+                    <form onSubmit={handleCreateProduct.bind(this)}>
                         <div className="card createProductForm">
                             <div className="card-content">
                                 <div className="field">
@@ -99,18 +67,6 @@ export default class ModifyProductPage extends CustomBasicPageLogged{
                                     </label>
                                     <div className="control">
                                         <input type="file" multiple={true} name="images" onChange={uploadImageProduct.bind(this)} />
-                                    </div>
-                                    <div className="media-scroller snaps-inline">
-                                        { this.state.imagesAlreadyAdded && this.state.imagesAlreadyAdded.length>0 && this.state.imagesAlreadyAdded.map(image => {
-                                            return (
-                                                <div key={image.ID} className="media-element">
-                                                    <i onClick={() => {this.deleteImageAlreadyAdded(image)}} className="gg-trash"></i>
-                                                    <Image src={`/api/products/image/${image.NAME}`} max-width={300} max-heigh={200} width={300} height={200} alt="Product Image"/>
-                                                </div>
-                                            )
-                                        })
-
-                                        }
                                     </div>
                                 </div>
                                 <div className="field">
@@ -161,20 +117,16 @@ export default class ModifyProductPage extends CustomBasicPageLogged{
                                     <div className="control">
                                         <input className="input" value={price} onChange={handleChangePrice.bind(this)} type="number" autoComplete="off"></input>
                                     </div>
-                                    { (formError=='price' || formError=='product') && CustomErrorMessage(msgError) }
+                                    { formError=='price' && CustomErrorMessage(msgError) }
                                 </div>
                                 <p className="help form-feedback-ok">
-                                    {obtainTextTranslated["requestOK"][this.state.requestOK.get('modifyProductOk')]}
+                                    {obtainTextTranslated["requestOK"][this.state.requestOK.get('createProductOk')]}
                                 </p>
                                 <div className="field">
                                     <p className="control">
                                         <button className="button">
-                                            {obtainTextTranslated["buttons"]["modify_product"]}
+                                            {obtainTextTranslated["buttons"]["add_product"]}
                                         </button>
-
-                                        <div className="deleteProduct" onClick={() => handleDeleteProduct(this)}>
-                                            {obtainTextTranslated["buttons"]["delete_product"]}
-                                        </div>
                                     </p>
                                 </div>
                             </div>

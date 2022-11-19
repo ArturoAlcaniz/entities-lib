@@ -1,10 +1,10 @@
-import { BaseEntity, Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinTable, ManyToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 import { ColumnNumericTransformer } from "../transformers/ColumnNumericTransformer";
 import { User } from "./user.entity";
 
 @Entity()
 export class Code extends BaseEntity {
-    @PrimaryGeneratedColumn("uuid")
+    @PrimaryColumn()
     ID: string;
 
     @Column({type: "decimal", default: 0.00, nullable: false, precision: 9, scale: 2, transformer: new ColumnNumericTransformer()})

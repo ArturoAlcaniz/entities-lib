@@ -134,6 +134,11 @@ function handleObtainCategories(thisComponent) {
                 thisComponent.setState({
                     productCategories: response.data
                 });
+                if(response.data.length>0) {
+                    thisComponent.setState({
+                        category: response.data[0]
+                    })
+                }
             }
         },
         () => {}
@@ -160,6 +165,9 @@ function handleCreateProduct(event: any) {
                     requestOK: lista,
                     requestErrors: new Map<string, string>(),
                 });
+                setTimeout(() => {
+                    Router.push("https://tishoptfg.com/sell");
+                }, 1000);
             }
         },
         (error) => {

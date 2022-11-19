@@ -100,7 +100,7 @@ spec:
          - containerPort: 3021
         volumeMounts:
         - name: volume-products
-          mountPath: "/ProductsService/files"
+          mountPath: "/app/ProductsService/files"
         command: ["bash", "-c"]
         args: ["cd /app/ProductsService && bash install.sh"]
       imagePullSecrets:

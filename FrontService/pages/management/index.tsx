@@ -27,7 +27,13 @@ export default class ManagementPage extends CustomBasicPageLogged{
                     <div className="box clickable" onClick={() => handleGoCodesManage()}>
                         <div className="content">
                             <>
-                                <Image src={money} width={300} height={200} alt="Logo"/>
+                                <Image 
+                                    src={money}
+                                    alt="Codes Management"
+                                    width={300} 
+                                    height={200} 
+                                    style={{ width: '300px', height: '200px' }}   
+                                />
                             </>
                             <p>
                                 <strong>{obtainTextTranslated["buttons"]["codes"]}</strong><br></br>

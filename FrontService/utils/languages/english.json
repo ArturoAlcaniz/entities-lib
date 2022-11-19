@@ -54,7 +54,8 @@
         "buy_coins": "Buy coins",
         "management": "Management",
         "codes": "Codes",
-        "create_code": "Create code"
+        "create_code": "Create code",
+        "redeem_code": "Redeem code"
     },
     "requestErrors": {
         "invalid_credentials": "Invalid Credentials",
@@ -84,6 +85,7 @@
         "successfully_updated": "User succesfully updated",
         "successfully_product_created": "Product successfully created",
         "successfully_product_modified": "Product successfully modified",
-        "successfully_payment": "Payment done successfully"
+        "successfully_payment": "Payment done successfully",
+        "successfully_code_created": "Code succesfully created"
     }
 }

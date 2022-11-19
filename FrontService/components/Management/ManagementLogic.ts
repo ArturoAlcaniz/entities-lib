@@ -1,17 +1,4 @@
 import Router from "next/router";
-import { obtainLimitedBy } from "./ManagementRequest";
-
-function handleObtainLimitedBy(thisComponent) {
-    obtainLimitedBy().then(
-        (response) => {
-            if (response.status == 200) {
-                thisComponent.setState({
-                    limitedByOptions: response.data
-                })
-            }
-        }
-    )
-}
 
 function handleGoCodesManage() {
     Router.push("management/codes")
@@ -37,4 +24,4 @@ function handleChangeAmount(event: any) {
     this.setState({amount: event.target.value})
 }
 
-export { handleObtainLimitedBy, handleGoCodesManage, handleChangeCoins, handleChangeId, handleChangeStartCode, handleChangeEndCode, handleChangeAmount }
+export { handleGoCodesManage, handleChangeCoins, handleChangeId, handleChangeStartCode, handleChangeEndCode, handleChangeAmount }

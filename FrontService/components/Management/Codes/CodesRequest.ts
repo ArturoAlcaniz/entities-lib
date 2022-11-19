@@ -1,6 +1,6 @@
 import axios, {AxiosPromise} from "axios";
 
-export default function createCodeRequest(
+export function createCodeRequest(
     thisComponent: any
 ): AxiosPromise<any> {
     return axios({
@@ -13,5 +13,25 @@ export default function createCodeRequest(
             ends: thisComponent.state.ends,
             amount: thisComponent.state.amount
         },
+    });
+}
+
+export function redeemCodeRequest(
+    thisComponent: any
+): AxiosPromise<any> {
+    return axios({
+        method: "post",
+        url: "/api/users/redeemCodeToken",
+        data: {
+            id: thisComponent.state.id
+        },
+    });
+}
+
+export function obtainAllCodesRequest(): AxiosPromise<any> {
+    return axios({
+        method: "get",
+        url: "/api/users/obtainAllCodes",
+        data: [],
     });
 }

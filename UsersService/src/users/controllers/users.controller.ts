@@ -31,6 +31,7 @@ import { CreateCodeTokenDto } from "../dtos/createCodeToken.dto";
 import { Code } from "$/../../../entities-lib/src/entities/code.entity";
 import { CodesService } from "../services/codes.service";
 import { DeepPartial } from "typeorm";
+import { RedeemCodeTokenDto } from "../dtos/redeemCodeToken.dto";
 
 
 @ApiTags("User Controller")
@@ -678,6 +679,89 @@ export class UsersController {
             .replace("{IP}", request.headers["x-forwarded-for"].toString())
             .replace("{USER}", user.EMAIL)
             .replace("{CODE}", code.ID)
+        );
+    }
+
+    @UseGuards(ThrottlerGuard)
+    @Throttle(100, 3000)
+    @ApiOkResponse()
+    @Get("obtainAllCodes")
+    async getAllCodes(
+        @Res({passthrough: true}) response: Response,
+        @Req() request: Request
+    ) {
+        
+        let codes: Code[] = await this.codesService.find({})
+
+        return codes;
+    }
+
+    @UseGuards(ThrottlerGuard)
+    @Throttle(10, 3000)
+    @ApiOkResponse()
+    @Post("redeemCodeToken")
+    @UseGuards(AuthenticatedGuard)
+    async redeemCodeToken(
+        @Body() payload: RedeemCodeTokenDto,
+        @Res({passthrough: true}) response: Response,
+        @Req() request: Request,
+    ) {
+        let user: User = await this.usersService.findOne({
+            where: {
+                ID: this.jwtService.decode(request.cookies["jwt"])["userId"],
+            },
+        });
+
+        if (user == null) {
+            response.status(400).json({
+                message: ["invalid_access"], formError: "access"
+            });
+            this.logger.info(
+                "Fail Create code (invalid_access) {IP} {USER}"
+                    .replace("{IP}", request.headers["x-forwarded-for"].toString())
+                    .replace("{USER}", user.EMAIL)
+            );
+            return;
+        }
+        
+        let codes = (await this.codesService.find(payload.id));
+        if (codes.length == 0) {
+            response
+                .status(400)
+                .json({message: ["code_not_exist"], formError: "id"});
+            this.logger.info(
+                "Fail Redeem Code (code_not_exist) {IP}".replace(
+                    "{IP}",
+                    request.headers["x-forwarded-for"].toString()
+                )
+            );
+            return;
+        }
+
+        if (codes[0].AMOUNT <= 0) {
+            response
+                .status(400)
+                .json({message: ["code_not_available"], formError: "id"});
+            this.logger.info(
+                "Fail Redeem Code (code_not_available) {IP}".replace(
+                    "{IP}",
+                    request.headers["x-forwarded-for"].toString()
+                )
+            );
+            return;
+        }
+        user.COINS = user.COINS + codes[0].COINS;
+        await this.usersService.save(user);
+
+        codes[0].AMOUNT = codes[0].AMOUNT-1;
+        await this.codesService.save(codes[0]);
+
+        response.status(200).json({message: ["successfully_code_redeemed"], COINS: user.COINS});
+        this.logger.info(
+            "Create Code Sucessfully {CODE} {IP} {USER}"
+            .replace("{IP}", request.headers["x-forwarded-for"].toString())
+            .replace("{USER}", user.EMAIL)
+            .replace("{CODE}", codes[0].ID)
         );
     }
 

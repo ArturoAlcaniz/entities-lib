@@ -19,7 +19,7 @@ export class CodesService extends BaseService<Code> {
     }
 
     createCode(payload: CreateCodeTokenDto): Code {
-        let code: Code;
+        let code: Code = new Code();
         code.ID = payload.id;
         code.COINS = Number(payload.coins);
         code.STARTS = payload.starts;
