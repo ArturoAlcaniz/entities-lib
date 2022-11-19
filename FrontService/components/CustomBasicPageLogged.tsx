@@ -93,7 +93,7 @@ export default class CustomBasicPageLogged extends Component<any, any>{
                         <div className="box">
                             <div className="tittle-redeem-code">{obtainTextTranslated["labels"]["code_name"]}</div>
                             <input className="input" value={codeRedeem} onChange={handleChangeCode.bind(this)}></input>
-                            <button className="button is-primary" onClick={handleRedeemCode.bind(this)}>{obtainTextTranslated["button"]["redeem_code"]}</button>
+                            <button className="button is-primary" onClick={handleRedeemCode.bind(this)}>{obtainTextTranslated["buttons"]["redeem_code"]}</button>
                         </div>
                     </div>
                 </div>
