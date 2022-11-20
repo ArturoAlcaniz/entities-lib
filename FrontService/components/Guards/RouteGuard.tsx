@@ -22,6 +22,7 @@ function RouteGuard({ children }) {
                 if(response.status == 200){
                     document.cookie = `username=${response.data.USERNAME};`;
                     document.cookie = `admin=${response.data.ROL === "ADMIN"}`;
+                    document.cookie = `coins=${response.data.COINS};`;
                     
                     if((publicPaths().includes(path) || (adminPaths().includes(path) && response.data.ROL != "ADMIN")) && router) {
                         setAuthorized(false);

@@ -13,18 +13,19 @@ export default class CustomBasicPageLogged extends Component<any, any>{
         return {
             pathname: ctx.pathname,
             initialLanguageSelected: cookies(ctx).languageSelected || 'english',
-            username: cookies(ctx).username,
+            initialUsername: cookies(ctx).username,
             admin: cookies(ctx).admin,
             email: cookies(ctx).email,
-            coins: cookies(ctx).coins,
-            avatar: cookies(ctx).avatar,
-            rol: cookies(ctx).rol,
+            initialCoins: cookies(ctx).coins,
+            initialAvatar: cookies(ctx).avatar,
+            initialRol: cookies(ctx).rol,
             redeemCodeActive: false,
         }
     }
 
     translations: { english: any; spanish: any; };
     modalCodeViewRef: RefObject<HTMLDivElement>;
+    headerViewRef: any;
     constructor(props: any) {
         super(props);
 
@@ -33,7 +34,11 @@ export default class CustomBasicPageLogged extends Component<any, any>{
             componentName: "TI-Shop",
             requestErrors: new Map<string, string>(),
             requestOK: new Map<string, string>(),
-            codeRedeem: ""
+            codeRedeem: "",
+            coins: props.initialCoins || "",
+            username: props.initialUsername || "",
+            avatar: props.initialAvatar || "",
+            rol: props.initialRol || ""
         }
 
         this.translations =
@@ -44,6 +49,7 @@ export default class CustomBasicPageLogged extends Component<any, any>{
         this.setLanguageSelected = this.setLanguageSelected.bind(this)
         this.setRedeemCodeActive = this.setRedeemCodeActive.bind(this)
         this.modalCodeViewRef = createRef();
+        this.headerViewRef = createRef();
     }
 
     setLanguageSelected(languageSelected: string) {
@@ -60,8 +66,6 @@ export default class CustomBasicPageLogged extends Component<any, any>{
     blurModalCodeView(event) {
         if (!event?.relatedTarget || !this.modalCodeViewRef.current?.contains(event?.relatedTarget)) {
             this.setState({ redeemCodeActive: false})
-        }else{
-            event?.currentTarget.focus()
         }
     }
     
@@ -70,7 +74,7 @@ export default class CustomBasicPageLogged extends Component<any, any>{
         let languageSelected = this.state.languageSelected
         let obtainTextTranslated = this.translations[languageSelected]
 
-        const { redeemCodeActive, codeRedeem } = this.state
+        const { redeemCodeActive, codeRedeem, coins, avatar, username } = this.state
 
         return (
             <div>
@@ -78,12 +82,12 @@ export default class CustomBasicPageLogged extends Component<any, any>{
                     <title>{this.state.componentName}</title>
                     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
                 </Head>
-                <HeaderLogged username={this.props.username}
+                <HeaderLogged ref={this.headerViewRef} username={username}
                         admin={this.props.admin}
                         email={this.props.email}
-                        coins={this.props.coins}
+                        coins={coins}
                         pathname={this.props.pathname}
-                        avatar={this.props.avatar} 
+                        avatar={avatar} 
                         setLanguageSelected={this.setLanguageSelected} 
                         setRedeemCodeActive={this.setRedeemCodeActive}
                         initialLanguageSelected={languageSelected} 

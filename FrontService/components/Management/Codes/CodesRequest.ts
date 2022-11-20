@@ -23,7 +23,7 @@ export function redeemCodeRequest(
         method: "post",
         url: "/api/users/redeemCodeToken",
         data: {
-            id: thisComponent.state.id
+            id: thisComponent.state.codeRedeem
         },
     });
 }

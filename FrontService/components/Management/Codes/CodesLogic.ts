@@ -1,5 +1,5 @@
 import Router from "next/router"
-import { createCodeRequest, obtainAllCodesRequest } from "./CodesRequest";
+import { createCodeRequest, obtainAllCodesRequest, redeemCodeRequest } from "./CodesRequest";
 
 function handleGoCreateCodes() {
     Router.push("codes/create")
@@ -60,7 +60,7 @@ function handleChangeCode(event: any) {
 }
 
 function handleRedeemCode(event: any) {
-    createCodeRequest(this).then(
+    redeemCodeRequest(this).then(
         (response) => {
             if (response.status == 200) {
                 let lista: Map<string, string> = new Map<string, string>().set(
@@ -72,7 +72,7 @@ function handleRedeemCode(event: any) {
                     requestOK: lista,
                     requestErrors: new Map<string, string>(),
                     coins: response.data.COINS
-                });
+                }, this.headerViewRef.current.setState({coins: response.data.COINS}));
             }
         },
         (error) => {
