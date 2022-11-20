@@ -51,8 +51,10 @@ export default class CustomBasicPageLogged extends Component<any, any>{
         document.cookie = `languageSelected=${languageSelected};`;
     }
 
-    setRedeemCodeActive(redeemCodeActive: string) {
-        this.setState({ redeemCodeActive: redeemCodeActive })
+    setRedeemCodeActive() {
+        this.setState({ redeemCodeActive: true }, () => {
+            this.modalCodeViewRef.current.focus();
+        });
     }
 
     blurModalCodeView(event) {
@@ -86,10 +88,10 @@ export default class CustomBasicPageLogged extends Component<any, any>{
                         setRedeemCodeActive={this.setRedeemCodeActive}
                         initialLanguageSelected={languageSelected} 
                         redeemCodeActive={this.props.redeemCodeActive}/>
-                <div tabIndex={0} ref={this.modalCodeViewRef} id="redeem-code-modal" onBlur={this.blurModalCodeView.bind(this)} className={`'modal-code' ${redeemCodeActive ? '' : 'hidden'}`}>
+                <div id="redeem-code-modal" className={`modal-code ${redeemCodeActive ? '' : 'hidden'}`}>
                     <div className="modal-background"></div>
 
-                    <div className="modal-content box-redeem-code">
+                    <div tabIndex={-1} ref={this.modalCodeViewRef} onBlur={this.blurModalCodeView.bind(this)} className="modal-content box-redeem-code">
                         <div className="box">
                             <div className="tittle-redeem-code">{obtainTextTranslated["labels"]["code_name"]}</div>
                             <input className="input" value={codeRedeem} onChange={handleChangeCode.bind(this)}></input>

@@ -63,7 +63,7 @@ export default class HeaderLogged extends Component<any,any> {
 
     handleOpenRedeemCode() {
         this.setState({redeemCodeActive: true})
-        this.props.setRedeemCodeActive(true);
+        this.props.setRedeemCodeActive();
         this.forceUpdate()
     }
 
