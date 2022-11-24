@@ -5,9 +5,7 @@ pipeline {
             steps {
                 script{
                     sh '''
-                    ls && 
                     cd UsersService && 
-                    su &&
                     bash docker_build.bash
                     '''
                 }

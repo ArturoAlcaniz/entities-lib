@@ -17,6 +17,9 @@ spec:
       containers:
       - name: jenkins
         image: arturoalcaniz/jenkins-service
+        securityContext:
+          privileged: true
+          runAsUser: 0
         ports:
          - containerPort: 8080
         volumeMounts:
@@ -33,7 +36,20 @@ spec:
         volumeMounts:
         - name: volume-jenkins
           mountPath: /jenkins-data
+        - name: docker-sock
+          mountPath: /var/run/docker.sock
+          readOnly: false
+        - name: docker-directory
+          mountPath: "/var/lib/docker"
+          readOnly: false
       volumes:
         - name: volume-jenkins
           persistentVolumeClaim:
             claimName: volume-jenkins
+        - name: docker-sock
+          hostPath:
+            path: "/var/run/docker.sock"
+            type: File
+        - name: docker-directory
+          hostPath:
+            path: "/var/lib/docker"
