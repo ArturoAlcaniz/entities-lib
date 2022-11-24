@@ -6,9 +6,8 @@ pipeline {
                 script{
                     sh '''
                     ls && 
-                    cd /UsersService && 
+                    cd UsersService && 
                     bash docker_build.bash
-                    
                     '''
                 }
             }
