@@ -10,3 +10,4 @@ RUN echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
 RUN apt-get update -y
 RUN apt-get install fontconfig openjdk-11-jre -y
 RUN apt-get install jenkins -y
+RUN apt-get install git -y
