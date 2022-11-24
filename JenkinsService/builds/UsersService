@@ -1,0 +1,16 @@
+pipeline {
+    agent any
+    stages {
+        stage('build') {
+            steps {
+                script{
+                    sh '''
+                    ls && 
+                    cd /UsersService && 
+                    bash docker_build.bash
+                    '''
+                }
+            }
+        }
+    }
+}
