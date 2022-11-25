@@ -6,7 +6,7 @@ pipeline {
                 script{
                     sh '''
                     cd UsersService && 
-                    bash docker_build.bash
+                    bash docker_build.bash $TOKEN_DOCKER
                     '''
                 }
             }
