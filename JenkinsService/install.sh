@@ -1,7 +1,6 @@
 #!/bin/bash
 # Script to be executed just once, when the system is installed.
 # Commands are only run once even if the script is called multiple times.
-printf $1 | docker login --username arturoalcaniz --password-stdin
 dockerd > /dev/null 2>&1 &
 curl -L --output cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
 dpkg -i cloudflared.deb
