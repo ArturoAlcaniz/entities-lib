@@ -10,8 +10,8 @@ const app = next({ dev, hostname, port })
 const handle = app.getRequestHandler()
 const fs = require("fs");
 const httpsOptions = {
-    key: fs.readFileSync("/app/certs/localhost/sslcache/tishoptfg.com/tishoptfg.com.key"),
-    cert: fs.readFileSync("/app/certs/localhost/sslcache/tishoptfg.com/tishoptfg.com.crt"),
+    key: fs.readFileSync("/app/certs/sslcache/tishoptfg.com/tishoptfg.com.key"),
+    cert: fs.readFileSync("/app/certs/sslcache/tishoptfg.com/tishoptfg.com.crt"),
 };
 
 app.prepare().then(() => {
