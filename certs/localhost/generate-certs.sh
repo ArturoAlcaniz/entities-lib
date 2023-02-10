@@ -12,7 +12,8 @@ LocalityName=Spain
 OrganizationName=tishoptfg.com
 OrganizationalUnitName=tishoptfg.com
 CommonName=tishoptfg.com
-EmailAddress=tishoptfg@gmail.com
+EmailAddress=admin@tishoptfg.com
+PASSPHRASE=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 10)
 
 if [ ! -d "sslcache" ]; then
   mkdir sslcache
@@ -23,16 +24,16 @@ cd sslcache
 if [ ! -f $CAfilename.pem ]; then
 
     ## generating a root certificate
-    openssl genrsa -des3 -out $CAfilename.key $bitsStrong
+    openssl genrsa -des3 -out $CAfilename.key -passout pass:$PASSPHRASE $bitsStrong
     openssl req -x509 \
     -new -nodes \
     -key $CAfilename.key \
     -sha256 -days 3650 \
     -out $CAfilename.pem \
+    -passin pass:$PASSPHRASE \
     -subj "/C=$CountryName/ST=$StateOrProvinceName/L=$LocalityName/O=$OrganizationName/OU=$OrganizationalUnitName/CN=$CommonName"
 
 fi
-
 
 ## generate private key
 openssl genrsa -out $awesomedomain.key $bitsStrong
@@ -41,6 +42,7 @@ openssl genrsa -out $awesomedomain.key $bitsStrong
 openssl req -new \
   -key $awesomedomain.key \
   -out $awesomedomain.csr \
+  -passin pass:$PASSPHRASE \
   -subj "/C=$CountryName/ST=$StateOrProvinceName/L=$LocalityName/O=$OrganizationName/OU=$OrganizationalUnitName/CN=$CommonName"
 
 OUT=$awesomedomain.ext
@@ -59,6 +61,7 @@ openssl x509 -req -in $awesomedomain.csr \
   -CAkey $CAfilename.key \
   -CAcreateserial \
   -out $awesomedomain.crt \
+  -passin pass:$PASSPHRASE \
   -days 3650 \
   -sha256 \
   -extfile $awesomedomain.ext
@@ -66,12 +69,4 @@ openssl x509 -req -in $awesomedomain.csr \
 mkdir $awesomedomain
 mv $awesomedomain.* $awesomedomain/ 
 
-cd /etc/nginx/
-
-NOW=$(date +%Y-%m-%d-%H.%M.%S)
-cp /etc/hosts /etc/hosts_backup_$NOW
-sed -i  "1s/^/127.0.0.1    ${awesomedomain}\n/" /etc/hosts
-
-#service nginx reload
-
-echo "done :), import  /etc/nginx/sslcache/$CAfilename.pem  and go to  https://$awesomedomain/" 
+echo "Certificates sucessfully generated" 
