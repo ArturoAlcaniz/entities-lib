@@ -1,6 +1,6 @@
 {
     "name": "MailerService",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "Backend of TFG Project using nestjs",
     "author": "Arturo Alcañiz",
     "private": true,
