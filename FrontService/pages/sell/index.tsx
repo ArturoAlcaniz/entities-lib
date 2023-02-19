@@ -27,7 +27,7 @@ export default class MyProductsPage extends CustomBasicPageLogged{
         return (
             <div>
                 {super.render()}
-                <div className='buttonGoMyProducts'>
+                <div className='buttonCentered'>
                     <Link href="/sell/create">
                         <button className="button is-primary">{obtainTextTranslated["buttons"]["add_product"]}</button>
                     </Link>

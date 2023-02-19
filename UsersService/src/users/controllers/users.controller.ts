@@ -659,6 +659,19 @@ export class UsersController {
             return;
         }
         
+        if((payload.starts == null || payload.starts.length == 0) && (payload.ends != null && payload.ends.length > 0) && new Date() < new Date(payload.ends)) {
+            response
+                .status(400)
+                .json({message: ["invalid_enddate"], formError: "ends"});
+            this.logger.info(
+                "Fail Create code (invalid_enddate) {IP}".replace(
+                    "{IP}",
+                    request.headers["x-forwarded-for"].toString()
+                )
+            );
+            return;
+        }
+
         if ((await this.codesService.findOne({where: {ID: payload.id}})) != null) {
             response
                 .status(400)

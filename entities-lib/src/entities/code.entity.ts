@@ -1,9 +1,10 @@
-import { BaseEntity, Column, Entity, JoinTable, ManyToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 import { ColumnNumericTransformer } from "../transformers/ColumnNumericTransformer";
 import { User } from "./user.entity";
+import { EntityWrapper} from "../transformers/EntityWrapper";
 
 @Entity()
-export class Code extends BaseEntity {
+export class Code extends EntityWrapper {
     @PrimaryColumn()
     ID: string;
 

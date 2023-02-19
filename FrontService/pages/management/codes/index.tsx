@@ -24,13 +24,12 @@ export default class CodesManagePage extends CustomBasicPageLogged{
         return (
             <div>
                 {super.render()}
-                <div className='buttonGoCreateCodes'>
+                <div className='buttonCentered'>
                     <Link href="/management/codes/create">
-                        <button className="button is-primary">{obtainTextTranslated["buttons"]["add_product"]}</button>
+                        <button className="button is-primary">{obtainTextTranslated["buttons"]["create_code"]}</button>
                     </Link>
                 </div>
                 <div className="pageCentered">
-                    <button className='button' onClick={() => {handleGoCreateCodes()}}>{obtainTextTranslated["buttons"]["create_code"]}</button>
                     <div className="ListCodes">
                         <table className="table">
                             <thead>

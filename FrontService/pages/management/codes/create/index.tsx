@@ -73,6 +73,7 @@ export default class CreateCodePage extends CustomBasicPageLogged{
                                     <div className="control">
                                         <input className="input" value={ends} onChange={handleChangeEndCode.bind(this)} type="datetime-local" autoComplete="off"></input>
                                     </div>
+                                    { formError=='ends' && CustomErrorMessage(msgError) }
                                 </div>
 
                                 <div className="field">
