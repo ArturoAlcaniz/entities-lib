@@ -195,6 +195,7 @@ export class UsersController {
             EMAIL: u.EMAIL,
             COINS: u.COINS,
             AVATAR: u.AVATAR,
+            ROL: u.ROL,
         });
         this.logger.info(
             "Login Sucessfully {IP}".replace(

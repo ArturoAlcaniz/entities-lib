@@ -201,7 +201,7 @@ export default class RegisterPage extends CustomBasicPage{
                                 <div className="field_haveAccount">
                                     <p className="control">
                                         {obtainTextTranslated["explanations"]["have_account2"]}
-                                        <Link href="/">
+                                        <Link href="/login">
                                             <a>{obtainTextTranslated["explanations"]["login"]}</a>
                                         </Link>
                                     </p>
