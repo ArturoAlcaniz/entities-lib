@@ -1,29 +1,25 @@
 import axios, {AxiosPromise} from "axios";
 
-export function createCodeRequest(
-    thisComponent: any
-): AxiosPromise<any> {
+export function createCodeRequest(thisComponent: any): AxiosPromise<any> {
     return axios({
         method: "post",
         url: "/api/users/createCodeToken",
         data: {
             id: thisComponent.state.id,
-            coins: thisComponent.state.coins, 
+            coins: thisComponent.state.coins,
             starts: thisComponent.state.starts,
             ends: thisComponent.state.ends,
-            amount: thisComponent.state.amount
+            amount: thisComponent.state.amount,
         },
     });
 }
 
-export function redeemCodeRequest(
-    thisComponent: any
-): AxiosPromise<any> {
+export function redeemCodeRequest(thisComponent: any): AxiosPromise<any> {
     return axios({
         method: "post",
         url: "/api/users/redeemCodeToken",
         data: {
-            id: thisComponent.state.codeRedeem
+            id: thisComponent.state.codeRedeem,
         },
     });
 }

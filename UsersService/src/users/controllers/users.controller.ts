@@ -659,7 +659,7 @@ export class UsersController {
             return;
         }
         
-        if((payload.starts == null || payload.starts.length == 0) && (payload.ends != null && payload.ends.length > 0) && new Date() < new Date(payload.ends)) {
+        if(payload.ends != null && payload.ends.length > 0 && new Date() < new Date(payload.ends)) {
             response
                 .status(400)
                 .json({message: ["invalid_enddate"], formError: "ends"});

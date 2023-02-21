@@ -1,8 +1,12 @@
-import Router from "next/router"
-import { createCodeRequest, obtainAllCodesRequest, redeemCodeRequest } from "./CodesRequest";
+import Router from "next/router";
+import {
+    createCodeRequest,
+    obtainAllCodesRequest,
+    redeemCodeRequest,
+} from "./CodesRequest";
 
 function handleGoCreateCodes() {
-    Router.push("codes/create")
+    Router.push("codes/create");
 }
 
 function handleCreateCode(event: any) {
@@ -33,30 +37,28 @@ function handleCreateCode(event: any) {
                 requestErrors: lista,
             });
         }
-    )
+    );
 }
 
 async function handleObtainAllCodes(thisComponent) {
-
     await obtainAllCodesRequest().then(
         (response) => {
             if (response.status == 200) {
-                let codesArray: Array<any> = []
-                for(let i=0; i<response.data.length; i++){
-                    codesArray.push(response.data[i])
+                let codesArray: Array<any> = [];
+                for (let i = 0; i < response.data.length; i++) {
+                    codesArray.push(response.data[i]);
                 }
                 thisComponent.setState({codes: codesArray});
             }
         },
         (error) => {
-            console.log(error)
+            console.log(error);
         }
-    )
+    );
 }
 
-
 function handleChangeCode(event: any) {
-    this.setState({codeRedeem: event.target.value})
+    this.setState({codeRedeem: event.target.value});
 }
 
 function handleRedeemCode(event: any) {
@@ -67,12 +69,17 @@ function handleRedeemCode(event: any) {
                     "redeemCodeOk",
                     response.data.message[0]
                 );
-                this.setState({
-                    formError: "",
-                    requestOK: lista,
-                    requestErrors: new Map<string, string>(),
-                    coins: response.data.COINS
-                }, this.headerViewRef.current.setState({coins: response.data.COINS}));
+                this.setState(
+                    {
+                        formError: "",
+                        requestOK: lista,
+                        requestErrors: new Map<string, string>(),
+                        coins: response.data.COINS,
+                    },
+                    this.headerViewRef.current.setState({
+                        coins: response.data.COINS,
+                    })
+                );
             }
         },
         (error) => {
@@ -86,7 +93,13 @@ function handleRedeemCode(event: any) {
                 requestErrors: lista,
             });
         }
-    )
+    );
 }
 
-export { handleGoCreateCodes, handleCreateCode, handleObtainAllCodes, handleChangeCode, handleRedeemCode }
+export {
+    handleGoCreateCodes,
+    handleCreateCode,
+    handleObtainAllCodes,
+    handleChangeCode,
+    handleRedeemCode,
+};

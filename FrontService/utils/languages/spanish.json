@@ -20,11 +20,11 @@
         "product_price": "Precio",
         "avatar": "Avatar",
         "productimage": "Imágenes",
-        "start_sell": "Vender a partir",
-        "end_sell": "Vender hasta",
+        "start_sell": "Fecha inicio",
+        "end_sell": "Fecha fin",
         "coins": "Coins",
-        "start_code": "Comienza en",
-        "end_code": "Termina en",
+        "start_code": "Fecha inicio",
+        "end_code": "Fecha fin",
         "code_name": "Código",
         "amount": "Cantidad"
     },
@@ -77,7 +77,8 @@
         "product_notexist": "El producto no existe",
         "invalid_code": "El código no es válido",
         "invalid_access": "No tienes permisos para realizar esta acción",
-        "code_already_exist": "Código ya existente"
+        "code_already_exist": "Código ya existente",
+        "invalid_enddate": "Fecha final debe ser posterior a la fecha inicio"
     },
     "requestOK": {
         "successfully_logged_in": "Usuario logeado correctamente",

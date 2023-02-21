@@ -20,11 +20,11 @@
         "product_price": "Price",
         "avatar": "Avatar",
         "productimage": "Images",
-        "start_sell": "Sale starts in",
-        "end_sell": "Sale ends in",
+        "start_sell": "Start date",
+        "end_sell": "End date",
         "coins": "Coins",
-        "start_code": "Starts in",
-        "end_code": "Ends in",
+        "start_code": "Start date",
+        "end_code": "End date",
         "code_name": "Code",
         "amount": "Amount"
     },
@@ -77,7 +77,8 @@
         "product_notexist": "The product not exist",
         "invalid_code": "The code is not valid",
         "invalid_access": "You haven't permission for this action",
-        "code_already_exist": "Code already exist"
+        "code_already_exist": "Code already exist",
+        "invalid_enddate": "End date must be after start date"
     },
     "requestOK": {
         "successfully_logged_in": "User successfully logged in",

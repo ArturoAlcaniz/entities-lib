@@ -1,5 +1,5 @@
 export function modifyProductValidation(thisComponent: any) {
-    if(!thisComponent.state.id) {
+    if (!thisComponent.state.id) {
         let lista: Map<string, string> = new Map<string, string>().set(
             "modifyProductError",
             "product_notexist"
@@ -24,8 +24,8 @@ export function modifyProductValidation(thisComponent: any) {
         });
         return false;
     }
-    
-    if(!thisComponent.state.category) {
+
+    if (!thisComponent.state.category) {
         let lista: Map<string, string> = new Map<string, string>().set(
             "modifyProductError",
             "productcategory_empty"
@@ -38,7 +38,7 @@ export function modifyProductValidation(thisComponent: any) {
         return false;
     }
 
-    if(!thisComponent.state.description) {
+    if (!thisComponent.state.description) {
         let lista: Map<string, string> = new Map<string, string>().set(
             "modifyProductError",
             "productdescription_empty"
@@ -51,7 +51,7 @@ export function modifyProductValidation(thisComponent: any) {
         return false;
     }
 
-    if(!thisComponent.state.price) {
+    if (!thisComponent.state.price) {
         let lista: Map<string, string> = new Map<string, string>().set(
             "modifyProductError",
             "productprice_empty"
@@ -65,7 +65,6 @@ export function modifyProductValidation(thisComponent: any) {
     }
     return true;
 }
-
 
 export function createProductValidation(thisComponent: any) {
     if (!thisComponent.state.productname) {
@@ -81,7 +80,7 @@ export function createProductValidation(thisComponent: any) {
         return false;
     }
 
-    if(!thisComponent.state.category) {
+    if (!thisComponent.state.category) {
         let lista: Map<string, string> = new Map<string, string>().set(
             "createProductError",
             "productcategory_empty"
@@ -94,7 +93,7 @@ export function createProductValidation(thisComponent: any) {
         return false;
     }
 
-    if(!thisComponent.state.description) {
+    if (!thisComponent.state.description) {
         let lista: Map<string, string> = new Map<string, string>().set(
             "createProductError",
             "productdescription_empty"
@@ -107,7 +106,7 @@ export function createProductValidation(thisComponent: any) {
         return false;
     }
 
-    if(!thisComponent.state.price) {
+    if (!thisComponent.state.price) {
         let lista: Map<string, string> = new Map<string, string>().set(
             "createProductError",
             "productprice_empty"

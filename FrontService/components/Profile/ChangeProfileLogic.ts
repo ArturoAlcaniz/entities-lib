@@ -5,7 +5,7 @@ import changeProfileValidation from "./ChangeProfileValidation";
 function uploadAvatar(event: any) {
     if (event.target.files && event.target.files[0]) {
         const i = event.target.files[0];
-  
+
         this.setState({avatar: i});
     }
 }
@@ -67,22 +67,33 @@ function showActualPass(event: any) {
 }
 
 function handleChangeUsername(event: any) {
-    this.setState({username: event.target.value})
+    this.setState({username: event.target.value});
 }
 
 function handleChangeEmail(event: any) {
-    this.setState({email: event.target.value})
+    this.setState({email: event.target.value});
 }
 
 function handleChangeNewPassword(event: any) {
-    this.setState({newPassword: event.target.value})
+    this.setState({newPassword: event.target.value});
 }
 
 function handleChangeNewConfirmPassword(event: any) {
-    this.setState({newConfirmPassword: event.target.value})
+    this.setState({newConfirmPassword: event.target.value});
 }
 
 function handleChangeActualPassord(event: any) {
-    this.setState({actualPassword: event.target.value})
+    this.setState({actualPassword: event.target.value});
 }
-export {showActualPass, showNewCPass, showNewPass, handleChangeProfile, uploadAvatar, handleChangeUsername, handleChangeEmail, handleChangeNewPassword, handleChangeNewConfirmPassword, handleChangeActualPassord}
+export {
+    showActualPass,
+    showNewCPass,
+    showNewPass,
+    handleChangeProfile,
+    uploadAvatar,
+    handleChangeUsername,
+    handleChangeEmail,
+    handleChangeNewPassword,
+    handleChangeNewConfirmPassword,
+    handleChangeActualPassord,
+};

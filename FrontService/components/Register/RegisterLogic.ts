@@ -1,7 +1,6 @@
 import {registerRequest, sendCodeRequest} from "./RegisterRequest";
 import registerValidation from "./RegisterValidation";
 
-
 function errorRegister(error, thisComponent) {
     let lista: Map<string, string> = new Map<string, string>().set(
         "registerError",
@@ -37,7 +36,7 @@ function handleSendCode(event: any) {
             }
         },
         (error) => {
-            errorRegister(error, this)
+            errorRegister(error, this);
         }
     );
 }
@@ -61,7 +60,7 @@ function handleRegister(event: any) {
             }
         },
         (error) => {
-            errorRegister(error, this)
+            errorRegister(error, this);
         }
     );
 }
@@ -77,22 +76,32 @@ function showCPass(event: any) {
 }
 
 function handleChangeUsername(event: any) {
-    this.setState({username: event.target.value})
+    this.setState({username: event.target.value});
 }
 
 function handleChangeEmail(event: any) {
-    this.setState({email: event.target.value})
+    this.setState({email: event.target.value});
 }
 
 function handleChangePassword(event: any) {
-    this.setState({password: event.target.value})
+    this.setState({password: event.target.value});
 }
 
 function handleChangeConfirmPassword(event: any) {
-    this.setState({confirmPassword: event.target.value})
+    this.setState({confirmPassword: event.target.value});
 }
 
 function handleChangeCode(event: any) {
-    this.setState({code: event.target.value})
+    this.setState({code: event.target.value});
 }
-export {handleRegister, handleSendCode, showCPass, showPass, handleChangeUsername, handleChangeEmail, handleChangePassword, handleChangeConfirmPassword, handleChangeCode};
+export {
+    handleRegister,
+    handleSendCode,
+    showCPass,
+    showPass,
+    handleChangeUsername,
+    handleChangeEmail,
+    handleChangePassword,
+    handleChangeConfirmPassword,
+    handleChangeCode,
+};

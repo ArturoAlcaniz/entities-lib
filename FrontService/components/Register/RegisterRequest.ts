@@ -5,7 +5,7 @@ function registerRequest(thisComponent: any): AxiosPromise<any> {
         method: "post",
         url: "/api/users/register2",
         data: {
-            code: thisComponent.state.code
+            code: thisComponent.state.code,
         },
     });
 }
@@ -17,7 +17,7 @@ function sendCodeRequest(thisComponent: any): AxiosPromise<any> {
         data: {
             username: thisComponent.state.username,
             email: thisComponent.state.email,
-            pass: thisComponent.state.password
+            pass: thisComponent.state.password,
         },
     });
 }

@@ -16,6 +16,7 @@ export default class HeaderLogged extends Component<any,any> {
     translations: { english: any; spanish: any; };
     notificationViewRef: RefObject<HTMLDivElement>;
     profileNavbarViewRef: RefObject<HTMLDivElement>;
+    domain: string = process.env.DOMAIN;
     constructor(props: any) {
         super(props);
 
@@ -137,6 +138,15 @@ export default class HeaderLogged extends Component<any,any> {
         }
     }
 
+    obtainFullUrl(endPoint: string): string {
+        let url = new Array()
+        url.push("https://")
+        url.push(this.domain)
+        url.push("/")
+        url.push(endPoint)
+        return url.join("")
+    }
+
     render() {
         const { showProfileNavbar, showNotifications, styleNavbarBurger, styleNavbarMenu } = this.state
         let languageSelected = this.state.languageSelected
@@ -156,17 +166,17 @@ export default class HeaderLogged extends Component<any,any> {
 
                     <div id="navbarBasicExample" className={styleNavbarMenu}>
                         <div className="navbar-start">
-                            <Link href="https://tishoptfg.com/buy">
+                            <Link href={this.obtainFullUrl("buy")}>
                                 <a className={this.checkIfIsActive("/buy") ? "navbar-custom is-active" : "navbar-custom"}>
                                     {obtainTextTranslated["buttons"]["buy"]}
                                 </a>
                             </Link>
-                            <Link href="https://tishoptfg.com/sell">
+                            <Link href={this.obtainFullUrl("sell")}>
                                 <a className={this.checkIfIsActive("/sell") ? "navbar-custom is-active" : "navbar-custom"}>
                                     {obtainTextTranslated["buttons"]["sell"]}
                                 </a>
                             </Link>
-                            <Link href="https://tishoptfg.com/management">
+                            <Link href={this.obtainFullUrl("management")}>
                                 <a style={{display: this.state.admin == "true" ? 'flex' : 'none' }} className={this.checkIfIsActive("/management") ? "navbar-custom is-active" : "navbar-custom"}>
                                     {obtainTextTranslated["buttons"]["management"]}
                                 </a>

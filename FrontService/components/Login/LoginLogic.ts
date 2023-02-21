@@ -43,7 +43,6 @@ function handleLoginToBack(thisComponent, idToken: string) {
                 setTimeout(() => {
                     Router.push("buy");
                 }, 1000);
-                
             }
         },
         (error) => {
@@ -106,15 +105,15 @@ function handleLogin2(event: any) {
 }
 
 function handleChangePassword(event: any) {
-    this.setState({password: event.target.value})
+    this.setState({password: event.target.value});
 }
 
 function handleChangeEmail(event: any) {
-    this.setState({email: event.target.value})
+    this.setState({email: event.target.value});
 }
 
 function handleChangeCode(event: any) {
-    this.setState({code: event.target.value})
+    this.setState({code: event.target.value});
 }
 
 function handleLogin(event: any) {
@@ -177,4 +176,12 @@ function bannedCountdown(thisComponent) {
     }, 1000);
 }
 
-export {handleLogin, handleButtonLoginGoogle, showPass, handleLogin2, handleChangePassword, handleChangeEmail, handleChangeCode};
+export {
+    handleLogin,
+    handleButtonLoginGoogle,
+    showPass,
+    handleLogin2,
+    handleChangePassword,
+    handleChangeEmail,
+    handleChangeCode,
+};

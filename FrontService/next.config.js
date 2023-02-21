@@ -42,7 +42,7 @@ module.exports = withImages({
             {
                 source: "/api/products/:path*",
                 destination: `http://${process.env.PRODUCTS_CONTAINER_NAME}:${process.env.PRODUCTS_CONTAINER_PORT}/products/:path*`,
-            }
+            },
         ];
     },
     webpack: (config, {webpack}) => {

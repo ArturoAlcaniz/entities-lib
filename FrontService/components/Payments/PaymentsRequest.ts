@@ -5,9 +5,9 @@ function buyCoinsRequest(id: string): AxiosPromise<any> {
         method: "post",
         url: `/api/users/buyCoins`,
         data: {
-            id: id
+            id: id,
         },
-    })
+    });
 }
 
-export {buyCoinsRequest}
+export {buyCoinsRequest};

@@ -2,13 +2,12 @@ import axios, {AxiosPromise} from "axios";
 
 function obtainAvatar(): AxiosPromise<any> {
     return axios({
-        method: 'get',
-        url: '/api/users/avatar',
+        method: "get",
+        url: "/api/users/avatar",
         data: {},
-        responseType: 'blob',
+        responseType: "blob",
     });
 }
-
 
 function sendCodeRequest(thisComponent: any): AxiosPromise<any> {
     return axios({
