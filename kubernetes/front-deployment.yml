@@ -85,6 +85,11 @@ spec:
             secretKeyRef:
               name: mysecret
               key: FIREBASE_API_KEY
+        - name: DOMAIN
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: DOMAIN
         image: arturoalcaniz/front-service:latest
         imagePullPolicy: "Always"
         ports:
