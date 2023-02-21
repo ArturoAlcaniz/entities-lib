@@ -12,10 +12,10 @@ export class Code extends EntityWrapper {
     COINS: number;
 
     @Column({type: "datetime", nullable: true, default: null})
-    STARTS: string;
+    STARTS: Date;
 
     @Column({type: "datetime", nullable: true, default: null})
-    ENDS: string;
+    ENDS: Date;
 
     @Column({type: "int", nullable: true, default: null})
     AMOUNT: number;

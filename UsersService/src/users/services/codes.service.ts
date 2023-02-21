@@ -24,12 +24,16 @@ export class CodesService extends BaseService<Code> {
         let code: Code = new Code();
         code.ID = payload.id;
         code.COINS = Number(payload.coins);
-        if((payload.starts == null || payload.starts.length == 0)) {
-            code.STARTS = new Date().toISOString();
-        } else {
-            code.STARTS = payload.starts;
+        code.STARTS = new Date();
+
+        if(payload.starts && payload.starts.length > 0) {
+            code.STARTS = new Date(payload.starts);
         }
-        code.ENDS = payload.ends;
+
+        if(payload.ends && payload.ends.length > 0) {
+            code.ENDS = new Date(payload.ends);
+        }
+
         code.AMOUNT = Number(payload.amount);
         this.logger.info("Created code: {CODE}".replace("{CODE}", code.toString()));        
         return code;
