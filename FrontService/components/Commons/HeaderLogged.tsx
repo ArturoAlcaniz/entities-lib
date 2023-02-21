@@ -89,11 +89,11 @@ export default class HeaderLogged extends Component<any,any> {
     }
 
     handleAccountConfig(){
-        Router.push('profile')
+        Router.push(this.obtainFullUrl('profile'))
     }
 
     handleGoBuyCoins(){
-        Router.push('payments')
+        Router.push(this.obtainFullUrl('payments'))
     }
 
     obtainUserAvatar(): string{
