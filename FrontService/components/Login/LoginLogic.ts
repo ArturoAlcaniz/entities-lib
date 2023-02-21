@@ -39,6 +39,7 @@ function handleLoginToBack(thisComponent, idToken: string) {
                 document.cookie = `coins=${response.data.COINS};`;
                 document.cookie = `avatar=${response.data.AVATAR};`;
                 document.cookie = `rol=${response.data.ROL};`;
+                document.cookie = `admin=${response.data.ROL === "ADMIN"}`;
                 setTimeout(() => {
                     Router.push("buy");
                 }, 1000);
@@ -84,6 +85,7 @@ function handleLogin2(event: any) {
                 document.cookie = `coins=${response.data.COINS};`;
                 document.cookie = `avatar=${response.data.AVATAR};`;
                 document.cookie = `rol=${response.data.ROL};`;
+                document.cookie = `admin=${response.data.ROL === "ADMIN"}`;
                 setTimeout(() => {
                     Router.push("buy");
                 }, 1000);
