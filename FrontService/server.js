@@ -36,7 +36,7 @@ if(cluster.isMaster){
 
 async function main() {
     app.prepare().then(() => {
-        const server = createServer(httpsOptions, async (req, res) => {
+        createServer(httpsOptions, async (req, res) => {
             try {
                 // Be sure to pass `true` as the second argument to `url.parse`.
                 // This tells it to parse the query portion of the URL.
@@ -55,11 +55,7 @@ async function main() {
                 res.statusCode = 500;
                 res.end("internal server error");
             }
-        });
-        
-        server.use(compression());
-        
-        server.listen(port, (err) => {
+        }).listen(port, (err) => {
             if (err) throw err;
             console.log(`> Ready on https://${hostname}:${port}`);
         });
