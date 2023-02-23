@@ -11,7 +11,6 @@ const hostname = "tishoptfg.com";
 const port = 443;
 // when using middleware `hostname` and `port` must be provided below
 const app = next({dev, hostname, port});
-app.use(compression());
 const handle = app.getRequestHandler();
 const fs = require("fs");
 const httpsOptions = {
@@ -37,7 +36,7 @@ if(cluster.isMaster){
 
 async function main() {
     app.prepare().then(() => {
-        createServer(httpsOptions, async (req, res) => {
+        const server = createServer(httpsOptions, async (req, res) => {
             try {
                 // Be sure to pass `true` as the second argument to `url.parse`.
                 // This tells it to parse the query portion of the URL.
@@ -56,7 +55,11 @@ async function main() {
                 res.statusCode = 500;
                 res.end("internal server error");
             }
-        }).listen(port, (err) => {
+        });
+        
+        server.use(compression());
+        
+        server.listen(port, (err) => {
             if (err) throw err;
             console.log(`> Ready on https://${hostname}:${port}`);
         });
