@@ -1,6 +1,7 @@
 const {createServer} = require("https");
 const {parse} = require("url");
 const next = require("next");
+const compression = require("compression");
 
 const dev = process.env.NODE_ENV !== "production";
 const hostname = "tishoptfg.com";
@@ -16,6 +17,7 @@ const httpsOptions = {
     ),
 };
 
+app.use(compression());
 app.prepare().then(() => {
     createServer(httpsOptions, async (req, res) => {
         try {
