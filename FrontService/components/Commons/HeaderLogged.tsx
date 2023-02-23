@@ -1,6 +1,6 @@
 import { Component, createRef, RefObject } from "react";
 import logo from "@assets/Logo-TISHOP.png"
-import userProfile from "@assets/UserProfile.png"
+import dynamic from 'next/dynamic'
 import * as langEnglish from '@utils/languages/english.json';
 import * as langSpanish from '@utils/languages/spanish.json';
 import Image from 'next/image'
@@ -200,10 +200,10 @@ export default class HeaderLogged extends Component<any,any> {
                     </div>
                 </nav>
                 {
-                    showNotifications ? NotificationsView(this) : (<div></div>)
+                    showNotifications && NotificationsView(this)
                 }
                 {
-                    showProfileNavbar ? ProfileNavbarView(this) : (<div></div>) 
+                    showProfileNavbar && ProfileNavbarView(this)
                 }
             </div>
         )

@@ -2,12 +2,11 @@ const os = require("os");
 const {createServer} = require("https");
 const {parse} = require("url");
 const next = require("next");
-const compression = require("compression");
 const cluster = require('node:cluster');
 const numCPUs = os.cpus().length;
 
 const dev = process.env.NODE_ENV !== "production";
-const hostname = "tishoptfg.com";
+const hostname = process.env.DOMAIN;
 const port = 443;
 // when using middleware `hostname` and `port` must be provided below
 const app = next({dev, hostname, port});
@@ -38,8 +37,6 @@ async function main() {
     app.prepare().then(() => {
         createServer(httpsOptions, async (req, res) => {
             try {
-                // Be sure to pass `true` as the second argument to `url.parse`.
-                // This tells it to parse the query portion of the URL.
                 const parsedUrl = parse(req.url, true);
                 const {pathname, query} = parsedUrl;
 

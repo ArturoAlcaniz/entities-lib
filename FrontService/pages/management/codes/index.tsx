@@ -25,7 +25,7 @@ export default class CodesManagePage extends CustomBasicPageLogged{
             <div>
                 {super.render()}
                 <div className='buttonCentered'>
-                    <Link href="/management/codes/create">
+                    <Link href="/management/codes/create" passHref>
                         <button className="button is-primary">{obtainTextTranslated["buttons"]["create_code"]}</button>
                     </Link>
                 </div>

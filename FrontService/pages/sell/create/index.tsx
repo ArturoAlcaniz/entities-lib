@@ -43,7 +43,7 @@ export default class SellPage extends CustomBasicPageLogged{
             <div>
                 {super.render()}
                 <div className='buttonCentered'>
-                    <Link href="/sell">
+                    <Link href="/sell" passHref>
                         <button className="button is-primary">{obtainTextTranslated["buttons"]["my_products"]}</button>
                     </Link>
                 </div>
