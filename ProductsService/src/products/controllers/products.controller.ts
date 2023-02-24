@@ -123,14 +123,14 @@ export class ProductsController {
         });
 
         let product: Product = await this.productsService.getRepository().createQueryBuilder()
-        .where('USERID = :uid', { uid: user.id })
-        .andWhere('ID = :pid', { pid: payload.id })
+        .where('user.id = :uid', { uid: user.id })
+        .andWhere('id = :pid', { pid: payload.id })
         .getOne();
 
         this.logger.info(`Deleting product ${product.id}`)
 
         let images = await this.productImagesService.getRepository().createQueryBuilder()
-        .where('PRODUCTID = :pid', { pid: payload.id })
+        .where('product.id = :pid', { pid: payload.id })
         .getMany();
 
         let imageIds = images.map(image => {return image.id});
@@ -166,8 +166,8 @@ export class ProductsController {
         });
 
         let product: Product = await this.productsService.getRepository().createQueryBuilder('product')
-        .where('USERID = :uid', { uid: user.id })
-        .andWhere('ID = :pid', { pid: payload.id })
+        .where('user.id = :uid', { uid: user.id })
+        .andWhere('id = :pid', { pid: payload.id })
         .getOne();
 
         product.productName = payload.productname;
@@ -181,7 +181,7 @@ export class ProductsController {
 
         await this.productImagesService.getRepository().createQueryBuilder()
         .delete()
-        .where('PRODUCTID = :pid', { pid: payload.id })
+        .where('product.id = :pid', { pid: payload.id })
         .andWhere({ID: Not(In(ids)) })
         .execute()
 
@@ -213,8 +213,8 @@ export class ProductsController {
         });
         
         let products: Product[] = await this.productsService.getRepository().createQueryBuilder('product')
-        .where('USERID = :uid', { uid: user.id })
-        .leftJoinAndSelect('product.IMAGES', 'product_image')
+        .where('user.id = :uid', { uid: user.id })
+        .leftJoinAndSelect('product.images', 'product_image')
         .getMany()
 
         return products;
@@ -230,10 +230,10 @@ export class ProductsController {
     ) {
         
         let products: Product[] = await this.productsService.find({
-            relations: ['IMAGES'],
+            relations: ['images'],
             loadRelationsId: true,
             where: {
-                BUYER: null
+                buyer: null
             },
         })
 
@@ -260,8 +260,8 @@ export class ProductsController {
     ) {
 
         let products: Product[] = await this.productsService.getRepository().createQueryBuilder('product')
-        .where('product.ID = :pid', { pid: product })
-        .leftJoinAndSelect('product.IMAGES', 'product_image')
+        .where('product.id = :pid', { pid: product })
+        .leftJoinAndSelect('product.images', 'product_image')
         .getMany()
 
         return products;
