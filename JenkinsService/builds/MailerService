@@ -5,6 +5,7 @@ pipeline {
             steps {
                 script{
                     sh '''
+                    echo ${scm.getLocations()[0].getURL()} &&
                     cd MailerService && 
                     bash docker_build.bash "$TOKEN_DOCKER"
                     '''
