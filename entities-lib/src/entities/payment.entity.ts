@@ -14,17 +14,17 @@ import { User } from "./user.entity";
 export class Payment extends BaseEntity {
 
     @PrimaryColumn()
-    ID: string;
+    id: string;
 
     @Column({type: "decimal", default: 0.00, nullable: false, precision: 9, scale: 2, transformer: new ColumnNumericTransformer()})
-    COINS: number;
+    coins: number;
 
-    @ManyToOne(type => User, user => user.PAYMENTS)
-    USER: User;
+    @ManyToOne(type => User, user => user.payments)
+    user: User;
 
     @CreateDateColumn()
-    CREATED_AT: "string";
+    createdAt: "string";
 
     @UpdateDateColumn()
-    UPDATED_AT: "string";
+    updatedAt: "string";
 }

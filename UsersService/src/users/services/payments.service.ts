@@ -22,7 +22,7 @@ export class PaymentsService extends BaseService<Payment> {
     }
 
     async validatePayment(payment: Payment) {
-        if ((await this.findOne({where: {ID: payment.ID}})) != null) {
+        if ((await this.findOne({where: {id: payment.id}})) != null) {
             return false;
         }
         return true;
@@ -30,9 +30,9 @@ export class PaymentsService extends BaseService<Payment> {
 
     createPayment(id: string, coins: string, user: User): Payment{
         let payment: Payment = new Payment();
-        payment.ID = id;
-        payment.COINS = parseFloat(coins);
-        payment.USER = user;
+        payment.id = id;
+        payment.coins = parseInt(coins);
+        payment.user = user;
         return payment;
     }
 }

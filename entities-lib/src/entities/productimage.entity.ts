@@ -10,15 +10,15 @@ import { Product } from "./product.entity";
 @Entity()
 export class ProductImage extends BaseEntity {
     @PrimaryGeneratedColumn("uuid")
-    ID: string;
+    id: string;
 
     @Column({type: "varchar", length: 50})
-    NAME: string;
+    name: string;
     
-    @ManyToOne(type => Product, product => product.IMAGES, {
+    @ManyToOne(type => Product, product => product.images, {
         onDelete: "RESTRICT",
         onUpdate: "RESTRICT",
         cascade: true,
     })
-    PRODUCT: Product;
+    product: Product;
 }

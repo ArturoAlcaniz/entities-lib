@@ -6,19 +6,19 @@ import { EntityWrapper} from "../transformers/EntityWrapper";
 @Entity()
 export class Code extends EntityWrapper {
     @PrimaryColumn()
-    ID: string;
+    id: string;
 
     @Column({type: "decimal", default: 0.00, nullable: false, precision: 9, scale: 2, transformer: new ColumnNumericTransformer()})
-    COINS: number;
+    coins: number;
 
     @Column({type: "datetime", nullable: true, default: null})
-    STARTS: Date;
+    starts: Date;
 
     @Column({type: "datetime", nullable: true, default: null})
-    ENDS: Date;
+    ends: Date;
 
     @Column({type: "int", nullable: true, default: null})
-    AMOUNT: number;
+    amount: number;
 
     @ManyToMany(() => User)
     @JoinTable()

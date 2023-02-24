@@ -47,7 +47,7 @@ export class AuthenticatedGuard implements CanActivate {
         }
 
         let userEntity: User = await this.usersService.findOne({
-            where: {ID: user},
+            where: {id: user},
         });
 
         request.user = userEntity;

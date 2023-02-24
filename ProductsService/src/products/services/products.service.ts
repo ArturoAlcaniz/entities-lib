@@ -20,13 +20,13 @@ export class ProductsService extends BaseService<Product> {
 
     createProduct(name: string, description: string, category: string, start: string, end: string, price: string, user: User): Product {
         let product = new Product()
-        product.PRODUCTNAME = name;
-        product.DESCRIPTION = description;
-        product.CATEGORY = <Category> category;
-        product.STARTS = start;
-        product.ENDS = end;
-        product.PRICE = price;
-        product.USER = user;
+        product.productName = name;
+        product.description = description;
+        product.category = <Category> category;
+        product.starts = start;
+        product.ends = end;
+        product.price = price;
+        product.user = user;
         return product;
     }
 

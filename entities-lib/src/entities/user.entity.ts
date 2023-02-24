@@ -21,41 +21,41 @@ export enum Rol {
 @Entity()
 export class User extends BaseEntity {
     @PrimaryGeneratedColumn("uuid")
-    ID: string;
+    id: string;
 
     @Column({type: "varchar", length: 50, unique: true})
-    USERNAME: string;
+    userName: string;
 
     @Column({type: "varchar", default: "", nullable: false, length: 50})
-    AVATAR: string;
+    avatar: string;
 
     @Column({type: "varchar", nullable: false, length: 50, unique: true})
-    EMAIL: string;
+    email: string;
 
     @Column({type: "enum", enum: Rol, default: Rol.USER, nullable: false})
-    ROL: Rol;
+    rol: Rol;
 
     @Column({type: "varchar", nullable: true, default: null, length: 100})
-    PASSWORD: string;
+    password: string;
 
     @Column({type: "decimal", default: 0.00, nullable: false, precision: 9, scale: 2, transformer: new ColumnNumericTransformer()})
-    COINS: number;
+    coins: number;
 
-    @OneToMany(type => Product, product => product.USER)
-    PRODUCTS: Product[];
+    @OneToMany(type => Product, product => product.user)
+    products: Product[];
 
-    @OneToMany(type => InvoiceItem, invoiceItem => invoiceItem.SELLER)
-    PRODUCTSSOLD: InvoiceItem[];
+    @OneToMany(type => InvoiceItem, invoiceItem => invoiceItem.seller)
+    productsSold: InvoiceItem[];
 
-    @OneToMany(type => Invoice, invoice => invoice.BUYER)
-    INVOICES: Invoice[];
+    @OneToMany(type => Invoice, invoice => invoice.buyer)
+    invoices: Invoice[];
 
     @CreateDateColumn()
-    CREATED_AT: "string";
+    createdAt: "string";
 
     @UpdateDateColumn()
-    UPDATED_AT: "string";
+    updatedAt: "string";
 
-    @OneToMany(type => Payment, payment => payment.USER)
-    PAYMENTS: any;
+    @OneToMany(type => Payment, payment => payment.user)
+    payments: Payment[];
 }

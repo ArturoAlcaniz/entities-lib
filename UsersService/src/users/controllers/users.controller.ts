@@ -132,12 +132,12 @@ export class UsersController {
             return;
         }
 
-        if (payload.code != this.usersService.codesSent.get(user.EMAIL).code) {
+        if (payload.code != this.usersService.codesSent.get(user.email).code) {
             response.status(400).json({message: ["code_invalid"]});
             return;
         }
 
-        if(!this.checkCodeEmail(this.usersService.codesSent.get(user.EMAIL))){
+        if(!this.checkCodeEmail(this.usersService.codesSent.get(user.email))){
             response.status(400).json({message: ["code_expired"]});
             return;
         }
@@ -159,7 +159,7 @@ export class UsersController {
         const user = this.jwtService.decode(request.cookies["jwt"])["userId"];
 
         let u: User = await this.usersService.findOne({
-            where: {ID: user},
+            where: {id: user},
         });
 
         if (
@@ -172,13 +172,13 @@ export class UsersController {
 
         if (
             !payload.code ||
-            payload.code != this.usersService.codesSent.get(u.EMAIL).code
+            payload.code != this.usersService.codesSent.get(u.email).code
         ) {
             response.status(400).json({message: ["code_invalid"]});
             return;
         }
 
-        if(!this.checkCodeEmail(this.usersService.codesSent.get(u.EMAIL))){
+        if(!this.checkCodeEmail(this.usersService.codesSent.get(u.email))){
             response.status(400).json({message: ["code_expired"]});
             return;
         }
@@ -191,11 +191,11 @@ export class UsersController {
 
         response.status(200).json({
             message: ["successfully_logged_in"],
-            USERNAME: u.USERNAME,
-            EMAIL: u.EMAIL,
-            COINS: u.COINS,
-            AVATAR: u.AVATAR,
-            ROL: u.ROL,
+            USERNAME: u.userName,
+            EMAIL: u.email,
+            COINS: u.coins,
+            AVATAR: u.avatar,
+            ROL: u.rol,
         });
         this.logger.info(
             "Login Sucessfully {IP}".replace(
@@ -215,7 +215,7 @@ export class UsersController {
         @Req() request: Request
     ) {
         let user: User = await this.usersService.findOne({
-            where: {EMAIL: payload.email},
+            where: {email: payload.email},
         });
 
         if (this.verifyBlockUser(request, payload.email)) {
@@ -259,9 +259,9 @@ export class UsersController {
             )
         )
 
-        const jwt = this.jwtService.sign({userId: user.ID});
-        this.usersService.usersLoggedInUnconfirmed.set(user.ID, jwt);
-        this.usersService.codesSent.set(user.EMAIL, codeEmail);
+        const jwt = this.jwtService.sign({userId: user.id});
+        this.usersService.usersLoggedInUnconfirmed.set(user.id, jwt);
+        this.usersService.codesSent.set(user.email, codeEmail);
 
         response.cookie("jwt", jwt, {
             httpOnly: true,
@@ -291,7 +291,7 @@ export class UsersController {
     ) {
         let user: User = await this.usersService.findOne({
             where: {
-                ID: this.jwtService.decode(request.cookies["jwt"])["userId"],
+                id: this.jwtService.decode(request.cookies["jwt"])["userId"],
             },
         });
 
@@ -322,14 +322,13 @@ export class UsersController {
 
         await this.paymentsService.save(payment)
 
-        let coins = Number(payment.COINS.toString().slice(0, (payment.COINS.toString().indexOf(".")+3)))
-        user.COINS = user.COINS + coins
+        user.coins = user.coins + payment.coins
         
         await this.usersService.save(user)
         
         response.status(200).json({
             message: ["successfully_payment"],
-            COINS: user.COINS
+            COINS: user.coins
         });
 
     }
@@ -366,7 +365,7 @@ export class UsersController {
         }
 
         let user: User = await this.usersService.findOne({
-            where: {EMAIL: infoUserGoogle.data.email},
+            where: {email: infoUserGoogle.data.email},
         });
 
         if (user == null) {
@@ -374,8 +373,8 @@ export class UsersController {
             return;
         }
 
-        const jwt = this.jwtService.sign({userId: user.ID});
-        this.usersService.usersLoggedIn.set(user.ID, jwt);
+        const jwt = this.jwtService.sign({userId: user.id});
+        this.usersService.usersLoggedIn.set(user.id, jwt);
 
         response.cookie("jwt", jwt, {
             httpOnly: true,
@@ -384,10 +383,10 @@ export class UsersController {
         });
         response.status(200).json({
             message: ["successfully_logged_in"],
-            USERNAME: user.USERNAME,
-            EMAIL: user.EMAIL,
-            COINS: user.COINS,
-            AVATAR: user.AVATAR,
+            USERNAME: user.userName,
+            EMAIL: user.email,
+            COINS: user.coins,
+            AVATAR: user.avatar,
         });
     }
 
@@ -407,14 +406,14 @@ export class UsersController {
     ) {
         let user: User = await this.usersService.findOne({
             where: {
-                ID: this.jwtService.decode(request.cookies["jwt"])["userId"],
+                id: this.jwtService.decode(request.cookies["jwt"])["userId"],
             },
         });
 
         if (
             user == null ||
-            (user.PASSWORD == null && payload.pass != "") ||
-            (user.PASSWORD != null &&
+            (user.password == null && payload.pass != "") ||
+            (user.password != null &&
                 !this.usersService.verifyPass(user, payload.pass))
         ) {
             response.status(400).json({
@@ -431,7 +430,7 @@ export class UsersController {
         }
 
         if (
-            payload.username != user.USERNAME &&
+            payload.username != user.userName &&
             !(await this.usersService.validateUniqueUsernameWithUsername(payload.username))
         ) {
             response
@@ -450,7 +449,7 @@ export class UsersController {
         }
 
         if (
-            payload.email != user.EMAIL &&
+            payload.email != user.email &&
             !(await this.usersService.validateUniqueEmailWithEmail(payload.email))
         ) {
             response
@@ -466,9 +465,9 @@ export class UsersController {
         }
 
         this.usersService.updateUser(user, payload);
-        user.AVATAR = avatar.filename;
+        user.avatar = avatar.filename;
         this.usersService.save(user);
-        response.status(200).json({message: ["successfully_updated"], AVATAR: user.AVATAR});
+        response.status(200).json({message: ["successfully_updated"], AVATAR: user.avatar});
         this.logger.info(
             "Update User Sucessfully {IP} {FILE}".replace(
                 "{IP}",
@@ -481,7 +480,7 @@ export class UsersController {
 
         await lastValueFrom(
             this.httpService.post(`http://${process.env.MAILER_CONTAINER_NAME}:${process.env.MAILER_CONTAINER_PORT}/mailer/sendDataChangedConfirm`,
-                JSON.stringify({email: user.EMAIL}),
+                JSON.stringify({email: user.email}),
                 {
                     headers: {"content-type": "application/json"}
                 }
@@ -537,14 +536,14 @@ export class UsersController {
     ) {
         let user: User = await this.usersService.findOne({
             where: {
-                ID: this.jwtService.decode(request.cookies["jwt"])["userId"],
+                id: this.jwtService.decode(request.cookies["jwt"])["userId"],
             },
         });
 
         if (
             user == null ||
-            (user.PASSWORD == null && payload.pass != "") ||
-            (user.PASSWORD != null &&
+            (user.password == null && payload.pass != "") ||
+            (user.password != null &&
                 !this.usersService.verifyPass(user, payload.pass))
         ) {
             response.status(400).json({
@@ -561,7 +560,7 @@ export class UsersController {
         }
 
         if (
-            payload.username != user.USERNAME &&
+            payload.username != user.userName &&
             !(await this.usersService.validateUniqueUsernameWithUsername(payload.username))
         ) {
             response
@@ -580,7 +579,7 @@ export class UsersController {
         }
 
         if (
-            payload.email != user.EMAIL &&
+            payload.email != user.email &&
             !(await this.usersService.validateUniqueEmailWithEmail(payload.email))
         ) {
             response
@@ -597,7 +596,7 @@ export class UsersController {
 
         this.usersService.updateUser(user, payload)
         this.usersService.save(user);
-        response.status(200).json({message: ["successfully_updated"], AVATAR: user.AVATAR});
+        response.status(200).json({message: ["successfully_updated"], AVATAR: user.avatar});
         this.logger.info(
             "Update User Sucessfully {IP} {FILE}".replace(
                 "{IP}",
@@ -631,18 +630,18 @@ export class UsersController {
     ) {
         let user: User = await this.usersService.findOne({
             where: {
-                ID: this.jwtService.decode(request.cookies["jwt"])["userId"],
+                id: this.jwtService.decode(request.cookies["jwt"])["userId"],
             },
         });
 
-        if (user == null ||  user.ROL != "ADMIN") {
+        if (user == null ||  user.rol != "ADMIN") {
             response.status(400).json({
                 message: ["invalid_access"], formError: "access"
             });
             this.logger.info(
                 "Fail Create code (invalid_access) {IP} {USER}"
                     .replace("{IP}", request.headers["x-forwarded-for"].toString())
-                    .replace("{USER}", user.EMAIL)
+                    .replace("{USER}", user.email)
             );
             return;
         }
@@ -691,8 +690,8 @@ export class UsersController {
         this.logger.info(
             "Create Code Sucessfully {CODE} {IP} {USER}"
             .replace("{IP}", request.headers["x-forwarded-for"].toString())
-            .replace("{USER}", user.EMAIL)
-            .replace("{CODE}", code.ID)
+            .replace("{USER}", user.email)
+            .replace("{CODE}", code.id)
         );
     }
 
@@ -722,7 +721,7 @@ export class UsersController {
     ) {
         let user: User = await this.usersService.findOne({
             where: {
-                ID: this.jwtService.decode(request.cookies["jwt"])["userId"],
+                id: this.jwtService.decode(request.cookies["jwt"])["userId"],
             },
         });
 
@@ -733,7 +732,7 @@ export class UsersController {
             this.logger.info(
                 "Fail Create code (invalid_access) {IP} {USER}"
                     .replace("{IP}", request.headers["x-forwarded-for"].toString())
-                    .replace("{USER}", user.EMAIL)
+                    .replace("{USER}", user.email)
             );
             return;
         }
@@ -752,7 +751,7 @@ export class UsersController {
             return;
         }
 
-        if (codes[0].AMOUNT <= 0) {
+        if (codes[0].amount <= 0) {
             response
                 .status(400)
                 .json({message: ["code_not_available"], formError: "id"});
@@ -764,18 +763,18 @@ export class UsersController {
             );
             return;
         }
-        user.COINS = user.COINS + codes[0].COINS;
+        user.coins = user.coins + codes[0].coins;
         await this.usersService.save(user);
 
-        codes[0].AMOUNT = codes[0].AMOUNT-1;
+        codes[0].amount = codes[0].amount-1;
         await this.codesService.save(codes[0]);
 
-        response.status(200).json({message: ["successfully_code_redeemed"], COINS: user.COINS});
+        response.status(200).json({message: ["successfully_code_redeemed"], COINS: user.coins});
         this.logger.info(
             "Create Code Sucessfully {CODE} {IP} {USER}"
             .replace("{IP}", request.headers["x-forwarded-for"].toString())
-            .replace("{USER}", user.EMAIL)
-            .replace("{CODE}", codes[0].ID)
+            .replace("{USER}", user.email)
+            .replace("{CODE}", codes[0].id)
         );
     }
 

@@ -19,8 +19,8 @@ export class ProductImagesService extends BaseService<ProductImage> {
 
     createProductImage(name: string, product: Product): ProductImage {
         let productImage = new ProductImage()
-        productImage.PRODUCT = product
-        productImage.NAME = name
+        productImage.product = product
+        productImage.name = name
         return productImage;
     }
 }

@@ -22,19 +22,19 @@ export class CodesService extends BaseService<Code> {
 
     createCode(payload: CreateCodeTokenDto): Code {
         let code: Code = new Code();
-        code.ID = payload.id;
-        code.COINS = Number(payload.coins);
-        code.STARTS = new Date();
+        code.id = payload.id;
+        code.coins = Number(payload.coins);
+        code.starts = new Date();
 
         if(payload.starts && payload.starts.length > 0) {
-            code.STARTS = new Date(payload.starts);
+            code.starts = new Date(payload.starts);
         }
 
         if(payload.ends && payload.ends.length > 0) {
-            code.ENDS = new Date(payload.ends);
+            code.ends = new Date(payload.ends);
         }
 
-        code.AMOUNT = Number(payload.amount);
+        code.amount = Number(payload.amount);
         this.logger.info("Created code: {CODE}".replace("{CODE}", code.toString()));        
         return code;
     }

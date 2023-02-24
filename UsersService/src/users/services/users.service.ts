@@ -34,10 +34,10 @@ export class UsersService extends BaseService<User> {
     }
 
     updateUser(user: User, data: ModifyUserDto): User {
-        user.EMAIL = data.email;
-        user.USERNAME = data.username;
+        user.email = data.email;
+        user.userName = data.username;
         if (data.newPass) {
-            user.PASSWORD = this.hashService.stringToHash(data.newPass);
+            user.password = this.hashService.stringToHash(data.newPass);
             console.log(data.newPass)
         }
         return user;
@@ -45,16 +45,16 @@ export class UsersService extends BaseService<User> {
 
     createUser(email: string, name: string, pass: string = null): User {
         let user: User = new User();
-        user.EMAIL = email;
-        user.USERNAME = name;
+        user.email = email;
+        user.userName = name;
         if (pass != null) {
-            user.PASSWORD = this.hashService.stringToHash(pass);
+            user.password = this.hashService.stringToHash(pass);
         }
         return user;
     }
 
     verifyPass(user: User, pass: string) {
-        return this.hashService.checkHash(pass, user.PASSWORD);
+        return this.hashService.checkHash(pass, user.password);
     }
 
     async validateLoginGoogle(data: any): Promise<any> {
@@ -83,32 +83,32 @@ export class UsersService extends BaseService<User> {
     }
 
     async checkExistGoogleEmail(data: any) {
-        return this.findOne({where: {EMAIL: data.email}});
+        return this.findOne({where: {email: data.email}});
     }
 
     async validateUniqueEmail(user: User) {
-        if ((await this.findOne({where: {EMAIL: user.EMAIL}})) != null) {
+        if ((await this.findOne({where: {email: user.email}})) != null) {
             return false;
         }
         return true;
     }
 
     async validateUniqueEmailWithEmail(email: string) {
-        if ((await this.findOne({where: {EMAIL: email}})) != null) {
+        if ((await this.findOne({where: {email: email}})) != null) {
             return false;
         }
         return true;
     }
 
     async validateUniqueUsername(user: User) {
-        if ((await this.findOne({where: {USERNAME: user.USERNAME}})) != null) {
+        if ((await this.findOne({where: {userName: user.userName}})) != null) {
             return false;
         }
         return true;
     }
 
     async validateUniqueUsernameWithUsername(username: string) {
-        if ((await this.findOne({where: {USERNAME: username}})) != null) {
+        if ((await this.findOne({where: {userName: username}})) != null) {
             return false;
         }
         return true;

@@ -49,7 +49,7 @@ export class ProductsController {
     ) {
         let user: User = await this.usersService.findOne({
             where: {
-                ID: this.jwtService.decode(request.cookies["jwt"])["userId"],
+                id: this.jwtService.decode(request.cookies["jwt"])["userId"],
             },
         });
 
@@ -87,7 +87,7 @@ export class ProductsController {
     ) {
         let user: User = await this.usersService.findOne({
             where: {
-                ID: this.jwtService.decode(request.cookies["jwt"])["userId"],
+                id: this.jwtService.decode(request.cookies["jwt"])["userId"],
             },
         });
 
@@ -118,28 +118,28 @@ export class ProductsController {
     ) {
         let user: User = await this.usersService.findOne({
             where: {
-                ID: this.jwtService.decode(request.cookies["jwt"])["userId"],
+                id: this.jwtService.decode(request.cookies["jwt"])["userId"],
             },
         });
 
         let product: Product = await this.productsService.getRepository().createQueryBuilder()
-        .where('USERID = :uid', { uid: user.ID })
+        .where('USERID = :uid', { uid: user.id })
         .andWhere('ID = :pid', { pid: payload.id })
         .getOne();
 
-        this.logger.info(`Deleting product ${product.ID}`)
+        this.logger.info(`Deleting product ${product.id}`)
 
         let images = await this.productImagesService.getRepository().createQueryBuilder()
         .where('PRODUCTID = :pid', { pid: payload.id })
         .getMany();
 
-        let imageIds = images.map(image => {return image.ID});
+        let imageIds = images.map(image => {return image.id});
 
         if (images.length > 0) {
             await this.productImagesService.deleteMany(imageIds);
         }
 
-        if ((await this.productsService.delete(product.ID)).affected) {
+        if ((await this.productsService.delete(product.id)).affected) {
             response.status(200).json({message: ["successfully_product_deleted"]});
         }
     }
@@ -161,21 +161,21 @@ export class ProductsController {
     ) {
         let user: User = await this.usersService.findOne({
             where: {
-                ID: this.jwtService.decode(request.cookies["jwt"])["userId"],
+                id: this.jwtService.decode(request.cookies["jwt"])["userId"],
             },
         });
 
         let product: Product = await this.productsService.getRepository().createQueryBuilder('product')
-        .where('USERID = :uid', { uid: user.ID })
+        .where('USERID = :uid', { uid: user.id })
         .andWhere('ID = :pid', { pid: payload.id })
         .getOne();
 
-        product.PRODUCTNAME = payload.productname;
-        product.DESCRIPTION = payload.description;
-        product.CATEGORY = <Category> payload.category;
-        product.STARTS = payload.startsell == "" ? null : payload.startsell;
-        product.ENDS = payload.endsell == "" ? null : payload.endsell;
-        product.PRICE = payload.price;
+        product.productName = payload.productname;
+        product.description = payload.description;
+        product.category = <Category> payload.category;
+        product.starts = payload.startsell == "" ? null : payload.startsell;
+        product.ends = payload.endsell == "" ? null : payload.endsell;
+        product.price = payload.price;
 
         let ids: string[] = JSON.parse(payload.imagesAlreadyAdded)
 
@@ -208,12 +208,12 @@ export class ProductsController {
     ) {
         let user: User = await this.usersService.findOne({
             where: {
-                ID: this.jwtService.decode(request.cookies["jwt"])["userId"],
+                id: this.jwtService.decode(request.cookies["jwt"])["userId"],
             },
         });
         
         let products: Product[] = await this.productsService.getRepository().createQueryBuilder('product')
-        .where('USERID = :uid', { uid: user.ID })
+        .where('USERID = :uid', { uid: user.id })
         .leftJoinAndSelect('product.IMAGES', 'product_image')
         .getMany()
 

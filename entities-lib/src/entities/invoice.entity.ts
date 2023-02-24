@@ -16,20 +16,20 @@ import { InvoiceItem } from "./invoiceItem.entity";
 @Entity()
 export class Invoice extends BaseEntity {
     @PrimaryGeneratedColumn("uuid")
-    ID: string;
+    id: string;
 
-    @ManyToOne(type => User, user => user.INVOICES)
-    BUYER: User;
+    @ManyToOne(type => User, user => user.invoices)
+    buyer: User;
 
-    @OneToMany(type => InvoiceItem, invoiceItem => invoiceItem.INVOICE)
-    ITEMS: InvoiceItem[];
+    @OneToMany(type => InvoiceItem, invoiceItem => invoiceItem.invoice)
+    items: InvoiceItem[];
 
     @Column({type: "decimal", nullable: false, precision: 5, scale: 2})
-    PRICE: string;
+    price: string;
 
     @CreateDateColumn()
-    CREATED_AT: "string";
+    created_at: "string";
 
     @UpdateDateColumn()
-    UPDATED_AT: "string";
+    updated_at: "string";
 }
