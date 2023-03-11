@@ -1,6 +1,16 @@
 {
     "compilerOptions": {
-        "experimentalDecorators": true, 
-        "allowJs": true
+        "declaration": true,
+        "removeComments": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "target": "es6",
+        "sourceMap": true,
+        "allowJs": true,
+        "outDir": "./dist",
+        "esModuleInterop": true,
+        "incremental": true,
+        "types": ["node"],
+        "typeRoots": ["./node_module/@types", "./src/types"]
     }
 }
