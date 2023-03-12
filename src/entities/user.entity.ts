@@ -13,13 +13,13 @@ import { Payment } from "./payment.entity";
 import { InvoiceItem } from "./invoiceItem.entity";
 import { Invoice } from "./invoice.entity";
 
-export enum Rol {
+enum Rol {
     USER = "USER",
     ADMIN = "ADMIN"
 }
 
 @Entity()
-export class User extends BaseEntity {
+class User extends BaseEntity {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
@@ -59,3 +59,5 @@ export class User extends BaseEntity {
     @OneToMany(type => Payment, payment => payment.user)
     payments: Payment[];
 }
+
+export {Rol, User}

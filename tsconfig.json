@@ -12,6 +12,7 @@
         "incremental": true,
         "types": ["node"],
         "moduleResolution": "node",
-        "typeRoots": ["./node_module/@types", "./src/types"]
+        "typeRoots": ["./node_module/@types", "./src/types"],
+        "preserveConstEnums": true
     }
 }
