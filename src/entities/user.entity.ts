@@ -35,7 +35,7 @@ class User extends BaseEntity {
     @Column({type: "enum", enum: Rol, default: Rol.USER, nullable: false})
     rol: Rol;
 
-    @Column({type: "varchar", nullable: true, default: null, length: 100})
+    @Column({type: "varchar", nullable: true, default: null, length: 300})
     password: string;
 
     @Column({type: "decimal", default: 0.00, nullable: false, precision: 9, scale: 2, transformer: new ColumnNumericTransformer()})
