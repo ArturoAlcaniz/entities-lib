@@ -3,6 +3,7 @@ import {
     Column,
     CreateDateColumn,
     Entity,
+    JoinColumn,
     ManyToOne,
     OneToMany,
     OneToOne,
@@ -44,6 +45,7 @@ export class Product extends BaseEntity {
     images: ProductImage[];
 
     @OneToOne(() => InvoiceItem, { nullable: true })
+    @JoinColumn()
     sold: InvoiceItem;
 
     @CreateDateColumn()
