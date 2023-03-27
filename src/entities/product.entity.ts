@@ -5,12 +5,14 @@ import {
     Entity,
     ManyToOne,
     OneToMany,
+    OneToOne,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from "typeorm";
 import { User } from "./user.entity";
 import { ProductImage } from "./productimage.entity";
 import { Category } from "./categoryProduct.enum";
+import { InvoiceItem } from "./invoiceItem.entity";
 
 @Entity()
 export class Product extends BaseEntity {
@@ -40,6 +42,9 @@ export class Product extends BaseEntity {
 
     @OneToMany(type => ProductImage, productImage => productImage.product)
     images: ProductImage[];
+
+    @OneToOne(type => InvoiceItem, invoiceItem => invoiceItem.product)
+    sold: InvoiceItem;
 
     @CreateDateColumn()
     createdAt: "string";

@@ -44,9 +44,6 @@ class User extends BaseEntity {
     @OneToMany(type => Product, product => product.user)
     products: Product[];
 
-    @OneToMany(type => InvoiceItem, invoiceItem => invoiceItem.seller)
-    productsSold: InvoiceItem[];
-
     @OneToMany(type => Invoice, invoice => invoice.buyer)
     invoices: Invoice[];
 
