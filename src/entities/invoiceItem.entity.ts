@@ -25,7 +25,7 @@ export class InvoiceItem extends BaseEntity {
     @ManyToOne(type => Invoice, invoice => invoice.items)
     invoice: Invoice;
 
-    @OneToOne(type => Product, product => product.sold)
+    @OneToOne(() => Product, { nullable: false })
     product: Product;
 
     @CreateDateColumn()

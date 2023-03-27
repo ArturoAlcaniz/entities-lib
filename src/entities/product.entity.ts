@@ -43,7 +43,7 @@ export class Product extends BaseEntity {
     @OneToMany(type => ProductImage, productImage => productImage.product)
     images: ProductImage[];
 
-    @OneToOne(type => InvoiceItem, invoiceItem => invoiceItem.product, { nullable: true })
+    @OneToOne(() => InvoiceItem, { nullable: true })
     sold: InvoiceItem;
 
     @CreateDateColumn()
