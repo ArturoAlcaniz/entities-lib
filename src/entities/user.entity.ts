@@ -10,13 +10,8 @@ import {
 import { ColumnNumericTransformer } from "../transformers/ColumnNumericTransformer";
 import { Product } from "./product.entity";
 import { Payment } from "./payment.entity";
-import { InvoiceItem } from "./invoiceItem.entity";
 import { Invoice } from "./invoice.entity";
-
-enum Rol {
-    USER = "USER",
-    ADMIN = "ADMIN"
-}
+import { Rol } from './rolUser.enum';
 
 @Entity()
 class User extends BaseEntity {
@@ -57,4 +52,4 @@ class User extends BaseEntity {
     payments: Payment[];
 }
 
-export {Rol, User}
+export {User}
