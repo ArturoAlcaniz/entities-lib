@@ -1,4 +1,4 @@
-import { Column, Entity, JoinTable, ManyToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, PrimaryColumn } from "typeorm";
 import { ColumnNumericTransformer } from "../transformers/ColumnNumericTransformer";
 import { User } from "./user.entity";
 import { EntityWrapper} from "../transformers/EntityWrapper";
