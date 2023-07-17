@@ -1,4 +1,4 @@
-import {IsNotEmpty, IsString, IsEmail, IsNumber} from "class-validator";
+import {IsNotEmpty, IsString, IsEmail, IsNumber, IsDecimal} from "class-validator";
 
 export class CreateUserManagementDto {
     @IsNotEmpty({message: "email_empty"})
@@ -18,6 +18,7 @@ export class CreateUserManagementDto {
     @IsString()
     readonly rol: string;
 
-    @IsNumber({}, {message: "invalid_coins"})
-    readonly coins: number;
+    @IsNotEmpty()
+    @IsDecimal()
+    readonly coins: string;
 }
