@@ -19,6 +19,5 @@ export class ModifyUserManagementDto {
     readonly rol: string;
 
     @IsNotEmpty()
-    @IsDecimal()
     readonly coins: string;
 }

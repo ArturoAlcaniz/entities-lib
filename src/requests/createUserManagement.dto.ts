@@ -19,6 +19,5 @@ export class CreateUserManagementDto {
     readonly rol: string;
 
     @IsNotEmpty()
-    @IsDecimal()
     readonly coins: string;
 }
