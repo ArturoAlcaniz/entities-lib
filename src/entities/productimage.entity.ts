@@ -17,8 +17,7 @@ export class ProductImage extends BaseEntity {
     
     @ManyToOne(type => Product, product => product.images, {
         onDelete: "RESTRICT",
-        onUpdate: "RESTRICT",
-        cascade: true,
+        onUpdate: "RESTRICT"
     })
     product: Product;
 }
