@@ -36,10 +36,10 @@ class User extends BaseEntity {
     @Column({type: "decimal", default: 0.00, nullable: false, precision: 9, scale: 2, transformer: new ColumnNumericTransformer()})
     coins: number;
 
-    @OneToMany(type => Product, product => product.user)
+    @OneToMany(type => Product, product => product.user, { cascade: true })
     products: Product[];
 
-    @OneToMany(type => Invoice, invoice => invoice.buyer)
+    @OneToMany(type => Invoice, invoice => invoice.buyer, { cascade: true })
     invoices: Invoice[];
 
     @CreateDateColumn()
@@ -48,7 +48,7 @@ class User extends BaseEntity {
     @UpdateDateColumn()
     updatedAt: "string";
 
-    @OneToMany(type => Payment, payment => payment.user)
+    @OneToMany(type => Payment, payment => payment.user, { cascade: true })
     payments: Payment[];
 }
 

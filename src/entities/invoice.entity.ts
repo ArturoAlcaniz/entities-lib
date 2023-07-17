@@ -21,7 +21,7 @@ export class Invoice extends BaseEntity {
     @ManyToOne(type => User, user => user.invoices)
     buyer: User;
 
-    @OneToMany(type => InvoiceItem, invoiceItem => invoiceItem.invoice)
+    @OneToMany(type => InvoiceItem, invoiceItem => invoiceItem.invoice, { cascade: true })
     items: InvoiceItem[];
 
     @Column({type: "decimal", nullable: false, precision: 5, scale: 2})
