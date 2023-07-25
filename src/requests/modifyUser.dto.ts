@@ -1,5 +1,6 @@
 import { Type } from "class-transformer";
 import {IsEmail, IsNotEmpty, IsOptional, IsString} from "class-validator";
+import multer from "multer";
 
 export class ModifyUserDto {
     @IsNotEmpty()
